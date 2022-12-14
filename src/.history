@@ -1,0 +1,8 @@
+help
+quit
+help
+exprsim -h
+load 8ff8
+exprsim
+exprsim -e (ab)
+quit

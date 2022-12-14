@@ -1,0 +1,194 @@
+Performing C++ SOURCE FILE Test HAS_FCOLOR_DIAGNOSTICS failed with the following output:
+Change Dir: /home/phy/phyLS/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_824fa/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_824fa.dir/build.make CMakeFiles/cmTC_824fa.dir/build
+gmake[1]: Entering directory `/home/phy/phyLS/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_824fa.dir/src.cxx.o
+/opt/rh/devtoolset-8/root/usr/bin/c++ -DHAS_FCOLOR_DIAGNOSTICS  -fcolor-diagnostics -std=gnu++17 -o CMakeFiles/cmTC_824fa.dir/src.cxx.o -c /home/phy/phyLS/build/CMakeFiles/CMakeTmp/src.cxx
+c++: error: unrecognized command line option '-fcolor-diagnostics'
+gmake[1]: *** [CMakeFiles/cmTC_824fa.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory `/home/phy/phyLS/build/CMakeFiles/CMakeTmp'
+gmake: *** [cmTC_824fa/fast] Error 2
+
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test HAS_WNO_gnu-anonymous-struct failed with the following output:
+Change Dir: /home/phy/phyLS/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_e01f8/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_e01f8.dir/build.make CMakeFiles/cmTC_e01f8.dir/build
+gmake[1]: Entering directory `/home/phy/phyLS/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_e01f8.dir/src.cxx.o
+/opt/rh/devtoolset-8/root/usr/bin/c++   -DHAS_WNO_gnu-anonymous-struct -Wno-gnu-anonymous-struct -std=gnu++17 -o CMakeFiles/cmTC_e01f8.dir/src.cxx.o -c /home/phy/phyLS/build/CMakeFiles/CMakeTmp/src.cxx
+<command-line>: warning: ISO C++11 requires whitespace after the macro name
+cc1plus: warning: unrecognized command line option '-Wno-gnu-anonymous-struct'
+Linking CXX executable cmTC_e01f8
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e01f8.dir/link.txt --verbose=1
+/opt/rh/devtoolset-8/root/usr/bin/c++ CMakeFiles/cmTC_e01f8.dir/src.cxx.o -o cmTC_e01f8 
+gmake[1]: Leaving directory `/home/phy/phyLS/build/CMakeFiles/CMakeTmp'
+
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test HAS_WNO_nested-anon-types failed with the following output:
+Change Dir: /home/phy/phyLS/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_15bff/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_15bff.dir/build.make CMakeFiles/cmTC_15bff.dir/build
+gmake[1]: Entering directory `/home/phy/phyLS/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_15bff.dir/src.cxx.o
+/opt/rh/devtoolset-8/root/usr/bin/c++   -DHAS_WNO_nested-anon-types -Wno-nested-anon-types -std=gnu++17 -o CMakeFiles/cmTC_15bff.dir/src.cxx.o -c /home/phy/phyLS/build/CMakeFiles/CMakeTmp/src.cxx
+<command-line>: warning: ISO C++11 requires whitespace after the macro name
+cc1plus: warning: unrecognized command line option '-Wno-nested-anon-types'
+Linking CXX executable cmTC_15bff
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_15bff.dir/link.txt --verbose=1
+/opt/rh/devtoolset-8/root/usr/bin/c++ CMakeFiles/cmTC_15bff.dir/src.cxx.o -o cmTC_15bff 
+gmake[1]: Leaving directory `/home/phy/phyLS/build/CMakeFiles/CMakeTmp'
+
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test HAS_WNO_unused-lambda-capture failed with the following output:
+Change Dir: /home/phy/phyLS/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_67150/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_67150.dir/build.make CMakeFiles/cmTC_67150.dir/build
+gmake[1]: Entering directory `/home/phy/phyLS/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_67150.dir/src.cxx.o
+/opt/rh/devtoolset-8/root/usr/bin/c++   -DHAS_WNO_unused-lambda-capture -Wno-unused-lambda-capture -std=gnu++17 -o CMakeFiles/cmTC_67150.dir/src.cxx.o -c /home/phy/phyLS/build/CMakeFiles/CMakeTmp/src.cxx
+<command-line>: warning: ISO C++11 requires whitespace after the macro name
+cc1plus: warning: unrecognized command line option '-Wno-unused-lambda-capture'
+Linking CXX executable cmTC_67150
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_67150.dir/link.txt --verbose=1
+/opt/rh/devtoolset-8/root/usr/bin/c++ CMakeFiles/cmTC_67150.dir/src.cxx.o -o cmTC_67150 
+gmake[1]: Leaving directory `/home/phy/phyLS/build/CMakeFiles/CMakeTmp'
+
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test HAS_WNO_unused-private-field failed with the following output:
+Change Dir: /home/phy/phyLS/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_7537d/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_7537d.dir/build.make CMakeFiles/cmTC_7537d.dir/build
+gmake[1]: Entering directory `/home/phy/phyLS/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_7537d.dir/src.cxx.o
+/opt/rh/devtoolset-8/root/usr/bin/c++   -DHAS_WNO_unused-private-field -Wno-unused-private-field -std=gnu++17 -o CMakeFiles/cmTC_7537d.dir/src.cxx.o -c /home/phy/phyLS/build/CMakeFiles/CMakeTmp/src.cxx
+<command-line>: warning: ISO C++11 requires whitespace after the macro name
+cc1plus: warning: unrecognized command line option '-Wno-unused-private-field'
+Linking CXX executable cmTC_7537d
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7537d.dir/link.txt --verbose=1
+/opt/rh/devtoolset-8/root/usr/bin/c++ CMakeFiles/cmTC_7537d.dir/src.cxx.o -o cmTC_7537d 
+gmake[1]: Leaving directory `/home/phy/phyLS/build/CMakeFiles/CMakeTmp'
+
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test HAS_WNO_inconsistent-missing-override failed with the following output:
+Change Dir: /home/phy/phyLS/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_f5234/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_f5234.dir/build.make CMakeFiles/cmTC_f5234.dir/build
+gmake[1]: Entering directory `/home/phy/phyLS/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_f5234.dir/src.cxx.o
+/opt/rh/devtoolset-8/root/usr/bin/c++   -DHAS_WNO_inconsistent-missing-override -Wno-inconsistent-missing-override -std=gnu++17 -o CMakeFiles/cmTC_f5234.dir/src.cxx.o -c /home/phy/phyLS/build/CMakeFiles/CMakeTmp/src.cxx
+<command-line>: warning: ISO C++11 requires whitespace after the macro name
+cc1plus: warning: unrecognized command line option '-Wno-inconsistent-missing-override'
+Linking CXX executable cmTC_f5234
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f5234.dir/link.txt --verbose=1
+/opt/rh/devtoolset-8/root/usr/bin/c++ CMakeFiles/cmTC_f5234.dir/src.cxx.o -o cmTC_f5234 
+gmake[1]: Leaving directory `/home/phy/phyLS/build/CMakeFiles/CMakeTmp'
+
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test HAS_WNO_range-loop-analysis failed with the following output:
+Change Dir: /home/phy/phyLS/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_616c4/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_616c4.dir/build.make CMakeFiles/cmTC_616c4.dir/build
+gmake[1]: Entering directory `/home/phy/phyLS/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_616c4.dir/src.cxx.o
+/opt/rh/devtoolset-8/root/usr/bin/c++   -DHAS_WNO_range-loop-analysis -Wno-range-loop-analysis -std=gnu++17 -o CMakeFiles/cmTC_616c4.dir/src.cxx.o -c /home/phy/phyLS/build/CMakeFiles/CMakeTmp/src.cxx
+<command-line>: warning: ISO C++11 requires whitespace after the macro name
+cc1plus: warning: unrecognized command line option '-Wno-range-loop-analysis'
+Linking CXX executable cmTC_616c4
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_616c4.dir/link.txt --verbose=1
+/opt/rh/devtoolset-8/root/usr/bin/c++ CMakeFiles/cmTC_616c4.dir/src.cxx.o -o cmTC_616c4 
+gmake[1]: Leaving directory `/home/phy/phyLS/build/CMakeFiles/CMakeTmp'
+
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test HAS_WNO_tautological-overlap-compare failed with the following output:
+Change Dir: /home/phy/phyLS/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_2d456/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_2d456.dir/build.make CMakeFiles/cmTC_2d456.dir/build
+gmake[1]: Entering directory `/home/phy/phyLS/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_2d456.dir/src.cxx.o
+/opt/rh/devtoolset-8/root/usr/bin/c++   -DHAS_WNO_tautological-overlap-compare -Wno-tautological-overlap-compare -std=gnu++17 -o CMakeFiles/cmTC_2d456.dir/src.cxx.o -c /home/phy/phyLS/build/CMakeFiles/CMakeTmp/src.cxx
+<command-line>: warning: ISO C++11 requires whitespace after the macro name
+cc1plus: warning: unrecognized command line option '-Wno-tautological-overlap-compare'
+Linking CXX executable cmTC_2d456
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2d456.dir/link.txt --verbose=1
+/opt/rh/devtoolset-8/root/usr/bin/c++ CMakeFiles/cmTC_2d456.dir/src.cxx.o -o cmTC_2d456 
+gmake[1]: Leaving directory `/home/phy/phyLS/build/CMakeFiles/CMakeTmp'
+
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test HAS_WNO_macro-redefined failed with the following output:
+Change Dir: /home/phy/phyLS/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_f8ffb/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_f8ffb.dir/build.make CMakeFiles/cmTC_f8ffb.dir/build
+gmake[1]: Entering directory `/home/phy/phyLS/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_f8ffb.dir/src.cxx.o
+/opt/rh/devtoolset-8/root/usr/bin/c++   -DHAS_WNO_macro-redefined -Wno-macro-redefined -std=gnu++17 -o CMakeFiles/cmTC_f8ffb.dir/src.cxx.o -c /home/phy/phyLS/build/CMakeFiles/CMakeTmp/src.cxx
+<command-line>: warning: ISO C++11 requires whitespace after the macro name
+cc1plus: warning: unrecognized command line option '-Wno-macro-redefined'
+Linking CXX executable cmTC_f8ffb
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f8ffb.dir/link.txt --verbose=1
+/opt/rh/devtoolset-8/root/usr/bin/c++ CMakeFiles/cmTC_f8ffb.dir/src.cxx.o -o cmTC_f8ffb 
+gmake[1]: Leaving directory `/home/phy/phyLS/build/CMakeFiles/CMakeTmp'
+
+
+Source file was:
+int main() { return 0; }
+Performing C++ SOURCE FILE Test CMAKE_HAVE_LIBC_PTHREAD failed with the following output:
+Change Dir: /home/phy/phyLS/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_d593d/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_d593d.dir/build.make CMakeFiles/cmTC_d593d.dir/build
+gmake[1]: Entering directory `/home/phy/phyLS/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_d593d.dir/src.cxx.o
+/opt/rh/devtoolset-8/root/usr/bin/c++ -DCMAKE_HAVE_LIBC_PTHREAD  -std=gnu++17 -o CMakeFiles/cmTC_d593d.dir/src.cxx.o -c /home/phy/phyLS/build/CMakeFiles/CMakeTmp/src.cxx
+Linking CXX executable cmTC_d593d
+/usr/local/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d593d.dir/link.txt --verbose=1
+/opt/rh/devtoolset-8/root/usr/bin/c++ CMakeFiles/cmTC_d593d.dir/src.cxx.o -o cmTC_d593d 
+CMakeFiles/cmTC_d593d.dir/src.cxx.o: In function `main':
+src.cxx:(.text+0x2d): undefined reference to `pthread_create'
+src.cxx:(.text+0x39): undefined reference to `pthread_detach'
+src.cxx:(.text+0x45): undefined reference to `pthread_cancel'
+src.cxx:(.text+0x56): undefined reference to `pthread_join'
+src.cxx:(.text+0x6a): undefined reference to `pthread_atfork'
+collect2: error: ld returned 1 exit status
+gmake[1]: *** [cmTC_d593d] Error 1
+gmake[1]: Leaving directory `/home/phy/phyLS/build/CMakeFiles/CMakeTmp'
+gmake: *** [cmTC_d593d/fast] Error 2
+
+
+Source file was:
+#include <pthread.h>
+
+static void* test_func(void* data)
+{
+  return data;
+}
+
+int main(void)
+{
+  pthread_t thread;
+  pthread_create(&thread, NULL, test_func, NULL);
+  pthread_detach(thread);
+  pthread_cancel(thread);
+  pthread_join(thread, NULL);
+  pthread_atfork(NULL, NULL, NULL);
+  pthread_exit(NULL);
+
+  return 0;
+}
+

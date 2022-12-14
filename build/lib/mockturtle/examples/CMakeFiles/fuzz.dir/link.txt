@@ -1,0 +1,1 @@
+/opt/rh/devtoolset-8/root/usr/bin/c++ CMakeFiles/fuzz.dir/fuzz.cpp.o -o fuzz  -pthread ../lib/abcsat/liblibabcsat.a ../lib/abcesop/liblibabcesop.a -lstdc++fs 
