@@ -1,4 +1,4 @@
-#powerful heightened yielded Logic Synthesis (phyLS)
+# powerful heightened yielded Logic Synthesis (phyLS)
 
 phyLS is based on the [EPFL Logic Synthesis Libraries](https://github.com/lsils/lstools-showcase).
 
