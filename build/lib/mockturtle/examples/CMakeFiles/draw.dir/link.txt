@@ -1,1 +1,0 @@
-/opt/rh/devtoolset-8/root/usr/bin/c++ CMakeFiles/draw.dir/draw.cpp.o -o draw  -pthread ../lib/abcsat/liblibabcsat.a ../lib/abcesop/liblibabcesop.a -lstdc++fs 

@@ -1,1 +1,0 @@
-/opt/rh/devtoolset-8/root/usr/bin/c++ CMakeFiles/cut_enumeration.dir/cut_enumeration.cpp.o -o cut_enumeration  -pthread ../lib/abcsat/liblibabcsat.a ../lib/abcesop/liblibabcesop.a -lstdc++fs 

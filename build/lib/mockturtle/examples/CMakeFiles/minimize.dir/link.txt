@@ -1,1 +1,0 @@
-/opt/rh/devtoolset-8/root/usr/bin/c++ CMakeFiles/minimize.dir/minimize.cpp.o -o minimize  -pthread ../lib/abcsat/liblibabcsat.a ../lib/abcesop/liblibabcesop.a -lstdc++fs 

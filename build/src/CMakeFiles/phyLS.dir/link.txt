@@ -1,1 +1,0 @@
-/opt/rh/devtoolset-8/root/usr/bin/c++ CMakeFiles/phyLS.dir/phyLS.cpp.o CMakeFiles/phyLS.dir/core/properties.cpp.o -o ../bin/phyLS  -lreadline -pthread ../lib/mockturtle/lib/abcsat/liblibabcsat.a ../lib/mockturtle/lib/abcesop/liblibabcesop.a -lstdc++fs 
