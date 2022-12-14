@@ -37,79 +37,67 @@
 
 #include "../store.hpp"
 
-namespace alice
-{
+namespace alice {
 
-  void add_optimum_network_entry(command &cmd, kitty::dynamic_truth_table &function)
-  {
-    if (cmd.env->variable("npn") != "")
-    {
-      function = std::get<0>(kitty::exact_npn_canonization(function));
-    }
-
-    optimum_network entry(function);
-
-    if (!entry.exists())
-    {
-      cmd.store<optimum_network>().extend();
-      cmd.store<optimum_network>().current() = entry;
-    }
+void add_optimum_network_entry(command &cmd,
+                               kitty::dynamic_truth_table &function) {
+  if (cmd.env->variable("npn") != "") {
+    function = std::get<0>(kitty::exact_npn_canonization(function));
   }
 
-  class load_command : public command
-  {
-  public:
-    load_command(const environment::ptr &env) : command(env, "Load new entry")
-    {
-      add_option("truth_table,--tt", truth_table, "truth table in hex format");
-      add_flag("--binary,-b", "read truth table as binary string");
-      add_option("--majn,-m", odd_inputs, "generate majority-of-n truth table ");
-    }
+  optimum_network entry(function);
 
-  protected:
-    void execute() override
-    {
-      auto function = [this]()
-      {
-        if (is_set("binary"))
-        {
-          const unsigned num_vars = ::log(truth_table.size()) / ::log(2.0);
-          kitty::dynamic_truth_table function(num_vars);
-          kitty::create_from_binary_string(function, truth_table);
-          return function;
-        }
-        else if (is_set("majn"))
-        {
-          if (!(odd_inputs & 1))
-          {
-            std::cout << " majority-of-n, n must be an odd number\n ";
-            assert(false);
-          }
-
-          kitty::dynamic_truth_table maj(odd_inputs);
-          kitty::create_majority(maj);
-          std::cout << " MAJ" << odd_inputs << " : " << kitty::to_hex(maj) << std::endl;
-          return maj;
-        }
-        else
-        {
-          const unsigned num_vars = ::log(truth_table.size() * 4) / ::log(2.0);
-          kitty::dynamic_truth_table function(num_vars);
-          kitty::create_from_hex_string(function, truth_table);
-          return function;
-        }
-      }();
-
-      add_optimum_network_entry(*this, function);
-    }
-
-  private:
-    std::string truth_table;
-    unsigned odd_inputs;
-  };
-
-  ALICE_ADD_COMMAND(load, "I/O");
-
+  if (!entry.exists()) {
+    cmd.store<optimum_network>().extend();
+    cmd.store<optimum_network>().current() = entry;
+  }
 }
+
+class load_command : public command {
+ public:
+  load_command(const environment::ptr &env) : command(env, "Load new entry") {
+    add_option("truth_table,--tt", truth_table, "truth table in hex format");
+    add_flag("--binary,-b", "read truth table as binary string");
+    add_option("--majn,-m", odd_inputs, "generate majority-of-n truth table ");
+  }
+
+ protected:
+  void execute() override {
+    auto function = [this]() {
+      if (is_set("binary")) {
+        const unsigned num_vars = ::log(truth_table.size()) / ::log(2.0);
+        kitty::dynamic_truth_table function(num_vars);
+        kitty::create_from_binary_string(function, truth_table);
+        return function;
+      } else if (is_set("majn")) {
+        if (!(odd_inputs & 1)) {
+          std::cout << " majority-of-n, n must be an odd number\n ";
+          assert(false);
+        }
+
+        kitty::dynamic_truth_table maj(odd_inputs);
+        kitty::create_majority(maj);
+        std::cout << " MAJ" << odd_inputs << " : " << kitty::to_hex(maj)
+                  << std::endl;
+        return maj;
+      } else {
+        const unsigned num_vars = ::log(truth_table.size() * 4) / ::log(2.0);
+        kitty::dynamic_truth_table function(num_vars);
+        kitty::create_from_hex_string(function, truth_table);
+        return function;
+      }
+    }();
+
+    add_optimum_network_entry(*this, function);
+  }
+
+ private:
+  std::string truth_table;
+  unsigned odd_inputs;
+};
+
+ALICE_ADD_COMMAND(load, "I/O");
+
+}  // namespace alice
 
 #endif

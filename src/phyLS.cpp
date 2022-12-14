@@ -1,5 +1,5 @@
 /* phyLS: powerful heightened yielded Logic Synthesis
- * Copyright (C) 2022 
+ * Copyright (C) 2022
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -24,13 +24,16 @@
  */
 
 #include "store.hpp"
-#include "commands/load.hpp"
+#include "commands/balance.hpp"
 #include "commands/exprsim.hpp"
-#include "commands/write_dot.hpp"
-#include "commands/techmap.hpp"
+#include "commands/load.hpp"
 #include "commands/lut_mapping.hpp"
+#include "commands/node_resynthesis.hpp"
+#include "commands/resub.hpp"
 #include "commands/sim.hpp"
 #include "commands/stpsat.hpp"
+#include "commands/techmap.hpp"
+#include "commands/write_dot.hpp"
+#include "commands/refactor.hpp"
 
-
-ALICE_MAIN( phyLS )
+ALICE_MAIN(phyLS)
