@@ -35,5 +35,6 @@
 #include "commands/techmap.hpp"
 #include "commands/write_dot.hpp"
 #include "commands/refactor.hpp"
+#include "commands/cut_rewriting.hpp"
 
 ALICE_MAIN(phyLS)

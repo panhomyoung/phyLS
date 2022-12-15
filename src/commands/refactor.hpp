@@ -49,14 +49,21 @@ class refactor_command : public command {
         std::cerr << "Error: Empty MIG network\n";
       else {
         auto mig = store<mig_network>().current();
+        begin = clock();
         if (is_set("akers")) {
           akers_resynthesis<mig_network> resyn;
-          refactoring(mig, resyn);
+          refactoring_params ps;
+          ps.max_pis = 4u;
+          refactoring(mig, resyn, ps);
         } else {
           mig_npn_resynthesis resyn;
-          refactoring(mig, resyn);
+          refactoring_params ps;
+          ps.max_pis = 4u;
+          refactoring(mig, resyn, ps);
         }
         mig = cleanup_dangling(mig);
+        end = clock();
+        totalTime = (double)(end - begin) / CLOCKS_PER_SEC;
         phyLS::print_stats(mig);
         store<mig_network>().extend();
         store<mig_network>().current() = mig;
@@ -66,9 +73,14 @@ class refactor_command : public command {
         std::cerr << "Error: Empty XAG network\n";
       else {
         auto xag = store<xag_network>().current();
+        begin = clock();
         bidecomposition_resynthesis<xag_network> resyn;
-        refactoring(xag, resyn);
+        refactoring_params ps;
+        ps.max_pis = 4u;
+        refactoring(xag, resyn, ps);
         xag = cleanup_dangling(xag);
+        end = clock();
+        totalTime = (double)(end - begin) / CLOCKS_PER_SEC;
         phyLS::print_stats(xag);
         store<xag_network>().extend();
         store<xag_network>().current() = xag;
@@ -78,9 +90,14 @@ class refactor_command : public command {
         std::cerr << "Error: Empty XMG network\n";
       else {
         auto xmg = store<xmg_network>().current();
+        begin = clock();
         xmg_npn_resynthesis resyn;
-        refactoring(xmg, resyn);
+        refactoring_params ps;
+        ps.max_pis = 4u;
+        refactoring(xmg, resyn, ps);
         xmg = cleanup_dangling(xmg);
+        end = clock();
+        totalTime = (double)(end - begin) / CLOCKS_PER_SEC;
         phyLS::print_stats(xmg);
         store<xmg_network>().extend();
         store<xmg_network>().current() = xmg;
@@ -90,9 +107,14 @@ class refactor_command : public command {
         std::cerr << "Error: Empty AIG network\n";
       else {
         auto aig = store<aig_network>().current();
+        begin = clock();
         direct_resynthesis<aig_network> aig_resyn;
-        refactoring(aig, aig_resyn);
+        refactoring_params ps;
+        ps.max_pis = 4u;
+        refactoring(aig, aig_resyn, ps);
         aig = cleanup_dangling(aig);
+        end = clock();
+        totalTime = (double)(end - begin) / CLOCKS_PER_SEC;
         phyLS::print_stats(aig);
         store<aig_network>().extend();
         store<aig_network>().current() = aig;

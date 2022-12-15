@@ -40,7 +40,8 @@ class resyn_command : public command {
  public:
   explicit resyn_command(const environment::ptr& env)
       : command(env,
-                "performs technology-independent restructuring : using MIG as default") {
+                "performs technology-independent restructuring : using MIG as "
+                "default") {
     add_flag("--xmg, -x", "Resubstitution for XMG");
     add_flag("--xag, -g", "Resubstitution for XAG");
     add_flag("--direct, -d", "Node resynthesis with direct synthesis");
@@ -74,8 +75,8 @@ class resyn_command : public command {
         totalTime = (double)(end - begin) / CLOCKS_PER_SEC;
       } else if (is_set("xag")) {
         begin = clock();
-        direct_resynthesis<xag_network> xag_resyn;
-        const auto xag = node_resynthesis<xag_network>(klut, xag_resyn);
+        xag_npn_resynthesis<xag_network> resyn;
+        const auto xag = node_resynthesis<xag_network>(klut, resyn);
         store<xag_network>().extend();
         store<xag_network>().current() = cleanup_dangling(xag);
         phyLS::print_stats(xag);
