@@ -36,5 +36,8 @@
 #include "commands/write_dot.hpp"
 #include "commands/refactor.hpp"
 #include "commands/cut_rewriting.hpp"
+#include "commands/cec.hpp"
+#include "commands/functional_reduction.hpp"
+#include "commands/convert_graph.hpp"
 
 ALICE_MAIN(phyLS)
