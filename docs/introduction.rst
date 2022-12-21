@@ -1,53 +1,21 @@
 Introduction
 ============
 
-The `percy` library provides a collection of SAT based exact synthesis engines.
-That includes engines based on conventional methods, as well as
-state-of-the-art engines which can take advantage of DAG topology information
-The aim of `percy` is to provide a flexible common interface that makes it easy
-to construct a parameterizable synthesis engine suitable for different domains.
-It is a header-only library, meaning that it can be used simply by including
-the percy/include folder in your project.  Internally, `percy` uses the `kitty`
-library [#]_ to represent the truth tables of the functions to be synthesized.
+The powerful heightened yielded Logic Synthesis (`phyLS`) is a growing logic synthesis tool based on EPFL Logic Synthesis Library `mockturtle` [#]_ .
+It can optimize different logic attributes, such as `AIG`, `MIG`, `XAG`, and `XMG`.
+`phyLS` combines logic optimization, technology mapping for look-up tables and standard cells, and verification.
 
-Synthesis using `percy` concerns five main components:
+`phyLS` provides an experimental implementation of these algorithms and a programming environment for building similar applications. 
+It also allows users to customize `phyLS` for their needs as the `ABC` [#]_ .
 
-1. *Specifications* -- Specification objects contain the information essential
-   to the synthesis process such as which functions to synthesize, I/O
-   information, and possibly optional parameters such as conflict limits for
-   time-bound synthesis, or topology information.  
-2. *Encoders* -- Encoders are objects which convert specifications to CNF
-   formulae. There are various ways to create such encodings, and by
-   separating their implementations it becomes simple to experiment with
-   different encodings in various settings.
-3. *Solvers* -- Once an encoding has been created, we use a SAT solver to find
-   a solution. Currently supported are ABC's `bsat` solver [#]_, the
-   Glucose and Glucose-Syrup solvers, [#]_ and the CryptoMinisat solver. [#]_
-   Adding a new solver to `percy` is as simple as declaring a handful of
-   interface functions. [#]_
-4. *Synthesizers* -- Synthesizers perform the task of composing encoders and
-   solvers. Different synthesizers correspond to different synthesis flows. For
-   example, some synthesizers may support synthesis flows that use topological
-   constraints, or allow for parallel synthesis flows. To perform synthesis
-   using `percy`, one creates a synthesizer object. Synthesizers are
-   parameterizable: we can change their encoder and solver backends. This
-   happens at compile time, so there is no runtime overhead.
-5. *Chains* -- Boolean chains are the result of exact synthesis.  A Boolean
-   chain is a compact multi-level logic representation that can be used to
-   represent multi-output Boolean functions. 
+`phyLS` concerns five main components of commands:
 
-A typical workflow will have some source for generating specifications, which
-are then given to a synthesizer that converts the specifications into optimum
-Boolean chains. Internally, the synthesizer will compose its underlying encoder
-and SAT solver in its specific synthesis flow. For example, a resynthesis
-algorithm might generate cuts in a logic network which serve as specifications.
-They are then fed to a synthesizer, and if the resulting optimum Boolean chains
-leads to an improvement, are replaced in the logic network. In optimizing this
-workflow, `percy` makes it easy to swap out one synthesis flow for another, to
-change CNF encodings, or to switch to a different SAT solver.
+1. *General* -- This component contains some general commands based on `alice` [#]_ , such as `ps` (Print statistics), `store` (Store management), and `show` (Show store entry).
+2. *I/O* -- A specialized format BAF (Binary Aig Format `.aig`) for reading/writing large AIGs into binary files. Input file also parsers for binary BLIF, BENCH format, and Verilog. Output file writers for binary BLIF, BENCH format, Verilog, and circuit graph representation DOT format. It also support truth-table as input.
+3. *Synthesis* -- We lists combinational synthesis commands implemented. Fast and efficient synthesis is achieved by DAG-aware rewriting of the AIG(command `rewrite`), or collapsing and refactoring of logic cones (command `refactor`), or AIG balancing (command `balance`) to reduce the AIG size and tends to reduce the number of AIG levels, or the technology-independent restructuring of the AIG (command `resub`).
+4. *Mapping* -- `phyLS` can realise both LUT-mapping (command `lutmap`) and Standard cell mapping (command `techmap`) of technology mapping.
+5. *verification* -- Several equivalence checking options are currently implemented, such as combinational equivalence checking (command `cec`) and random simulation of the netowrk (command `sim`).
 
-.. [#] https://github.com/msoeken/kitty 
+.. [#] https://github.com/lsils/mockturtle
 .. [#] https://github.com/berkeley-abc/abc 
-.. [#] http://www.labri.fr/perso/lsimon/glucose/ 
-.. [#] https://github.com/msoos/cryptominisat 
-.. [#] Unfortunately some solvers may not compile on your favorite OS...
+.. [#] https://github.com/msoeken/alice
