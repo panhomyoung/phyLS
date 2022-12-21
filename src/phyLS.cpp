@@ -39,5 +39,6 @@
 #include "commands/cec.hpp"
 #include "commands/functional_reduction.hpp"
 #include "commands/convert_graph.hpp"
+#include "commands/lutmap.hpp"
 
 ALICE_MAIN(phyLS)

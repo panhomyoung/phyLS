@@ -26,9 +26,9 @@
 
 namespace alice {
 
-  class tech_mapping_command: public command {
+  class techmap_command: public command {
   public:
-    explicit tech_mapping_command(const environment::ptr& env)
+    explicit techmap_command(const environment::ptr& env)
       : command(env, "Standard cell mapping : using AIG as default") {
       add_flag("--xmg, -x", "Standard cell mapping for XMG");
       add_flag("--mig, -m", "Standard cell mapping for MIG");
@@ -137,7 +137,7 @@ namespace alice {
     }
   };
 
-  ALICE_ADD_COMMAND(tech_mapping, "Mapping")
+  ALICE_ADD_COMMAND(techmap, "Mapping")
 
 }  // namespace alice
 

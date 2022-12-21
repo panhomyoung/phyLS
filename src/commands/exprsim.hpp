@@ -69,7 +69,7 @@ class exprsim_command : public command {
   uint32_t max_num_vars = 0u;
 };
 
-ALICE_ADD_COMMAND(exprsim, "I/O")
+ALICE_ADD_COMMAND(exprsim, "Verification")
 
 }  // namespace alice
 
