@@ -1,8 +1,6 @@
 Acknowledgments
 ===============
 
-The implementation of `percy` was inspired by Mathias Soeken's exact synthesis
-implementation in ABC_. A special thanks also goes out to Alan Mishchenko for
-inspiring discussions and ideas.
+The implementation of `phyLS` was inspired by Chu Zhufei's logic synthesis tool ALSO_.
 
-.. _ABC: https://github.com/berkeley-abc/abc 
+.. _ALSO: https://github.com/nbulsi/also
