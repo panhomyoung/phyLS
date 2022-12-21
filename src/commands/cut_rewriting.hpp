@@ -41,7 +41,7 @@ namespace alice {
 class rewrite_command : public command {
  public:
   explicit rewrite_command(const environment::ptr& env)
-      : command(env, "on-the-fly DAG-aware logic rewriting") {
+      : command(env, "on-the-fly DAG-aware logic rewriting [default = AIG]") {
     add_flag("--xmg, -x", "rewriting for XMG");
     add_flag("--mig, -m", "rewriting for MIG");
     add_flag("--xag, -g", "rewriting for XAG");
@@ -171,7 +171,7 @@ class rewrite_command : public command {
   }
 };
 
-ALICE_ADD_COMMAND(rewrite, "Logic synthesis")
+ALICE_ADD_COMMAND(rewrite, "Synthesis")
 
 }  // namespace alice
 

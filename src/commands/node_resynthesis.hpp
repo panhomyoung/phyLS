@@ -40,8 +40,7 @@ class resyn_command : public command {
  public:
   explicit resyn_command(const environment::ptr& env)
       : command(env,
-                "performs technology-independent restructuring : using MIG as "
-                "default") {
+                "performs technology-independent restructuring [default = MIG]") {
     add_flag("--xmg, -x", "Resubstitution for XMG");
     add_flag("--xag, -g", "Resubstitution for XAG");
     add_flag("--direct, -d", "Node resynthesis with direct synthesis");
@@ -107,7 +106,7 @@ class resyn_command : public command {
   }
 };
 
-ALICE_ADD_COMMAND(resyn, "Logic synthesis")
+ALICE_ADD_COMMAND(resyn, "Synthesis")
 
 }  // namespace alice
 

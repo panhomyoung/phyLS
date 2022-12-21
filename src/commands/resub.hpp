@@ -40,7 +40,7 @@ namespace alice {
 class resub_command : public command {
  public:
   explicit resub_command(const environment::ptr& env)
-      : command(env, "performs technology-independent restructuring : using AIG as default") {
+      : command(env, "performs technology-independent restructuring [default = AIG]") {
     add_flag("--xmg, -x", "Resubstitution for XMG");
     add_flag("--mig, -m", "Resubstitution for MIG");
     add_flag("--xag, -g", "Resubstitution for XAG");
@@ -137,7 +137,7 @@ class resub_command : public command {
   }
 };
 
-ALICE_ADD_COMMAND(resub, "Logic synthesis")
+ALICE_ADD_COMMAND(resub, "Synthesis")
 
 }  // namespace alice
 

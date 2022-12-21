@@ -24,7 +24,7 @@ namespace alice {
 class create_graph_command : public command {
  public:
   explicit create_graph_command(const environment::ptr& env)
-      : command(env, "functional reduction : using AIG as default") {
+      : command(env, "functional reduction [default = AIG]") {
     add_option("-e,--expression", expression,
                "creates new graph from expression");
     add_flag("--mig, -m", "functional reduction for MIG");
@@ -97,7 +97,7 @@ class create_graph_command : public command {
   string expression = "";
 };
 
-ALICE_ADD_COMMAND(create_graph, "Logic synthesis")
+ALICE_ADD_COMMAND(create_graph, "Synthesis")
 
 }  // namespace alice
 

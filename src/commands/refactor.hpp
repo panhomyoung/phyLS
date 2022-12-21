@@ -31,7 +31,7 @@ namespace alice {
 class refactor_command : public command {
  public:
   explicit refactor_command(const environment::ptr& env)
-      : command(env, "performs technology-independent refactoring") {
+      : command(env, "performs technology-independent refactoring [default = AIG]") {
     add_flag("--mig, -m", "refactoring for MIG");
     add_flag("--xag, -g", "refactoring for XAG");
     add_flag("--xmg, -x", "refactoring for XMG");
@@ -128,7 +128,7 @@ class refactor_command : public command {
  private:
 };
 
-ALICE_ADD_COMMAND(refactor, "Logic synthesis")
+ALICE_ADD_COMMAND(refactor, "Synthesis")
 
 }  // namespace alice
 

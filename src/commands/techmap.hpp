@@ -29,7 +29,7 @@ namespace alice {
   class techmap_command: public command {
   public:
     explicit techmap_command(const environment::ptr& env)
-      : command(env, "Standard cell mapping : using AIG as default") {
+      : command(env, "Standard cell mapping [default = AIG]") {
       add_flag("--xmg, -x", "Standard cell mapping for XMG");
       add_flag("--mig, -m", "Standard cell mapping for MIG");
       add_flag("--lut, -l", "Standard cell mapping for k-LUT");

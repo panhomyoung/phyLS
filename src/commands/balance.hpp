@@ -69,7 +69,7 @@ class balance_command : public command {
  private:
 };
 
-ALICE_ADD_COMMAND(balance, "Logic synthesis")
+ALICE_ADD_COMMAND(balance, "Synthesis")
 
 }  // namespace alice
 

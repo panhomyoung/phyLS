@@ -30,7 +30,7 @@ namespace alice {
 class reduction_command : public command {
  public:
   explicit reduction_command(const environment::ptr& env)
-      : command(env, "functional reduction : using AIG as default") {
+      : command(env, "functional reduction [default = AIG]") {
     add_flag("--mig, -m", "functional reduction for MIG");
     add_flag("--xag, -g", "functional reduction for XAG");
     add_flag("--xmg, -x", "functional reduction for XMG");
@@ -82,7 +82,7 @@ class reduction_command : public command {
  private:
 };
 
-ALICE_ADD_COMMAND(reduction, "Logic synthesis")
+ALICE_ADD_COMMAND(reduction, "Synthesis")
 
 }  // namespace alice
 
