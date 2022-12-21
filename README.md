@@ -1,6 +1,7 @@
 # powerful heightened yielded Logic Synthesis (phyLS)
 
-phyLS is based on the [EPFL Logic Synthesis Libraries](https://github.com/lsils/lstools-showcase).
+phyLS is based on the [mockturtle](https://github.com/lsils/mockturtle), it can optimize different logics attributes. 
+Currently, it supports AIG, MIG, XAG, and XMG based optimization.
 
 ## Requirements
 A modern compiler is required to build the libraries. 
