@@ -5,10 +5,9 @@ All commands
 ----------------------------------
 
 Input:
-
-.. code-block:: bash
-
+::
     help
+
 
 Output:
 ::
@@ -40,9 +39,7 @@ Synthesis of EPFL benchmarks
 In the following example, we show how `phyLS` can be used to synthesize a EPFL benchamrk. 
 
 Input:
-
-.. code-block:: bash
-
+::
     read_aiger ~/phyLS/benchmarks/adder.aig
     ps -a
     resub // any synthesis commands
