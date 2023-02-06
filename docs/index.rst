@@ -32,10 +32,3 @@ Welcome to phyLS's documentation!
    exprsim
    sat
    sim
-
-Indices and tables
-==================
-
-.. * :ref:`genindex`
-.. * :ref:`modindex`
-.. * :ref:`search`
