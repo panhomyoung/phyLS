@@ -2,7 +2,7 @@ Examples
 ============
 
 All commands
-----------------------------------
+----------------
 
 Input:
 ::
@@ -34,7 +34,7 @@ Output:
 For more details, simply add '-h' after command to see all options of this command.
 
 Synthesis of EPFL benchmarks
-----------------------------------
+----------------
 
 In the following example, we show how `phyLS` can be used to synthesize a EPFL benchamrk. 
 
