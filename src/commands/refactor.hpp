@@ -31,7 +31,8 @@ namespace alice {
 class refactor_command : public command {
  public:
   explicit refactor_command(const environment::ptr& env)
-      : command(env, "performs technology-independent refactoring [default = AIG]") {
+      : command(env,
+                "performs technology-independent refactoring [default = AIG]") {
     add_flag("--mig, -m", "refactoring for MIG");
     add_flag("--xag, -g", "refactoring for XAG");
     add_flag("--xmg, -x", "refactoring for XMG");
@@ -42,7 +43,7 @@ class refactor_command : public command {
  protected:
   void execute() {
     clock_t begin, end;
-    double totalTime;
+    double totalTime = 0.0;
 
     if (is_set("mig")) {
       if (store<mig_network>().size() == 0u)

@@ -40,7 +40,9 @@ namespace alice {
 class resub_command : public command {
  public:
   explicit resub_command(const environment::ptr& env)
-      : command(env, "performs technology-independent restructuring [default = AIG]") {
+      : command(
+            env,
+            "performs technology-independent restructuring [default = AIG]") {
     add_flag("--xmg, -x", "Resubstitution for XMG");
     add_flag("--mig, -m", "Resubstitution for MIG");
     add_flag("--xag, -g", "Resubstitution for XAG");
@@ -51,7 +53,7 @@ class resub_command : public command {
  protected:
   void execute() {
     clock_t begin, end;
-    double totalTime;
+    double totalTime = 0.0;
 
     if (is_set("xmg")) {
       if (store<xmg_network>().size() == 0u)

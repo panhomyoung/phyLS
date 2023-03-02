@@ -32,7 +32,7 @@ class sim_command : public command {
  protected:
   void execute() {
     clock_t begin, end;
-    double totalTime;
+    double totalTime = 0.0;
     if (is_set("xmg_network")) {
       begin = clock();
       if (is_set("partial_simulate")) {

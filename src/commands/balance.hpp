@@ -37,7 +37,7 @@ class balance_command : public command {
  protected:
   void execute() {
     clock_t begin, end;
-    double totalTime;
+    double totalTime = 0.0;
 
     if (store<aig_network>().size() == 0u)
       std::cerr << "Error: Empty AIG network\n";
