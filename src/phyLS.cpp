@@ -40,5 +40,12 @@
 #include "commands/functional_reduction.hpp"
 #include "commands/convert_graph.hpp"
 #include "commands/lutmap.hpp"
+#include "commands/abc/read.hpp"
+#include "commands/abc/write.hpp"
+#include "commands/abc/strash.hpp"
+#include "commands/abc/resub.hpp"
+#include "commands/abc/fraig.hpp"
+#include "commands/abc/&get.hpp"
+#include "commands/abc/&fraig.hpp"
 
 ALICE_MAIN(phyLS)

@@ -26,6 +26,10 @@
 #ifndef STORE_HPP
 #define STORE_HPP
 
+#include <aig/gia/gia.h>
+#include <aig/gia/giaAig.h>
+#include <base/abc/abc.h>
+#include <base/io/ioAbc.h>
 #include <fmt/format.h>
 
 #include <alice/alice.hpp>
@@ -39,6 +43,8 @@
 #include <mockturtle/io/write_verilog.hpp>
 #include <mockturtle/mockturtle.hpp>
 #include <mockturtle/views/names_view.hpp>
+
+#include "./core/abc2mockturtle.hpp"
 
 using namespace mockturtle;
 
@@ -498,6 +504,107 @@ ALICE_CONVERT(xmg_network, element, mig_network) {
   mig_npn_resynthesis resyn;
   auto mig = node_resynthesis<mig_network>(klut, resyn);
   return mig;
+}
+
+/* ABC aiger */
+ALICE_ADD_STORE(pabc::Abc_Ntk_t *, "abc", "b", "ABC", "ABCs")
+
+ALICE_DESCRIBE_STORE(pabc::Abc_Ntk_t *, abc) {
+  const auto name = pabc::Abc_NtkName(abc);
+  const auto pi_num = pabc::Abc_NtkPiNum(abc);
+  const auto po_num = pabc::Abc_NtkPoNum(abc);
+  return fmt::format("{}   i/o = {}/{}", name, pi_num, po_num);
+}
+
+ALICE_PRINT_STORE(pabc::Abc_Ntk_t *, os, abc) {
+  os << "AIG PI/PO = " << pabc::Abc_NtkPiNum(abc) << "/"
+     << pabc::Abc_NtkPoNum(abc) << "\n";
+}
+
+ALICE_PRINT_STORE_STATISTICS(pabc::Abc_Ntk_t *, os, abc) {
+  Abc_NtkPrintStats(abc, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1);
+}
+
+ALICE_LOG_STORE_STATISTICS(pabc::Abc_Ntk_t *, abc) {
+  return {{"name", pabc::Abc_NtkName(abc)},
+          {"inputs", pabc::Abc_NtkPiNum(abc)},
+          {"outputs", pabc::Abc_NtkPoNum(abc)},
+          {"nodes", pabc::Abc_NtkNodeNum(abc)},
+          {"levels", pabc::Abc_NtkLevel(abc)}};
+}
+
+ALICE_CONVERT(pabc::Abc_Ntk_t *, element, aig_network) {
+  pabc::Abc_Ntk_t *pNtk = element;
+  aig_network aig = phyLS::abc2mockturtle_a(pNtk);
+  return aig;
+}
+
+ALICE_CONVERT(xmg_network, element, pabc::Abc_Ntk_t *) {
+  xmg_network xmg = element;
+  pabc::Abc_Ntk_t *pNtk = phyLS::mockturtle2abc_x(xmg);
+  return pNtk;
+}
+
+ALICE_CONVERT(aig_network, element, pabc::Abc_Ntk_t *) {
+  aig_network aig = element;
+  pabc::Abc_Ntk_t *pNtk = phyLS::mockturtle2abc_a(aig);
+  return pNtk;
+}
+
+ALICE_CONVERT(mig_network, element, pabc::Abc_Ntk_t *) {
+  mig_network mig = element;
+  pabc::Abc_Ntk_t *pNtk = phyLS::mockturtle2abc_m(mig);
+  return pNtk;
+}
+
+ALICE_CONVERT(xag_network, element, pabc::Abc_Ntk_t *) {
+  xag_network xag = element;
+  pabc::Abc_Ntk_t *pNtk = phyLS::mockturtle2abc_g(xag);
+  return pNtk;
+}
+
+ALICE_CONVERT(klut_network, element, pabc::Abc_Ntk_t *) {
+  klut_network klut = element;
+  pabc::Abc_Ntk_t *pNtk = phyLS::mockturtle2abc_l(klut);
+  return pNtk;
+}
+
+/* ABC Gia */
+ALICE_ADD_STORE(pabc::Gia_Man_t *, "gia", "i", "GIA", "GIAs")
+
+ALICE_DESCRIBE_STORE(pabc::Gia_Man_t *, gia) {
+  const auto name = pabc::Gia_ManName(gia);
+  const auto pi_num = pabc::Gia_ManPiNum(gia);
+  const auto po_num = pabc::Gia_ManPoNum(gia);
+  return fmt::format("{}   i/o = {}/{}", name, pi_num, po_num);
+}
+
+ALICE_PRINT_STORE(pabc::Gia_Man_t *, os, gia) {
+  os << "GIA PI/PO = " << pabc::Gia_ManPiNum(gia) << "/"
+     << pabc::Gia_ManPoNum(gia) << "\n";
+}
+
+ALICE_PRINT_STORE_STATISTICS(pabc::Gia_Man_t *, os, gia) {
+  pabc::Gps_Par_t Pars{};
+  pabc::Gia_ManPrintStats(gia, &Pars);
+}
+
+ALICE_LOG_STORE_STATISTICS(pabc::Gia_Man_t *, gia) {
+  return {{"name", pabc::Gia_ManName(gia)},
+          {"inputs", pabc::Gia_ManPiNum(gia)},
+          {"outputs", pabc::Gia_ManPoNum(gia)},
+          {"nodes", pabc::Gia_ManAndNum(gia)},
+          {"levels", pabc::Gia_ManLevelNum(gia)}};
+}
+
+ALICE_ADD_FILE_TYPE(gia, "Gia");
+
+ALICE_READ_FILE(pabc::Gia_Man_t *, gia, filename, cmd) {
+  return pabc::Gia_AigerRead((char *)filename.c_str(), 0, 0, 0);
+}
+
+ALICE_WRITE_FILE(pabc::Gia_Man_t *, gia, gia, filename, cmd) {
+  pabc::Gia_AigerWrite(gia, (char *)filename.c_str(), 1, 0, 0);
 }
 
 }  // namespace alice
