@@ -1,7 +1,7 @@
 # powerful heightened yielded Logic Synthesis (phyLS)
 
-phyLS is based on the [mockturtle](https://github.com/lsils/mockturtle), it can optimize different logics attributes. 
-Currently, it supports AIG, MIG, XAG, and XMG based optimization.
+phyLS is based on the [mockturtle](https://github.com/lsils/mockturtle) and the [abc](https://github.com/berkeley-abc/abc), it can optimize different logics attributes. 
+Currently, it supports mockturtle format(AIG, MIG, XAG, XMG) and abc format(AIG,GIA) based optimization.
 
 [Read the documentation here.](https://phyls.readthedocs.io/en/latest/)
 
