@@ -47,5 +47,8 @@
 #include "commands/abc/fraig.hpp"
 #include "commands/abc/&get.hpp"
 #include "commands/abc/&fraig.hpp"
+#include "commands/abc/comb.hpp"
+#include "commands/simulator.hpp"
+#include "commands/abc/cec.hpp"
 
 ALICE_MAIN(phyLS)

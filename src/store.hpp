@@ -231,6 +231,16 @@ ALICE_PRINT_STORE_STATISTICS(aig_network, os, aig) {
 
 ALICE_ADD_FILE_TYPE(verilog, "Verilog");
 
+ALICE_READ_FILE(aig_network, verilog, filename, cmd) {
+  aig_network aig;
+
+  if (lorina::read_verilog(filename, mockturtle::verilog_reader(aig)) !=
+      lorina::return_code::success) {
+    std::cout << "[w] parse error\n";
+  }
+  return aig;
+}
+
 ALICE_READ_FILE(xmg_network, verilog, filename, cmd) {
   xmg_network xmg;
 
