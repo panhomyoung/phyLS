@@ -81,7 +81,7 @@ class CircuitGraph {
   gate_idx add_gate(Type type, const std::vector<std::string> &input_names,
                     const std::string &output_name);
 
-  const line_idx get_line(const std::string &name) const;
+  line_idx get_line(const std::string &name) const;
   line_idx line(const std::string &name);
 
   const Gate &get_gate(const gate_idx &idx) const { return m_gates[idx]; }

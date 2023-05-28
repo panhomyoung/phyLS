@@ -44,17 +44,19 @@ class simulator_command : public command {
     clock_t begin, end;
     double totalTime = 0.0;
 
-    begin = clock();
-
     phyLS::simulator sim(graph);
+
+    begin = clock();
+    
     sim.simulate();
-    if (is_set("verbose")) sim.print_simulation_result();
 
     end = clock();
     totalTime = (double)(end - begin) / CLOCKS_PER_SEC;
 
+    if (is_set("verbose")) sim.print_simulation_result();
+
     std::cout.setf(ios::fixed);
-    std::cout << "[CPU time]   " << setprecision(2) << totalTime << " s"
+    std::cout << "[CPU time]   " << setprecision(3) << totalTime << " s"
               << std::endl;
   }
 

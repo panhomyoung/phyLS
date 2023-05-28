@@ -74,7 +74,7 @@ line_idx CircuitGraph::line(const std::string& name) {
   return NULL_INDEX;
 }
 
-const line_idx CircuitGraph::get_line(const std::string& name) const {
+line_idx CircuitGraph::get_line(const std::string& name) const {
   auto it = m_name_to_line_idx.find(name);
 
   if (it != m_name_to_line_idx.end()) {
@@ -164,7 +164,7 @@ void CircuitGraph::print_graph() {
               << int(gate.make_gate_name(gate.get_type())) << "(";
     std::vector<std::string> inputs_name;
     // for(const auto& input : gate.get_inputs())
-    for (int i = gate.get_inputs().size() - 1; i > -1;) {
+    for (int i = gate.get_inputs().size() - 1; i > -1; i--) {
       inputs_name.push_back(m_lines[gate.get_inputs()[i]].name);
       inputs_name.push_back(", ");
     }

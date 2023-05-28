@@ -2,7 +2,7 @@
 
 namespace phyLS {
 simulator::simulator(CircuitGraph& graph) : graph(graph) {
-  pattern_num = 20;  // 随机产生10000个仿真向量
+  pattern_num = 10000;  // 随机产生10000个仿真向量
   // max_branch = int( log2(pattern_num) );                    //做cut的界
   max_branch = 8;
   sim_info.resize(graph.get_lines().size());  // 按照lines的id记录仿真向量的信息
@@ -25,8 +25,6 @@ bool simulator::simulate() {
   for (const auto& node : nodes) {
     single_node_sim(node);
   }
-  // 4: 打印结果
-  // print_simulation_result();
   return true;
 }
 
@@ -50,7 +48,7 @@ need_sim_nodes simulator::get_need_nodes() {
   for (unsigned level = 0; level <= graph.get_mld(); level++) {
     for (const auto& node_id : graph.get_m_node_level()[level]) {
       line_idx output = graph.get_gates()[node_id].get_output();
-      lines_flag[output] == true;
+      //lines_flag[output] = true;
       if (lines_flag[output] == true) {
         nodes.push_back(node_id);
       }
@@ -134,31 +132,32 @@ void simulator::get_node_matrix(const gate_idx node_id, m_chain& mc,
         temp = map.at(line_id);
       mc.emplace_back(1, temp);
     } else  // 存lut  (PIs)的lines_flag必为true 所以这种情况不可能出现source为空
-    {
       get_node_matrix(graph.get_lines()[line_id].source, mc, map);
-    }
   }
 }
 
 void simulator::print_simulation_result() {
-  for (const auto& input_id : graph.get_inputs()) {
-    std::cout << graph.get_lines()[input_id].name << " ";
-  }
-  std::cout << ": ";
-  for (const auto& output_id : graph.get_outputs()) {
-    std::cout << graph.get_lines()[output_id].name << " ";
-  }
-  std::cout << std::endl;
+  std::cout << "PI/PO : " << graph.get_inputs().size() << "/"
+            << graph.get_outputs().size() << std::endl
+            << "result size = " << sim_info.size() << std::endl;
+
   for (int i = 0; i < pattern_num; i++) {
+    std::cout << "Pattern " << i + 1 << " : ";
     for (const auto& input_id : graph.get_inputs()) {
-      std::cout << sim_info[input_id][i] << "  ";
+      std::cout << sim_info[input_id][i];
     }
-    std::cout << ":  ";
+    std::cout << " = ";
     for (const auto& output_id : graph.get_outputs()) {
-      std::cout << sim_info[output_id][i] << " ";
+      std::cout << sim_info[output_id][i];
     }
     std::cout << std::endl;
+    std::cout << "random node result : " << sim_info[100][i] << std::endl;
   }
+//   for (const auto& input_id : graph.get_inputs())
+//     std::cout << graph.get_lines()[input_id].name << " ";
+//   std::cout << ": ";
+//   for (const auto& output_id : graph.get_outputs())
+//     std::cout << graph.get_lines()[output_id].name << " ";
 }
 
 bool simulator::check_sim_info() {

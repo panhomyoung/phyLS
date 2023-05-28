@@ -36,8 +36,9 @@ class fr_command : public command {
     add_flag("--xmg, -x", "functional reduction for XMG");
     add_option("--tfi_node, -n", max_tfi_node,
                "Maximum number of nodes in the TFI to be compared");
-    add_flag("--saturation, -s",
-             "repeat until no further improvement can be found");
+    add_option("--filename, -f", filename, "pre-generated patterns file");
+    add_flag("--pattern, -p",
+             "save the appended patterns (with CEXs) into file");
     add_flag("--verbose, -v", "print the information");
   }
 
@@ -47,10 +48,10 @@ class fr_command : public command {
     double totalTime;
 
     functional_reduction_params ps;
-    ps.max_TFI_nodes = max_tfi_node;
-    if (is_set("saturation")) ps.saturation = true;
-
-    if (is_set("verbose")) {
+    if (is_set("--filename")) ps.pattern_filename = filename;
+    if (is_set("--tfi_node")) ps.max_TFI_nodes = max_tfi_node;
+    if (is_set("--pattern")) ps.save_patterns = "pattern.log";
+    if (is_set("--verbose")) {
       ps.verbose = true;
       ps.progress = true;
     }
@@ -94,6 +95,7 @@ class fr_command : public command {
 
  private:
   int max_tfi_node = 500;
+  string filename = "pattern.log";
 };
 
 ALICE_ADD_COMMAND(fr, "Synthesis")

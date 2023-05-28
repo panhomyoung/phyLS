@@ -50,5 +50,6 @@
 #include "commands/abc/comb.hpp"
 #include "commands/simulator.hpp"
 #include "commands/abc/cec.hpp"
+#include "commands/stpfr.hpp"
 
 ALICE_MAIN(phyLS)

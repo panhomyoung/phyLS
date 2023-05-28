@@ -56,7 +56,7 @@ class stp_vec {
   const word &operator()(unsigned idx) const { return vec[idx]; }
 
   // 获取矩阵的列数
-  const unsigned cols() const { return this->vec.size(); }
+  unsigned cols() const { return this->vec.size(); }
 
   // 判断是不是一个变量
   bool is_variable() { return this->cols() == 1; }
