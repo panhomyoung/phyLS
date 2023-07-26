@@ -20,6 +20,8 @@ class simulator {
  public:
   simulator(CircuitGraph& graph);
   bool simulate();  // simulate
+  bool full_simulate();  //full_simulate
+  std::vector<std::vector<int>> generateBinary(int n);
   void print_simulation_result();
 
  private:
