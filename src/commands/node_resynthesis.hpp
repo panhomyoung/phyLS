@@ -43,6 +43,7 @@ class resyn_command : public command {
                 "performs technology-independent restructuring [default = MIG]") {
     add_flag("--xmg, -x", "Resubstitution for XMG");
     add_flag("--xag, -g", "Resubstitution for XAG");
+    add_flag("--aig, -a", "Resubstitution for AIG");
     add_flag("--direct, -d", "Node resynthesis with direct synthesis");
     add_flag("--verbose, -v", "print the information");
   }
@@ -79,6 +80,19 @@ class resyn_command : public command {
         store<xag_network>().extend();
         store<xag_network>().current() = cleanup_dangling(xag);
         phyLS::print_stats(xag);
+        end = clock();
+        totalTime = (double)(end - begin) / CLOCKS_PER_SEC;
+      } else if (is_set("aig")) {
+        begin = clock();
+        exact_resynthesis_params ps;
+        ps.cache = std::make_shared<exact_resynthesis_params::cache_map_t>();
+        exact_aig_resynthesis<aig_network> exact_resyn(false, ps);
+        node_resynthesis_stats nrst;
+        dsd_resynthesis<aig_network, decltype(exact_resyn)> resyn(exact_resyn);
+        const auto aig = node_resynthesis<aig_network>(klut, resyn, {}, &nrst);
+        store<aig_network>().extend();
+        store<aig_network>().current() = cleanup_dangling(aig);
+        phyLS::print_stats(aig);
         end = clock();
         totalTime = (double)(end - begin) / CLOCKS_PER_SEC;
       } else {

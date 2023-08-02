@@ -43,12 +43,27 @@ class lutmap_command : public command {
     add_flag("--recompute_cuts, -c",
              "recompute cuts at each step [default = true]");
     add_flag("--edge, -e", "Use edge count reduction [default = true]");
+    add_flag("--cost_function, -f",
+             "LUT map with cost function [default = false]");
     add_flag("--dominated_cuts, -d",
              "Remove the cuts that are contained in others [default = true]");
     add_flag("--verbose, -v", "print the information");
   }
 
  protected:
+  struct lut_custom_cost {
+    std::pair<uint32_t, uint32_t> operator()(uint32_t num_leaves) const {
+      if (num_leaves < 2u) return {0u, 0u};
+      return {num_leaves, 1u}; /* area, delay */
+    }
+
+    std::pair<uint32_t, uint32_t> operator()(
+        kitty::dynamic_truth_table const& tt) const {
+      if (tt.num_vars() < 2u) return {0u, 0u};
+      return {tt.num_vars(), 1u}; /* area, delay */
+    }
+  };
+
   void execute() {
     if (is_set("mig")) {
       if (store<mig_network>().size() == 0u)
@@ -109,7 +124,7 @@ class lutmap_command : public command {
         std::cerr << "Error: Empty AIG network\n";
       else {
         auto aig = store<aig_network>().current();
-        mapping_view mapped_aig{aig};
+        mapping_view<aig_network, true> mapped_aig{aig};
         phyLS::lut_map_params ps;
         if (is_set("area")) ps.area_oriented_mapping = true;
         if (is_set("relax_required")) ps.relax_required = relax_required;
@@ -119,7 +134,11 @@ class lutmap_command : public command {
         if (is_set("edge")) ps.edge_optimization = false;
         if (is_set("dominated_cuts")) ps.remove_dominated_cuts = false;
         cout << "Mapped AIG into " << cut_size << "-LUT : ";
-        phyLS::lut_map(mapped_aig, ps);
+        if (is_set("cost_function"))
+          phyLS::lut_map<decltype(mapped_aig), true, lut_custom_cost>(
+              mapped_aig, ps);
+        else
+          phyLS::lut_map(mapped_aig, ps);
         mapped_aig.clear_mapping();
       }
     }
