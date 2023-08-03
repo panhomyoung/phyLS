@@ -11,20 +11,29 @@ Input:
 
 Output:
 ::
+    ABC commands:
+     aresub           comb             fraig            strash
+
     Verification commands:
-     cec              exprsim          sat              sim
+     acec             cec              exprsim          sat
+     sim              simulator
 
     Mapping commands:
      lut_mapping      lutmap           techmap
 
     Synthesis commands:
-     balance          create_graph     reduction        refactor
-     resub            resyn            rewrite
+     balance          create_graph     exact            fr
+     lutrw            refactor         resub            resyn
+     rewrite          stpfr
 
     I/O commands:
-     load             read_aiger       read_bench       read_blif
-     read_genlib      read_verilog     write_aiger      write_bench
-     write_blif       write_dot        write_genlib     write_verilog
+     load             read             read_aiger       read_bench
+     read_blif        read_genlib      read_gia         read_verilog
+     write            write_aiger      write_bench      write_blif
+     write_dot        write_genlib     write_gia        write_verilog
+
+    Gia commands:
+     Afraig           Aget
 
     General commands:
      alias            convert          current          help
