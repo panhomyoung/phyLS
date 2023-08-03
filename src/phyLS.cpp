@@ -51,7 +51,6 @@
 #include "commands/simulator.hpp"
 #include "commands/abc/cec.hpp"
 #include "commands/stpfr.hpp"
-#include "commands/cutrw.hpp"
 #include "commands/exact/exact_lut.hpp"
 #include "commands/exact/lutrw.hpp"
 
