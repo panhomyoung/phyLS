@@ -1,8 +1,9 @@
 #include "simulator.hpp"
+#include<algorithm>
 
 namespace phyLS {
 simulator::simulator(CircuitGraph& graph) : graph(graph) {
-  pattern_num = 10000;  // 随机产生10000个仿真向量
+  pattern_num = 100;  // 随机产生100个仿真向量
   // max_branch = int( log2(pattern_num) );                    //做cut的界
   max_branch = 8;
   sim_info.resize(graph.get_lines().size());  // 按照lines的id记录仿真向量的信息
@@ -16,6 +17,34 @@ simulator::simulator(CircuitGraph& graph) : graph(graph) {
   }
 }
 
+std::vector<std::vector<int>> simulator::generateBinary(int n)//generate n bit binary
+{
+  std::vector<std::vector<int>> nbitBinary;//store n bit binary
+  for(int i = 0;i < (1 << n); i++)
+  {
+    std::string s = "";
+    for (int j = 0; j < n; j++) 
+    {
+      if (i & (1 << j)) 
+      {
+        s += "1";
+      } 
+      else 
+      {
+        s += "0";
+      }
+    }
+    reverse(s.begin(), s.end());
+    std::vector<int> vec;//single n bit binary
+    for(auto c : s)
+    {
+      vec.push_back(std::stoi(std::string(1,c)));//stoi (string to int)
+    }
+    nbitBinary.push_back(vec);
+  }
+  return nbitBinary;
+}
+
 bool simulator::simulate() {
   // 1: 给电路划分层级
   graph.match_logic_depth();
@@ -24,6 +53,54 @@ bool simulator::simulate() {
   // 3: 仿真
   for (const auto& node : nodes) {
     single_node_sim(node);
+  }
+  return true;
+}
+
+bool simulator::full_simulate() {
+  std::vector<std::vector<int>> nbitBinary = generateBinary(graph.get_inputs().size());
+  pattern_num = nbitBinary.size();
+  for (const line_idx& line_id : graph.get_inputs()) 
+    {
+      sim_info[line_id].resize(pattern_num);
+      lines_flag[line_id] = true;
+      for (int i = 0; i < pattern_num; i++) 
+      {
+        sim_info[line_id][i] = nbitBinary[i][line_id];//生成全仿真的真值表
+      }
+    }
+  graph.match_logic_depth();
+  need_sim_nodes nodes = get_need_nodes();
+  for (const auto& node : nodes) {
+    single_node_sim(node);
+  }
+  //get the truth table
+  int po0_index = graph.get_inputs().size();
+  int pon_index = po0_index + graph.get_outputs().size() - 1;
+  std::vector<std::vector<int>> outputs_tt;
+  //std::vector<std::vector<int>> nbitBinary = generateBinary(graph.get_inputs().size());
+  for(int i = po0_index;i <= pon_index; i++)
+  {
+    std::vector<int> int_vector(sim_info[i].begin(), sim_info[i].end());
+    outputs_tt.push_back(int_vector);
+    std::reverse(outputs_tt[i - po0_index].begin(), outputs_tt[i - po0_index].end());
+  }
+
+  std::vector<std::string> hex_strings;
+  for(const auto& binary_vector : outputs_tt)
+  {
+    std::stringstream hex_stream;
+
+    for (int i = 0; i < binary_vector.size(); i += 4) 
+    {
+      int sum = binary_vector[i] * 8 + binary_vector[i+1] * 4 + binary_vector[i+2] * 2 + binary_vector[i+3];
+      hex_stream << std::hex << sum;
+    }
+    hex_strings.push_back(hex_stream.str());
+  }
+  for(int i = 0;i < graph.get_outputs().size(); i++)
+  {
+    std::cout << "turth table of po" << i << " is: 0x" << hex_strings[i] << std::endl;
   }
   return true;
 }
@@ -138,26 +215,26 @@ void simulator::get_node_matrix(const gate_idx node_id, m_chain& mc,
 
 void simulator::print_simulation_result() {
   std::cout << "PI/PO : " << graph.get_inputs().size() << "/"
-            << graph.get_outputs().size() << std::endl
-            << "result size = " << sim_info.size() << std::endl;
+            << graph.get_outputs().size() << std::endl;
 
+  for (const auto& input_id : graph.get_inputs()) {
+    std::cout << graph.get_lines()[input_id].name << " ";
+  }
+  std::cout << ": ";
+  for (const auto& output_id : graph.get_outputs()) {
+    std::cout << graph.get_lines()[output_id].name << " ";
+  }
+  std::cout << std::endl;
   for (int i = 0; i < pattern_num; i++) {
-    std::cout << "Pattern " << i + 1 << " : ";
     for (const auto& input_id : graph.get_inputs()) {
-      std::cout << sim_info[input_id][i];
+      std::cout << sim_info[input_id][i] << "  ";
     }
-    std::cout << " = ";
+    std::cout << ":  ";
     for (const auto& output_id : graph.get_outputs()) {
-      std::cout << sim_info[output_id][i];
+      std::cout << sim_info[output_id][i] << " ";
     }
     std::cout << std::endl;
-    std::cout << "random node result : " << sim_info[100][i] << std::endl;
   }
-//   for (const auto& input_id : graph.get_inputs())
-//     std::cout << graph.get_lines()[input_id].name << " ";
-//   std::cout << ": ";
-//   for (const auto& output_id : graph.get_outputs())
-//     std::cout << graph.get_lines()[output_id].name << " ";
 }
 
 bool simulator::check_sim_info() {

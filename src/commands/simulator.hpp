@@ -28,6 +28,7 @@ class simulator_command : public command {
       : command(env, "STP-based logic network simulation") {
     add_option("filename,-f", filename, "name of input file");
     add_flag("--verbose, -v", "verbose output");
+    add_flag("--full_simulation, -t", "full simulation to get the truth table");
   }
 
  protected:
@@ -48,7 +49,11 @@ class simulator_command : public command {
 
     begin = clock();
     
-    sim.simulate();
+    if(is_set("full_simulation")){
+      sim.full_simulate();
+    }else{
+      sim.simulate();
+    }
 
     end = clock();
     totalTime = (double)(end - begin) / CLOCKS_PER_SEC;
