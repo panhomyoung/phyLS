@@ -77,7 +77,7 @@ class lut_rewriting_manager {
     });
 
     // clean all redundant luts
-    auto klut_opt = mockturtle::cleanup_luts(klut);
+    auto klut_opt = mockturtle::cleanup_dangling(klut);
     return klut_opt;
   }
 
@@ -341,43 +341,17 @@ class lut_rewriting_manager {
   }
 
   void es(int nr_in, std::string tt, percy::chain& result) {
-    int node = nr_in - 1;
-    bool target = false;
-    while (true) {
-      spec spec;
-      bsat_wrapper solver;
-      percy::partial_dag_encoder encoder2(solver);
-      encoder2.reset_sim_tts(nr_in);
+    spec spec;
+    chain c;
+    spec.verbosity = 0;
 
-      spec.add_alonce_clauses = false;
-      spec.add_nontriv_clauses = false;
-      spec.add_lex_func_clauses = false;
-      spec.add_colex_clauses = false;
-      spec.add_noreapply_clauses = false;
-      spec.add_symvar_clauses = false;
-      spec.verbosity = 0;
+    kitty::dynamic_truth_table f(nr_in);
+    kitty::create_from_hex_string(f, tt);
+    spec[0] = f;
 
-      kitty::dynamic_truth_table f(nr_in);
-      kitty::create_from_hex_string(f, tt);
-      spec[0] = f;
-
-      auto dags = percy::pd_generate_filtered(node, nr_in);
-      spec.preprocess();
-      for (auto& dag : dags) {
-        percy::chain c;
-        synth_result status;
-        status = percy::pd_cegar_synthesize(spec, c, dag, solver, encoder2);
-        if (status == success) {
-          result.copy(c);
-          target = true;
-          break;
-        }
-      }
-      if (target) {
-        break;
-      }
-      node++;
-    }
+    spec.preprocess();
+    auto res = pd_ser_synthesize_parallel(spec, c, 4, "../src/pd/");
+    if (res == success) result.copy(c);
   }
 
  private:

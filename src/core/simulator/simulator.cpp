@@ -3,7 +3,7 @@
 
 namespace phyLS {
 simulator::simulator(CircuitGraph& graph) : graph(graph) {
-  pattern_num = 100;  // 随机产生100个仿真向量
+  pattern_num = 10000;  // 随机产生100个仿真向量
   // max_branch = int( log2(pattern_num) );                    //做cut的界
   max_branch = 8;
   sim_info.resize(graph.get_lines().size());  // 按照lines的id记录仿真向量的信息

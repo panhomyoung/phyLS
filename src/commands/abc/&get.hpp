@@ -2,7 +2,7 @@
  * Copyright (C) 2023 */
 
 /**
- * @file get.hpp
+ * @file &get.hpp
  *
  * @brief converts the current network into GIA
  *

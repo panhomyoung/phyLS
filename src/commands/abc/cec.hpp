@@ -77,7 +77,7 @@ class acec_command : public command {
   string filename_2;
 };
 
-ALICE_ADD_COMMAND(acec, "Verification")
+ALICE_ADD_COMMAND(acec, "ABC")
 
 }  // namespace alice
 

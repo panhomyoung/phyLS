@@ -1,3 +1,14 @@
+/* phyLS: powerful heightened yielded Logic Synthesis
+ * Copyright (C) 2023 */
+
+/**
+ * @file stpfr.hpp
+ *
+ * @brief STP-based functional reduction
+ *
+ * @author Homyoung
+ * @since  2023/03/14
+ */
 #ifndef STPFR_HPP
 #define STPFR_HPP
 

@@ -13,6 +13,7 @@
 #ifndef SIM_HPP
 #define SIM_HPP
 
+#include <kitty/static_truth_table.hpp>
 #include <mockturtle/algorithms/simulation.hpp>
 
 using namespace std;
@@ -83,7 +84,7 @@ class sim_command : public command {
       begin = clock();
       aig_network aig = store<aig_network>().current();
       if (is_set("partial_simulate")){
-        partial_simulator sim(aig.num_pis(), 100000);
+        partial_simulator sim(aig.num_pis(), 10000);
         unordered_node_map<kitty::partial_truth_table, aig_network>
             node_to_value(aig);
         simulate_nodes(aig, node_to_value, sim);
@@ -103,8 +104,7 @@ class sim_command : public command {
         // });
       }  else {
         default_simulator<kitty::dynamic_truth_table> sim(aig.num_pis());
-        unordered_node_map<kitty::dynamic_truth_table, aig_network>
-            node_to_value(aig);
+        unordered_node_map<kitty::dynamic_truth_table, aig_network> node_to_value(aig);
         simulate_nodes<kitty::dynamic_truth_table>(aig, node_to_value, sim);
       }
       end = clock();

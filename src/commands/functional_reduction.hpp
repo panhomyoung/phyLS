@@ -48,6 +48,7 @@ class fr_command : public command {
     double totalTime;
 
     functional_reduction_params ps;
+    ps.max_iterations = 0;
     if (is_set("--filename")) ps.pattern_filename = filename;
     if (is_set("--tfi_node")) ps.max_TFI_nodes = max_tfi_node;
     if (is_set("--pattern")) ps.save_patterns = "pattern.log";
@@ -94,7 +95,7 @@ class fr_command : public command {
   }
 
  private:
-  int max_tfi_node = 500;
+  int max_tfi_node = 10000;
   string filename = "pattern.log";
 };
 

@@ -1,5 +1,6 @@
-/* phyLS: Advanced Logic Synthesis and Optimization tool
- * Copyright (C) 2019- Ningbo University, Ningbo, China
+/* phyLS: powerful heightened yielded Logic Synthesis
+ * Copyright (C) 2023 */
+
 /*
   \file stp_npn.hpp
   \brief Replace with size-optimum STP-based exact synthesis from NPN
@@ -72,7 +73,7 @@ class stp_npn_resynthesis {
   std::unordered_map<std::string, std::vector<std::string>> opt_klut;
 
   void load_optimal_klut() {
-    std::ifstream infile("../src/networks/stp/opt_stp.txt");
+    std::ifstream infile("../src/networks/stp/opt_map.txt");
     if (!infile) {
       std::cout << " Cannot open file " << std::endl;
       assert(false);

@@ -1,5 +1,5 @@
-/* phyLS: Advanced Logic Synthesis and Optimization tool
- * Copyright (C) 2019- Ningbo University, Ningbo, China */
+/* phyLS: powerful heightened yielded Logic Synthesis
+ * Copyright (C) 2023 */
 
 /**
  * @file build_xag_db.hpp
