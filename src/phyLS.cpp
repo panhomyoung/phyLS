@@ -70,5 +70,11 @@
 #include "commands/abc/balance.hpp"
 #include "commands/abc/refactor.hpp"
 #include "commands/abc/rewrite.hpp"
+#include "commands/xag/rm.hpp"
+#include "commands/xag/rm2.hpp"
+#include "commands/xag/xagrw.hpp"
+#include "commands/xag/xagrs.hpp"
+#include "commands/xmg/xmgrs.hpp"
+#include "commands/xmg/xmgrw.hpp"
 
 ALICE_MAIN(phyLS)

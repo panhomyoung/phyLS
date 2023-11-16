@@ -16,7 +16,7 @@
 #include <mockturtle/mockturtle.hpp>
 #include <mockturtle/utils/stopwatch.hpp>
 
-#include "../core/xmginv.hpp"
+#include "../../core/xmginv.hpp"
 
 namespace alice {
 
