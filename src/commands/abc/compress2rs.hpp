@@ -26,7 +26,7 @@ namespace alice {
 class compress2rs_command : public command {
  public:
   explicit compress2rs_command(const environment::ptr &env)
-      : command(env, "usage: synthesis scripts.") {
+      : command(env, "combination optimization script") {
     add_flag("--verbose, -v", "print the information");
   }
 
