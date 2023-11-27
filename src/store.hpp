@@ -552,31 +552,36 @@ ALICE_CONVERT(pabc::Abc_Ntk_t *, element, aig_network) {
 ALICE_CONVERT(xmg_network, element, pabc::Abc_Ntk_t *) {
   xmg_network xmg = element;
   pabc::Abc_Ntk_t *pNtk = phyLS::mockturtle2abc_x(xmg);
-  return pNtk;
+  pabc::Abc_Ntk_t *pNtkLogic = pabc::Abc_NtkToLogic(pNtk);
+  return pNtkLogic;
 }
 
 ALICE_CONVERT(aig_network, element, pabc::Abc_Ntk_t *) {
   aig_network aig = element;
   pabc::Abc_Ntk_t *pNtk = phyLS::mockturtle2abc_a(aig);
-  return pNtk;
+  pabc::Abc_Ntk_t *pNtkLogic = pabc::Abc_NtkToLogic(pNtk);
+  return pNtkLogic;
 }
 
 ALICE_CONVERT(mig_network, element, pabc::Abc_Ntk_t *) {
   mig_network mig = element;
   pabc::Abc_Ntk_t *pNtk = phyLS::mockturtle2abc_m(mig);
-  return pNtk;
+  pabc::Abc_Ntk_t *pNtkLogic = pabc::Abc_NtkToLogic(pNtk);
+  return pNtkLogic;
 }
 
 ALICE_CONVERT(xag_network, element, pabc::Abc_Ntk_t *) {
   xag_network xag = element;
   pabc::Abc_Ntk_t *pNtk = phyLS::mockturtle2abc_g(xag);
-  return pNtk;
+  pabc::Abc_Ntk_t *pNtkLogic = pabc::Abc_NtkToLogic(pNtk);
+  return pNtkLogic;
 }
 
 ALICE_CONVERT(klut_network, element, pabc::Abc_Ntk_t *) {
   klut_network klut = element;
   pabc::Abc_Ntk_t *pNtk = phyLS::mockturtle2abc_l(klut);
-  return pNtk;
+  pabc::Abc_Ntk_t *pNtkLogic = pabc::Abc_NtkToLogic(pNtk);
+  return pNtkLogic;
 }
 
 /* ABC Gia */
