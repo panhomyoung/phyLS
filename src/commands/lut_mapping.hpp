@@ -34,10 +34,12 @@ class lut_mapping_command : public command {
       : command(env, "LUT mapping [default = AIG]") {
     add_option("cut_size, -k", cut_size,
                "set the cut size from 2 to 8, default = 4");
-    add_flag("--verbose, -v", "print the information");
     add_flag("--satlut, -s", "satlut mapping");
     add_flag("--xag, -g", "LUT mapping for XAG");
     add_flag("--mig, -m", "LUT mapping for MIG");
+    add_flag("--klut, -l", "LUT mapping for k-LUT");
+    add_flag("--area, -a", "area-oriented mapping, default = no");
+    add_flag("--verbose, -v", "print the information");
   }
 
  protected:
@@ -45,6 +47,9 @@ class lut_mapping_command : public command {
     clock_t begin, end;
     double totalTime;
     lut_mapping_params ps;
+    if (is_set("area")){
+      ps.rounds_ela = 4u;
+    }
 
     if (is_set("mig")) {
       /* derive some MIG */
@@ -78,6 +83,22 @@ class lut_mapping_command : public command {
       totalTime = (double)(end - begin) / CLOCKS_PER_SEC;
       store<klut_network>().extend();
       store<klut_network>().current() = klut;
+    } else if (is_set("klut")) {
+      /* derive some kLUT */
+      assert(store<klut_network>().size() > 0);
+      begin = clock();
+      klut_network klut = store<klut_network>().current();
+
+      mapping_view<klut_network, true> mapped_klut{klut};
+      ps.cut_enumeration_ps.cut_size = cut_size;
+      lut_mapping<mapping_view<klut_network, true>, true>(mapped_klut, ps);
+
+      /* collapse into k-LUT network */
+      const auto klut_new = *collapse_mapped_network<klut_network>(mapped_klut);
+      end = clock();
+      totalTime = (double)(end - begin) / CLOCKS_PER_SEC;
+      store<klut_network>().extend();
+      store<klut_network>().current() = klut_new;
     } else {
       if (store<aig_network>().size() == 0) {
         assert(false && "Error: Empty AIG network\n");

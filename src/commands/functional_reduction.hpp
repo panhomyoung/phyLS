@@ -95,7 +95,7 @@ class fr_command : public command {
   }
 
  private:
-  int max_tfi_node = 10000;
+  int max_tfi_node = 1000;
   string filename = "pattern.log";
 };
 

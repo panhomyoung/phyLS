@@ -21,6 +21,7 @@
 
 #include "../../core/exact/exact_dag.hpp"
 #include "../../core/exact/exact_lut.hpp"
+#include "../core/exact/lut_rewriting.hpp"
 
 using namespace std;
 using namespace percy;
@@ -38,6 +39,8 @@ class exact_command : public command {
              "stp based cegar encoding and partial DAG structure");
     add_flag("--dag_depth, -t",
              "cegar encoding and partial DAG structure for Delay");
+    add_flag("--decomposition, -p",
+             "using decomposition before exact synthesis");
     add_option("--output, -o", filename, "the verilog filename");
     add_flag("--enumeration, -e", "enumerate all solutions");
     add_flag("--new_entry, -w", "adds k-LUT store entry");
@@ -46,6 +49,7 @@ class exact_command : public command {
     add_flag("--xag, -g", "enable exact synthesis for XAG, default = false");
     add_flag("--npn, -n", "print result for NPN storing, default = false");
     add_flag("--depth, -d", "print the depth of each result, default = false");
+    add_flag("--parallel, -l", "parallel exact synthesis");
     add_flag("--verbose, -v", "verbose results, default = true");
   }
 
@@ -200,6 +204,29 @@ class exact_command : public command {
     }
   }
 
+  void es_parallel(int nr_in, chain& result) {
+    spec spec;
+    chain c;
+
+    spec.add_alonce_clauses = false;
+    spec.add_nontriv_clauses = false;
+    spec.add_lex_func_clauses = false;
+    spec.add_colex_clauses = false;
+    spec.add_noreapply_clauses = false;
+    spec.add_symvar_clauses = false;
+    spec.verbosity = 0;
+
+    kitty::dynamic_truth_table f(nr_in);
+    kitty::create_from_hex_string(f, tt);
+    spec[0] = f;
+
+    spec.preprocess();
+    auto res = pd_ser_synthesize_parallel(spec, c, 4, "../src/pd/");
+    // auto res = pf_fence_synthesize(spec, c, 8);
+
+    if (res == success) result.copy(c);
+  }
+
   void es_delay(int nr_in, list<chain>& chains) {
     int node = nr_in - 1, max_level = 0, count = 0;
     bool target = false;
@@ -336,6 +363,12 @@ class exact_command : public command {
       }
     }
     return target;
+  }
+
+  void es_after_decomposition() {
+    dec_network = store<mockturtle::klut_network>().current();
+    phyLS::lut_rewriting_params ps;
+    dec_network = phyLS::lut_rewriting_c(dec_network, ps);
   }
 
   void execute() {
@@ -522,7 +555,7 @@ class exact_command : public command {
       }
       cout << "[Total realization]: " << count << endl;
     } else if (is_set("stp_cegar_dag")) {
-      if (is_set("map")){
+      if (is_set("map")) {
         ps.gates = store<std::vector<mockturtle::gate>>().current();
         begin = clock();
         exact_lut_dag_enu_map(tt, nr_in, ps);
@@ -544,10 +577,45 @@ class exact_command : public command {
         totalTime = (double)(end - begin) / CLOCKS_PER_SEC;
         cout << "[Total realization]: " << nr_in << endl;
       }
+    } else if (is_set("decomposition")) {
+      begin = clock();
+      es_after_decomposition();
+      end = clock();
+      totalTime = (double)(end - begin) / CLOCKS_PER_SEC;
+    } else if (is_set("parallel")) {
+      int64_t total_elapsed = 0;
+      auto start = std::chrono::steady_clock::now();
+      chain chain;
+      es_parallel(nr_in, chain);
+      const auto elapsed1 =
+          std::chrono::duration_cast<std::chrono::microseconds>(
+              std::chrono::steady_clock::now() - start)
+              .count();
+      total_elapsed += elapsed1;
+      if (ps.verbose) {
+        chain.print_bench();
+        if (ps.depth) {
+          klut_network klut = create_network(chain);
+          mockturtle::depth_view depth_lut{klut};
+          std::cout << "level = " << depth_lut.depth() - 1 << std::endl;
+        }
+      }
+      if (ps.npn) {
+        chain.print_npn();
+        if (ps.depth) {
+          klut_network klut = create_network(chain);
+          mockturtle::depth_view depth_lut{klut};
+          std::cout << "l{" << depth_lut.depth() - 1 << "}" << std::endl;
+        } else {
+          std::cout << std::endl;
+        }
+      }
+      printf("[Total CPU time]   : %ldus\n", total_elapsed);
     } else {
       if (is_set("enumeration")) {
         begin = clock();
-        phyLS::exact_lut_enu(tt_h, nr_in);
+        int cut_size = 0;
+        phyLS::exact_lut_enu(tt_h, nr_in, cut_size);
         end = clock();
         totalTime = (double)(end - begin) / CLOCKS_PER_SEC;
         int count = 0;
@@ -558,7 +626,8 @@ class exact_command : public command {
         cout << "[Total realization]: " << count << endl;
       } else {
         begin = clock();
-        phyLS::exact_lut(tt_h, nr_in);
+        int cut_size = 0;
+        phyLS::exact_lut(tt_h, nr_in, cut_size);
         end = clock();
         totalTime = (double)(end - begin) / CLOCKS_PER_SEC;
         int count = 0;
@@ -582,6 +651,7 @@ class exact_command : public command {
   double min_delay = 0.00;
   int mapping_gate = 0;
   std::string filename = "techmap.v";
+  klut_network dec_network;
 };
 
 ALICE_ADD_COMMAND(exact, "Synthesis")
