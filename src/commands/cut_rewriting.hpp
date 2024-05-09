@@ -34,7 +34,6 @@
 
 #include "../core/misc.hpp"
 #include "../networks/aoig/xag_lut_npn.hpp"
-#include "../networks/stp/stp_npn.hpp"
 
 using namespace std;
 using namespace mockturtle;
@@ -48,7 +47,6 @@ class rewrite_command : public command {
     add_flag("--mig, -m", "rewriting for MIG");
     add_flag("--xag, -g", "rewriting for XAG");
     add_flag("--klut, -l", "rewriting for k-LUT");
-    add_flag("--klut_npn, -n", "cut rewriting based on k-LUT NPN network");
     add_flag("--xag_npn_lut, -u",
              "cut rewriting based on XAG NPN based LUT network");
     add_flag("--xag_npn, -p", "cut rewriting based on XAG NPN network");
@@ -199,26 +197,6 @@ class rewrite_command : public command {
 
       store<xag_network>().extend();
       store<xag_network>().current() = cleanup_dangling(xag);
-    } else if (is_set("klut_npn")) {
-      klut_network klut = store<klut_network>().current();
-      phyLS::print_stats(klut);
-
-      begin = clock();
-      stp_npn_resynthesis resyn;
-      cut_rewriting_params ps;
-      ps.cut_enumeration_ps.cut_size = 4u;
-      ps.allow_zero_gain = false;
-      if (is_set("compatibility_graph"))
-        cut_rewriting_with_compatibility_graph(klut, resyn);
-      else
-        klut = cut_rewriting(klut, resyn, ps);
-      klut = cleanup_dangling(klut);
-      end = clock();
-      totalTime = (double)(end - begin) / CLOCKS_PER_SEC;
-
-      phyLS::print_stats(klut);
-      store<klut_network>().extend();
-      store<klut_network>().current() = cleanup_dangling(klut);
     } else {
       if (store<aig_network>().size() == 0u)
         std::cerr << "Error: Empty AIG network\n";

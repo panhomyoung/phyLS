@@ -19,3 +19,13 @@ cmake ..
 make
 ./bin/phyLS
 ```
+
+## baseline scripts
+```bash
+read_aiger ../benchmarks/adder.aig;
+ps -a;
+resub;
+balance;
+rewrite;
+quit;
+```
