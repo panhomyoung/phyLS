@@ -11,7 +11,7 @@ Compiled successfully with Clang 6.0.1, Clang 12.0.0, GCC 7.3.0, and GCC 8.2.0.
 
 ## How to Compile
 ```bash
-git clone --recursive https://github.com/panhongyang0/phyLS.git
+git clone -b aig --recursive https://github.com/panhongyang0/phyLS.git
 cd phyLS
 mkdir build
 cd build
@@ -27,5 +27,7 @@ ps -a;
 resub;
 balance;
 rewrite;
+read_genlib ../src/mcnc.genlib;
+techmap;
 quit;
 ```
