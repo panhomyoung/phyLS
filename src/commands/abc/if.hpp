@@ -28,6 +28,13 @@ class if_command : public command {
  public:
   explicit if_command(const environment::ptr &env)
       : command(env, "performs FPGA mapping of the AIG") {
+    add_option("-k,--klut", LutSize, "the number of LUT inputs (2 < k < 8), Default=4");
+    add_option("-c,--cut", CutSize,
+               "the max number of priority cuts (0 < c < 2^12), Default=8");
+    add_flag("--minimization, -m",
+             "enables cut minimization by removing vacuous variables");
+    add_flag("--delay, -y", "delay optimization with recorded library");
+    add_option("-f,--file", filename, "recorded library");
     add_flag("--verbose, -v", "print the information");
   }
 
@@ -45,23 +52,42 @@ class if_command : public command {
       If_Par_t Pars, *pPars = &Pars;
       If_ManSetDefaultPars(pPars);
       pPars->pLutLib = (If_LibLut_t *)Abc_FrameReadLibLut();
-      if (pPars->nLutSize == -1) {
-        if (pPars->pLutLib == NULL) {
-          printf("The LUT library is not given.\n");
-          return;
+
+      if (is_set("klut")) pPars->nLutSize = LutSize;
+      if (is_set("cut")) pPars->nCutsMax = CutSize;
+      if (is_set("minimization")) pPars->fCutMin ^= 1;
+      if (is_set("delay")) {
+        pPars->fUserRecLib ^= 1;
+        pPars->fTruth = 1;
+        pPars->fCutMin = 1;
+        pPars->fExpRed = 0;
+        pPars->fUsePerm = 1;
+        pPars->pLutLib = NULL;
+        int nVars = 6;
+        int nCuts = 32;
+        int fFuncOnly = 0;
+        int fVerbose = 0;
+        char *FileName, *pTemp;
+        FILE *pFile;
+        Gia_Man_t *pGia = NULL;
+        FileName = filename.data();
+        for (pTemp = FileName; *pTemp; pTemp++)
+          if (*pTemp == '>') *pTemp = '\\';
+        if ((pFile = fopen(FileName, "r")) == NULL) {
+          printf("Cannot open input file \"%s\". ", FileName);
+          if ((FileName = Extra_FileGetSimilarName(FileName, ".aig", NULL, NULL,
+                                                   NULL, NULL)))
+            printf("Did you mean \"%s\"?", FileName);
+          printf("\n");
         }
-        pPars->nLutSize = pPars->pLutLib->LutMax;
+        fclose(pFile);
+        pGia = Gia_AigerRead(FileName, 0, 1, 0);
+        if (pGia == NULL) {
+          printf("Reading AIGER has failed.\n");
+        }
+        Abc_NtkRecStart3(pGia, nVars, nCuts, fFuncOnly, fVerbose);
       }
 
-      if (pPars->nLutSize < 2 || pPars->nLutSize > IF_MAX_LUTSIZE) {
-        printf("Incorrect LUT size (%d).\n", pPars->nLutSize);
-        return;
-      }
-
-      if (pPars->nCutsMax < 1 || pPars->nCutsMax >= (1 << 12)) {
-        printf("Incorrect number of cuts.\n");
-        return;
-      }
       if (!Abc_NtkIsStrash(pNtk)) {
         // strash and balance the network
         pNtk = Abc_NtkStrash(pNtk, 0, 0, 0);
@@ -106,6 +132,9 @@ class if_command : public command {
   }
 
  private:
+  uint32_t LutSize = 4u;
+  uint32_t CutSize = 8u;
+  string filename;
 };
 
 ALICE_ADD_COMMAND(if, "ABC")
