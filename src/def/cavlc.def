@@ -1,0 +1,1479 @@
+COMPONENTS 693 ;
+   - and_11_ and
+      + PLACED ( 64 4271 ) N ;
+   - and_12_ and
+      + PLACED ( 48 4014 ) N ;
+   - and_13_ and
+      + PLACED ( 60 4095 ) N ;
+   - and_14_ and
+      + PLACED ( 52 3770 ) N ;
+   - and_15_ and
+      + PLACED ( 49 3382 ) N ;
+   - and_16_ and
+      + PLACED ( 50 3153 ) N ;
+   - and_17_ and
+      + PLACED ( 51 3692 ) N ;
+   - and_18_ and
+      + PLACED ( 46 3263 ) N ;
+   - and_19_ and
+      + PLACED ( 55 4641 ) N ;
+   - and_20_ and
+      + PLACED ( 43 3288 ) N ;
+   - and_21_ and
+      + PLACED ( 45 2985 ) N ;
+   - and_22_ and
+      + PLACED ( 44 2944 ) N ;
+   - and_23_ and
+      + PLACED ( 37 3114 ) N ;
+   - and_24_ and
+      + PLACED ( 52 3687 ) N ;
+   - and_25_ and
+      + PLACED ( 55 3397 ) N ;
+   - and_26_ and
+      + PLACED ( 52 3225 ) N ;
+   - and_27_ and
+      + PLACED ( 57 3184 ) N ;
+   - and_28_ and
+      + PLACED ( 54 3036 ) N ;
+   - and_29_ and
+      + PLACED ( 58 4081 ) N ;
+   - and_30_ and
+      + PLACED ( 49 3940 ) N ;
+   - and_31_ and
+      + PLACED ( 50 4124 ) N ;
+   - and_32_ and
+      + PLACED ( 44 3931 ) N ;
+   - and_33_ and
+      + PLACED ( 46 3560 ) N ;
+   - and_34_ and
+      + PLACED ( 49 3469 ) N ;
+   - and_35_ and
+      + PLACED ( 53 3279 ) N ;
+   - and_36_ and
+      + PLACED ( 55 3120 ) N ;
+   - and_37_ and
+      + PLACED ( 46 3225 ) N ;
+   - and_38_ and
+      + PLACED ( 40 3328 ) N ;
+   - and_39_ and
+      + PLACED ( 39 3043 ) N ;
+   - and_40_ and
+      + PLACED ( 44 3597 ) N ;
+   - and_41_ and
+      + PLACED ( 39 3298 ) N ;
+   - and_42_ and
+      + PLACED ( 44 2725 ) N ;
+   - and_43_ and
+      + PLACED ( 38 2850 ) N ;
+   - and_44_ and
+      + PLACED ( 35 3045 ) N ;
+   - and_45_ and
+      + PLACED ( 39 3499 ) N ;
+   - and_46_ and
+      + PLACED ( 49 4304 ) N ;
+   - and_47_ and
+      + PLACED ( 40 3690 ) N ;
+   - and_48_ and
+      + PLACED ( 39 3493 ) N ;
+   - and_49_ and
+      + PLACED ( 45 3523 ) N ;
+   - and_50_ and
+      + PLACED ( 43 3507 ) N ;
+   - and_51_ and
+      + PLACED ( 56 3637 ) N ;
+   - and_52_ and
+      + PLACED ( 52 3997 ) N ;
+   - and_53_ and
+      + PLACED ( 48 3742 ) N ;
+   - and_54_ and
+      + PLACED ( 41 3284 ) N ;
+   - and_55_ and
+      + PLACED ( 45 3130 ) N ;
+   - and_56_ and
+      + PLACED ( 43 2709 ) N ;
+   - and_57_ and
+      + PLACED ( 40 2941 ) N ;
+   - and_58_ and
+      + PLACED ( 39 3285 ) N ;
+   - and_59_ and
+      + PLACED ( 51 3718 ) N ;
+   - and_60_ and
+      + PLACED ( 43 3789 ) N ;
+   - and_61_ and
+      + PLACED ( 40 3797 ) N ;
+   - and_62_ and
+      + PLACED ( 39 3987 ) N ;
+   - and_63_ and
+      + PLACED ( 51 3834 ) N ;
+   - and_64_ and
+      + PLACED ( 45 3554 ) N ;
+   - and_65_ and
+      + PLACED ( 46 3499 ) N ;
+   - and_66_ and
+      + PLACED ( 44 3682 ) N ;
+   - and_67_ and
+      + PLACED ( 42 3526 ) N ;
+   - and_68_ and
+      + PLACED ( 42 3886 ) N ;
+   - and_69_ and
+      + PLACED ( 42 4306 ) N ;
+   - and_70_ and
+      + PLACED ( 46 3810 ) N ;
+   - and_71_ and
+      + PLACED ( 45 3062 ) N ;
+   - and_72_ and
+      + PLACED ( 44 2849 ) N ;
+   - and_73_ and
+      + PLACED ( 46 2973 ) N ;
+   - and_74_ and
+      + PLACED ( 45 2846 ) N ;
+   - and_75_ and
+      + PLACED ( 47 2800 ) N ;
+   - and_76_ and
+      + PLACED ( 49 2933 ) N ;
+   - and_77_ and
+      + PLACED ( 51 3288 ) N ;
+   - and_78_ and
+      + PLACED ( 46 2960 ) N ;
+   - and_79_ and
+      + PLACED ( 46 3464 ) N ;
+   - and_80_ and
+      + PLACED ( 45 3447 ) N ;
+   - and_81_ and
+      + PLACED ( 43 3738 ) N ;
+   - and_82_ and
+      + PLACED ( 47 3967 ) N ;
+   - and_83_ and
+      + PLACED ( 47 3752 ) N ;
+   - and_84_ and
+      + PLACED ( 59 4486 ) N ;
+   - and_85_ and
+      + PLACED ( 40 3597 ) N ;
+   - and_86_ and
+      + PLACED ( 43 3612 ) N ;
+   - and_87_ and
+      + PLACED ( 49 4154 ) N ;
+   - and_88_ and
+      + PLACED ( 47 3948 ) N ;
+   - and_89_ and
+      + PLACED ( 49 3780 ) N ;
+   - and_90_ and
+      + PLACED ( 47 3553 ) N ;
+   - and_91_ and
+      + PLACED ( 40 2859 ) N ;
+   - and_92_ and
+      + PLACED ( 47 4228 ) N ;
+   - and_93_ and
+      + PLACED ( 36 3388 ) N ;
+   - and_94_ and
+      + PLACED ( 48 4024 ) N ;
+   - and_95_ and
+      + PLACED ( 37 3408 ) N ;
+   - and_96_ and
+      + PLACED ( 41 3246 ) N ;
+   - and_97_ and
+      + PLACED ( 57 4296 ) N ;
+   - and_98_ and
+      + PLACED ( 46 2669 ) N ;
+   - and_99_ and
+      + PLACED ( 48 2645 ) N ;
+   - and_100_ and
+      + PLACED ( 48 3173 ) N ;
+   - and_101_ and
+      + PLACED ( 45 3729 ) N ;
+   - and_102_ and
+      + PLACED ( 44 3794 ) N ;
+   - and_103_ and
+      + PLACED ( 49 3600 ) N ;
+   - and_104_ and
+      + PLACED ( 52 3195 ) N ;
+   - and_105_ and
+      + PLACED ( 51 3128 ) N ;
+   - and_106_ and
+      + PLACED ( 51 3682 ) N ;
+   - and_107_ and
+      + PLACED ( 49 2933 ) N ;
+   - and_108_ and
+      + PLACED ( 49 2845 ) N ;
+   - and_109_ and
+      + PLACED ( 40 2686 ) N ;
+   - and_110_ and
+      + PLACED ( 40 2887 ) N ;
+   - and_111_ and
+      + PLACED ( 37 3156 ) N ;
+   - and_112_ and
+      + PLACED ( 42 3598 ) N ;
+   - and_113_ and
+      + PLACED ( 51 3958 ) N ;
+   - and_114_ and
+      + PLACED ( 64 4627 ) N ;
+   - and_115_ and
+      + PLACED ( 45 3360 ) N ;
+   - and_116_ and
+      + PLACED ( 48 3597 ) N ;
+   - and_117_ and
+      + PLACED ( 45 3402 ) N ;
+   - and_118_ and
+      + PLACED ( 48 3292 ) N ;
+   - and_119_ and
+      + PLACED ( 49 3185 ) N ;
+   - and_120_ and
+      + PLACED ( 52 3603 ) N ;
+   - and_121_ and
+      + PLACED ( 52 3770 ) N ;
+   - and_122_ and
+      + PLACED ( 55 3894 ) N ;
+   - and_123_ and
+      + PLACED ( 61 4379 ) N ;
+   - and_124_ and
+      + PLACED ( 50 3753 ) N ;
+   - and_125_ and
+      + PLACED ( 45 3253 ) N ;
+   - and_126_ and
+      + PLACED ( 50 3185 ) N ;
+   - and_127_ and
+      + PLACED ( 48 3214 ) N ;
+   - and_128_ and
+      + PLACED ( 51 3654 ) N ;
+   - and_129_ and
+      + PLACED ( 48 3803 ) N ;
+   - and_130_ and
+      + PLACED ( 49 3595 ) N ;
+   - and_131_ and
+      + PLACED ( 53 3880 ) N ;
+   - and_132_ and
+      + PLACED ( 65 4620 ) N ;
+   - and_133_ and
+      + PLACED ( 50 3639 ) N ;
+   - and_134_ and
+      + PLACED ( 48 3230 ) N ;
+   - and_135_ and
+      + PLACED ( 56 3504 ) N ;
+   - and_136_ and
+      + PLACED ( 47 3094 ) N ;
+   - and_137_ and
+      + PLACED ( 50 3348 ) N ;
+   - and_138_ and
+      + PLACED ( 51 3682 ) N ;
+   - and_139_ and
+      + PLACED ( 49 4052 ) N ;
+   - and_140_ and
+      + PLACED ( 58 4455 ) N ;
+   - and_141_ and
+      + PLACED ( 48 3867 ) N ;
+   - and_142_ and
+      + PLACED ( 44 3196 ) N ;
+   - and_143_ and
+      + PLACED ( 43 3319 ) N ;
+   - and_144_ and
+      + PLACED ( 38 4213 ) N ;
+   - and_145_ and
+      + PLACED ( 41 3606 ) N ;
+   - and_146_ and
+      + PLACED ( 48 3425 ) N ;
+   - and_147_ and
+      + PLACED ( 52 3683 ) N ;
+   - and_148_ and
+      + PLACED ( 57 4022 ) N ;
+   - and_149_ and
+      + PLACED ( 57 3677 ) N ;
+   - and_150_ and
+      + PLACED ( 56 4049 ) N ;
+   - and_151_ and
+      + PLACED ( 52 3484 ) N ;
+   - and_152_ and
+      + PLACED ( 47 3643 ) N ;
+   - and_153_ and
+      + PLACED ( 43 3871 ) N ;
+   - and_154_ and
+      + PLACED ( 48 3807 ) N ;
+   - and_155_ and
+      + PLACED ( 54 3578 ) N ;
+   - and_156_ and
+      + PLACED ( 59 3482 ) N ;
+   - and_157_ and
+      + PLACED ( 62 3488 ) N ;
+   - and_158_ and
+      + PLACED ( 56 3313 ) N ;
+   - and_159_ and
+      + PLACED ( 51 3549 ) N ;
+   - and_160_ and
+      + PLACED ( 49 3533 ) N ;
+   - and_161_ and
+      + PLACED ( 52 3519 ) N ;
+   - and_162_ and
+      + PLACED ( 53 3857 ) N ;
+   - and_163_ and
+      + PLACED ( 56 4408 ) N ;
+   - and_164_ and
+      + PLACED ( 47 3607 ) N ;
+   - and_165_ and
+      + PLACED ( 52 3571 ) N ;
+   - and_166_ and
+      + PLACED ( 47 3355 ) N ;
+   - and_167_ and
+      + PLACED ( 47 3337 ) N ;
+   - and_168_ and
+      + PLACED ( 52 3708 ) N ;
+   - and_169_ and
+      + PLACED ( 54 3623 ) N ;
+   - and_170_ and
+      + PLACED ( 51 3367 ) N ;
+   - and_171_ and
+      + PLACED ( 48 2961 ) N ;
+   - and_172_ and
+      + PLACED ( 44 3103 ) N ;
+   - and_173_ and
+      + PLACED ( 42 3383 ) N ;
+   - and_174_ and
+      + PLACED ( 36 3218 ) N ;
+   - and_175_ and
+      + PLACED ( 52 3671 ) N ;
+   - and_176_ and
+      + PLACED ( 43 2811 ) N ;
+   - and_177_ and
+      + PLACED ( 41 2996 ) N ;
+   - and_178_ and
+      + PLACED ( 48 3212 ) N ;
+   - and_179_ and
+      + PLACED ( 52 3347 ) N ;
+   - and_180_ and
+      + PLACED ( 42 3268 ) N ;
+   - and_181_ and
+      + PLACED ( 49 3536 ) N ;
+   - and_182_ and
+      + PLACED ( 46 4287 ) N ;
+   - and_183_ and
+      + PLACED ( 47 4378 ) N ;
+   - and_184_ and
+      + PLACED ( 43 3783 ) N ;
+   - and_185_ and
+      + PLACED ( 44 3622 ) N ;
+   - and_186_ and
+      + PLACED ( 45 3608 ) N ;
+   - and_187_ and
+      + PLACED ( 45 3550 ) N ;
+   - and_188_ and
+      + PLACED ( 48 3992 ) N ;
+   - and_189_ and
+      + PLACED ( 49 3255 ) N ;
+   - and_190_ and
+      + PLACED ( 49 3808 ) N ;
+   - and_191_ and
+      + PLACED ( 48 2974 ) N ;
+   - and_192_ and
+      + PLACED ( 65 4396 ) N ;
+   - and_193_ and
+      + PLACED ( 52 3086 ) N ;
+   - and_194_ and
+      + PLACED ( 53 2656 ) N ;
+   - and_195_ and
+      + PLACED ( 54 2650 ) N ;
+   - and_196_ and
+      + PLACED ( 57 3030 ) N ;
+   - and_197_ and
+      + PLACED ( 55 3578 ) N ;
+   - and_198_ and
+      + PLACED ( 52 3592 ) N ;
+   - and_199_ and
+      + PLACED ( 38 3355 ) N ;
+   - and_200_ and
+      + PLACED ( 41 3603 ) N ;
+   - and_201_ and
+      + PLACED ( 45 3934 ) N ;
+   - and_202_ and
+      + PLACED ( 46 3801 ) N ;
+   - and_203_ and
+      + PLACED ( 49 3571 ) N ;
+   - and_204_ and
+      + PLACED ( 54 4275 ) N ;
+   - and_205_ and
+      + PLACED ( 46 4061 ) N ;
+   - and_206_ and
+      + PLACED ( 41 3996 ) N ;
+   - and_207_ and
+      + PLACED ( 35 3880 ) N ;
+   - and_208_ and
+      + PLACED ( 41 3988 ) N ;
+   - and_209_ and
+      + PLACED ( 45 3857 ) N ;
+   - and_210_ and
+      + PLACED ( 51 3774 ) N ;
+   - and_211_ and
+      + PLACED ( 49 3492 ) N ;
+   - and_212_ and
+      + PLACED ( 51 3599 ) N ;
+   - and_213_ and
+      + PLACED ( 45 3543 ) N ;
+   - and_214_ and
+      + PLACED ( 42 3598 ) N ;
+   - and_215_ and
+      + PLACED ( 42 4136 ) N ;
+   - and_216_ and
+      + PLACED ( 46 3658 ) N ;
+   - and_217_ and
+      + PLACED ( 40 3882 ) N ;
+   - and_218_ and
+      + PLACED ( 39 3743 ) N ;
+   - and_219_ and
+      + PLACED ( 32 3100 ) N ;
+   - and_220_ and
+      + PLACED ( 36 2830 ) N ;
+   - and_221_ and
+      + PLACED ( 48 2785 ) N ;
+   - and_222_ and
+      + PLACED ( 35 2620 ) N ;
+   - and_223_ and
+      + PLACED ( 31 2955 ) N ;
+   - and_224_ and
+      + PLACED ( 38 3276 ) N ;
+   - and_225_ and
+      + PLACED ( 51 2776 ) N ;
+   - and_226_ and
+      + PLACED ( 51 3200 ) N ;
+   - and_227_ and
+      + PLACED ( 51 3379 ) N ;
+   - and_228_ and
+      + PLACED ( 46 3933 ) N ;
+   - and_229_ and
+      + PLACED ( 41 4008 ) N ;
+   - and_230_ and
+      + PLACED ( 40 3650 ) N ;
+   - and_231_ and
+      + PLACED ( 38 3094 ) N ;
+   - and_232_ and
+      + PLACED ( 51 3815 ) N ;
+   - and_233_ and
+      + PLACED ( 42 3452 ) N ;
+   - and_234_ and
+      + PLACED ( 48 3488 ) N ;
+   - and_235_ and
+      + PLACED ( 47 3504 ) N ;
+   - and_236_ and
+      + PLACED ( 43 3238 ) N ;
+   - and_237_ and
+      + PLACED ( 49 3592 ) N ;
+   - and_238_ and
+      + PLACED ( 48 3737 ) N ;
+   - and_239_ and
+      + PLACED ( 45 4002 ) N ;
+   - and_240_ and
+      + PLACED ( 41 4068 ) N ;
+   - and_241_ and
+      + PLACED ( 43 3867 ) N ;
+   - and_242_ and
+      + PLACED ( 45 3417 ) N ;
+   - and_243_ and
+      + PLACED ( 34 2585 ) N ;
+   - and_244_ and
+      + PLACED ( 56 4159 ) N ;
+   - and_245_ and
+      + PLACED ( 48 3748 ) N ;
+   - and_246_ and
+      + PLACED ( 50 3902 ) N ;
+   - and_247_ and
+      + PLACED ( 46 3577 ) N ;
+   - and_248_ and
+      + PLACED ( 45 3818 ) N ;
+   - and_249_ and
+      + PLACED ( 49 3877 ) N ;
+   - and_250_ and
+      + PLACED ( 51 3561 ) N ;
+   - and_251_ and
+      + PLACED ( 51 3329 ) N ;
+   - and_252_ and
+      + PLACED ( 55 3597 ) N ;
+   - and_253_ and
+      + PLACED ( 55 4039 ) N ;
+   - and_254_ and
+      + PLACED ( 49 3755 ) N ;
+   - and_255_ and
+      + PLACED ( 63 4401 ) N ;
+   - and_256_ and
+      + PLACED ( 53 3856 ) N ;
+   - and_257_ and
+      + PLACED ( 50 3554 ) N ;
+   - and_258_ and
+      + PLACED ( 51 3812 ) N ;
+   - and_259_ and
+      + PLACED ( 48 3757 ) N ;
+   - and_260_ and
+      + PLACED ( 41 3921 ) N ;
+   - and_261_ and
+      + PLACED ( 47 3482 ) N ;
+   - and_262_ and
+      + PLACED ( 45 4013 ) N ;
+   - and_263_ and
+      + PLACED ( 41 3836 ) N ;
+   - and_264_ and
+      + PLACED ( 34 3471 ) N ;
+   - and_265_ and
+      + PLACED ( 39 3478 ) N ;
+   - and_266_ and
+      + PLACED ( 46 3274 ) N ;
+   - and_267_ and
+      + PLACED ( 48 3133 ) N ;
+   - and_268_ and
+      + PLACED ( 47 3484 ) N ;
+   - and_269_ and
+      + PLACED ( 49 3201 ) N ;
+   - and_270_ and
+      + PLACED ( 43 2928 ) N ;
+   - and_271_ and
+      + PLACED ( 52 3498 ) N ;
+   - and_272_ and
+      + PLACED ( 54 3865 ) N ;
+   - and_273_ and
+      + PLACED ( 44 3398 ) N ;
+   - and_274_ and
+      + PLACED ( 40 3245 ) N ;
+   - and_275_ and
+      + PLACED ( 40 3700 ) N ;
+   - and_276_ and
+      + PLACED ( 42 3842 ) N ;
+   - and_277_ and
+      + PLACED ( 41 3779 ) N ;
+   - and_278_ and
+      + PLACED ( 39 3636 ) N ;
+   - and_279_ and
+      + PLACED ( 50 3688 ) N ;
+   - and_280_ and
+      + PLACED ( 41 3235 ) N ;
+   - and_281_ and
+      + PLACED ( 39 3265 ) N ;
+   - and_282_ and
+      + PLACED ( 51 4155 ) N ;
+   - and_283_ and
+      + PLACED ( 44 3583 ) N ;
+   - and_284_ and
+      + PLACED ( 44 3461 ) N ;
+   - and_285_ and
+      + PLACED ( 45 3220 ) N ;
+   - and_286_ and
+      + PLACED ( 41 3363 ) N ;
+   - and_287_ and
+      + PLACED ( 38 3088 ) N ;
+   - and_288_ and
+      + PLACED ( 46 3266 ) N ;
+   - and_289_ and
+      + PLACED ( 45 3008 ) N ;
+   - and_290_ and
+      + PLACED ( 43 3235 ) N ;
+   - and_291_ and
+      + PLACED ( 42 3388 ) N ;
+   - and_292_ and
+      + PLACED ( 44 3503 ) N ;
+   - and_293_ and
+      + PLACED ( 46 3497 ) N ;
+   - and_294_ and
+      + PLACED ( 49 3705 ) N ;
+   - and_295_ and
+      + PLACED ( 49 3718 ) N ;
+   - and_296_ and
+      + PLACED ( 51 3673 ) N ;
+   - and_297_ and
+      + PLACED ( 53 3708 ) N ;
+   - and_298_ and
+      + PLACED ( 51 3377 ) N ;
+   - and_299_ and
+      + PLACED ( 53 3958 ) N ;
+   - and_300_ and
+      + PLACED ( 55 3799 ) N ;
+   - and_301_ and
+      + PLACED ( 49 3355 ) N ;
+   - and_302_ and
+      + PLACED ( 57 3892 ) N ;
+   - and_303_ and
+      + PLACED ( 51 3586 ) N ;
+   - and_304_ and
+      + PLACED ( 53 3978 ) N ;
+   - and_305_ and
+      + PLACED ( 57 4196 ) N ;
+   - and_306_ and
+      + PLACED ( 52 3861 ) N ;
+   - and_307_ and
+      + PLACED ( 53 3548 ) N ;
+   - and_308_ and
+      + PLACED ( 51 3389 ) N ;
+   - and_309_ and
+      + PLACED ( 61 4514 ) N ;
+   - and_310_ and
+      + PLACED ( 46 3273 ) N ;
+   - and_311_ and
+      + PLACED ( 50 3437 ) N ;
+   - and_312_ and
+      + PLACED ( 48 3654 ) N ;
+   - and_313_ and
+      + PLACED ( 51 3285 ) N ;
+   - and_314_ and
+      + PLACED ( 54 3803 ) N ;
+   - and_315_ and
+      + PLACED ( 58 3868 ) N ;
+   - and_316_ and
+      + PLACED ( 55 4031 ) N ;
+   - and_317_ and
+      + PLACED ( 53 3646 ) N ;
+   - and_318_ and
+      + PLACED ( 43 3941 ) N ;
+   - and_319_ and
+      + PLACED ( 37 3378 ) N ;
+   - and_320_ and
+      + PLACED ( 40 3317 ) N ;
+   - and_321_ and
+      + PLACED ( 50 4099 ) N ;
+   - and_322_ and
+      + PLACED ( 42 3986 ) N ;
+   - and_323_ and
+      + PLACED ( 44 3885 ) N ;
+   - and_324_ and
+      + PLACED ( 48 3712 ) N ;
+   - and_325_ and
+      + PLACED ( 56 3686 ) N ;
+   - and_326_ and
+      + PLACED ( 57 3653 ) N ;
+   - and_327_ and
+      + PLACED ( 55 3735 ) N ;
+   - and_328_ and
+      + PLACED ( 47 3682 ) N ;
+   - and_329_ and
+      + PLACED ( 43 3461 ) N ;
+   - and_330_ and
+      + PLACED ( 46 3362 ) N ;
+   - and_331_ and
+      + PLACED ( 64 4099 ) N ;
+   - and_332_ and
+      + PLACED ( 39 3327 ) N ;
+   - and_333_ and
+      + PLACED ( 43 3214 ) N ;
+   - and_334_ and
+      + PLACED ( 43 2899 ) N ;
+   - and_335_ and
+      + PLACED ( 41 3389 ) N ;
+   - and_336_ and
+      + PLACED ( 43 2924 ) N ;
+   - and_337_ and
+      + PLACED ( 47 2719 ) N ;
+   - and_338_ and
+      + PLACED ( 52 2782 ) N ;
+   - and_339_ and
+      + PLACED ( 56 2969 ) N ;
+   - and_340_ and
+      + PLACED ( 49 2878 ) N ;
+   - and_341_ and
+      + PLACED ( 53 3241 ) N ;
+   - and_342_ and
+      + PLACED ( 51 2779 ) N ;
+   - and_343_ and
+      + PLACED ( 56 2894 ) N ;
+   - and_344_ and
+      + PLACED ( 50 2975 ) N ;
+   - and_345_ and
+      + PLACED ( 57 4181 ) N ;
+   - and_346_ and
+      + PLACED ( 49 3457 ) N ;
+   - and_347_ and
+      + PLACED ( 50 3607 ) N ;
+   - and_348_ and
+      + PLACED ( 49 4242 ) N ;
+   - and_349_ and
+      + PLACED ( 50 3833 ) N ;
+   - and_350_ and
+      + PLACED ( 51 3520 ) N ;
+   - and_351_ and
+      + PLACED ( 47 3664 ) N ;
+   - and_352_ and
+      + PLACED ( 42 3702 ) N ;
+   - and_353_ and
+      + PLACED ( 41 4153 ) N ;
+   - and_354_ and
+      + PLACED ( 36 4568 ) N ;
+   - and_355_ and
+      + PLACED ( 41 4430 ) N ;
+   - and_356_ and
+      + PLACED ( 48 3664 ) N ;
+   - and_357_ and
+      + PLACED ( 49 3857 ) N ;
+   - and_358_ and
+      + PLACED ( 53 4277 ) N ;
+   - and_359_ and
+      + PLACED ( 53 4766 ) N ;
+   - and_360_ and
+      + PLACED ( 53 4669 ) N ;
+   - and_361_ and
+      + PLACED ( 43 3971 ) N ;
+   - and_362_ and
+      + PLACED ( 50 4812 ) N ;
+   - and_363_ and
+      + PLACED ( 48 4383 ) N ;
+   - and_364_ and
+      + PLACED ( 48 4061 ) N ;
+   - and_365_ and
+      + PLACED ( 45 3618 ) N ;
+   - and_366_ and
+      + PLACED ( 41 3724 ) N ;
+   - and_367_ and
+      + PLACED ( 37 2959 ) N ;
+   - and_368_ and
+      + PLACED ( 41 3366 ) N ;
+   - and_369_ and
+      + PLACED ( 44 3510 ) N ;
+   - and_370_ and
+      + PLACED ( 57 3742 ) N ;
+   - and_371_ and
+      + PLACED ( 50 3370 ) N ;
+   - and_372_ and
+      + PLACED ( 48 3535 ) N ;
+   - and_373_ and
+      + PLACED ( 47 3625 ) N ;
+   - and_374_ and
+      + PLACED ( 39 4158 ) N ;
+   - and_375_ and
+      + PLACED ( 45 3866 ) N ;
+   - and_376_ and
+      + PLACED ( 44 4151 ) N ;
+   - and_377_ and
+      + PLACED ( 51 3988 ) N ;
+   - and_378_ and
+      + PLACED ( 52 4002 ) N ;
+   - and_379_ and
+      + PLACED ( 50 4127 ) N ;
+   - and_380_ and
+      + PLACED ( 52 3363 ) N ;
+   - and_381_ and
+      + PLACED ( 48 3856 ) N ;
+   - and_382_ and
+      + PLACED ( 53 4152 ) N ;
+   - and_383_ and
+      + PLACED ( 49 4427 ) N ;
+   - and_384_ and
+      + PLACED ( 50 4618 ) N ;
+   - and_385_ and
+      + PLACED ( 49 3934 ) N ;
+   - and_386_ and
+      + PLACED ( 49 2860 ) N ;
+   - and_387_ and
+      + PLACED ( 50 3940 ) N ;
+   - and_388_ and
+      + PLACED ( 54 3607 ) N ;
+   - and_389_ and
+      + PLACED ( 52 2804 ) N ;
+   - and_390_ and
+      + PLACED ( 51 3141 ) N ;
+   - and_391_ and
+      + PLACED ( 43 3602 ) N ;
+   - and_392_ and
+      + PLACED ( 45 4068 ) N ;
+   - and_393_ and
+      + PLACED ( 48 4075 ) N ;
+   - and_394_ and
+      + PLACED ( 53 3957 ) N ;
+   - and_395_ and
+      + PLACED ( 54 3657 ) N ;
+   - and_396_ and
+      + PLACED ( 39 3104 ) N ;
+   - and_397_ and
+      + PLACED ( 40 2875 ) N ;
+   - and_398_ and
+      + PLACED ( 48 3149 ) N ;
+   - and_399_ and
+      + PLACED ( 39 3117 ) N ;
+   - and_400_ and
+      + PLACED ( 42 2808 ) N ;
+   - and_401_ and
+      + PLACED ( 45 2775 ) N ;
+   - and_402_ and
+      + PLACED ( 50 2792 ) N ;
+   - and_403_ and
+      + PLACED ( 50 3305 ) N ;
+   - and_404_ and
+      + PLACED ( 56 3165 ) N ;
+   - and_405_ and
+      + PLACED ( 59 2937 ) N ;
+   - and_406_ and
+      + PLACED ( 59 3290 ) N ;
+   - and_407_ and
+      + PLACED ( 52 3452 ) N ;
+   - and_408_ and
+      + PLACED ( 45 3281 ) N ;
+   - and_409_ and
+      + PLACED ( 44 3573 ) N ;
+   - and_410_ and
+      + PLACED ( 38 3091 ) N ;
+   - and_411_ and
+      + PLACED ( 46 3886 ) N ;
+   - and_412_ and
+      + PLACED ( 55 3877 ) N ;
+   - and_413_ and
+      + PLACED ( 50 3475 ) N ;
+   - and_414_ and
+      + PLACED ( 53 3386 ) N ;
+   - and_415_ and
+      + PLACED ( 49 3236 ) N ;
+   - and_416_ and
+      + PLACED ( 49 3850 ) N ;
+   - and_417_ and
+      + PLACED ( 49 3710 ) N ;
+   - and_418_ and
+      + PLACED ( 48 3372 ) N ;
+   - and_419_ and
+      + PLACED ( 52 4302 ) N ;
+   - and_420_ and
+      + PLACED ( 50 3277 ) N ;
+   - and_421_ and
+      + PLACED ( 51 3889 ) N ;
+   - and_422_ and
+      + PLACED ( 48 3889 ) N ;
+   - and_423_ and
+      + PLACED ( 50 3548 ) N ;
+   - and_424_ and
+      + PLACED ( 44 3662 ) N ;
+   - and_425_ and
+      + PLACED ( 43 3444 ) N ;
+   - and_426_ and
+      + PLACED ( 47 3423 ) N ;
+   - and_427_ and
+      + PLACED ( 49 3430 ) N ;
+   - and_428_ and
+      + PLACED ( 46 3530 ) N ;
+   - and_429_ and
+      + PLACED ( 52 3763 ) N ;
+   - and_430_ and
+      + PLACED ( 51 3731 ) N ;
+   - and_431_ and
+      + PLACED ( 43 3240 ) N ;
+   - and_432_ and
+      + PLACED ( 47 3222 ) N ;
+   - and_433_ and
+      + PLACED ( 51 3647 ) N ;
+   - and_434_ and
+      + PLACED ( 46 3476 ) N ;
+   - and_435_ and
+      + PLACED ( 46 3397 ) N ;
+   - and_436_ and
+      + PLACED ( 46 3608 ) N ;
+   - and_437_ and
+      + PLACED ( 43 3665 ) N ;
+   - and_438_ and
+      + PLACED ( 46 3532 ) N ;
+   - and_439_ and
+      + PLACED ( 47 3653 ) N ;
+   - and_440_ and
+      + PLACED ( 45 3244 ) N ;
+   - and_441_ and
+      + PLACED ( 41 2958 ) N ;
+   - and_442_ and
+      + PLACED ( 45 3260 ) N ;
+   - and_443_ and
+      + PLACED ( 44 2835 ) N ;
+   - and_444_ and
+      + PLACED ( 48 2835 ) N ;
+   - and_445_ and
+      + PLACED ( 50 2509 ) N ;
+   - and_446_ and
+      + PLACED ( 52 3111 ) N ;
+   - and_447_ and
+      + PLACED ( 52 2933 ) N ;
+   - and_448_ and
+      + PLACED ( 47 2877 ) N ;
+   - and_449_ and
+      + PLACED ( 37 3268 ) N ;
+   - and_450_ and
+      + PLACED ( 35 3330 ) N ;
+   - and_451_ and
+      + PLACED ( 46 3285 ) N ;
+   - and_452_ and
+      + PLACED ( 46 3325 ) N ;
+   - and_453_ and
+      + PLACED ( 40 3349 ) N ;
+   - and_454_ and
+      + PLACED ( 37 3261 ) N ;
+   - and_455_ and
+      + PLACED ( 39 3286 ) N ;
+   - and_456_ and
+      + PLACED ( 51 2969 ) N ;
+   - and_457_ and
+      + PLACED ( 55 2609 ) N ;
+   - and_458_ and
+      + PLACED ( 51 2980 ) N ;
+   - and_459_ and
+      + PLACED ( 43 3264 ) N ;
+   - and_460_ and
+      + PLACED ( 38 3344 ) N ;
+   - and_461_ and
+      + PLACED ( 34 3639 ) N ;
+   - and_462_ and
+      + PLACED ( 36 3704 ) N ;
+   - and_463_ and
+      + PLACED ( 43 3274 ) N ;
+   - and_464_ and
+      + PLACED ( 40 3338 ) N ;
+   - and_465_ and
+      + PLACED ( 41 3164 ) N ;
+   - and_466_ and
+      + PLACED ( 39 3477 ) N ;
+   - and_467_ and
+      + PLACED ( 38 3518 ) N ;
+   - and_468_ and
+      + PLACED ( 40 3545 ) N ;
+   - and_469_ and
+      + PLACED ( 51 3369 ) N ;
+   - and_470_ and
+      + PLACED ( 47 3781 ) N ;
+   - and_471_ and
+      + PLACED ( 46 3906 ) N ;
+   - and_472_ and
+      + PLACED ( 49 3767 ) N ;
+   - and_473_ and
+      + PLACED ( 53 3146 ) N ;
+   - and_474_ and
+      + PLACED ( 52 3481 ) N ;
+   - and_475_ and
+      + PLACED ( 53 3313 ) N ;
+   - and_476_ and
+      + PLACED ( 51 3197 ) N ;
+   - and_477_ and
+      + PLACED ( 53 3137 ) N ;
+   - and_478_ and
+      + PLACED ( 42 3598 ) N ;
+   - and_479_ and
+      + PLACED ( 40 3796 ) N ;
+   - and_480_ and
+      + PLACED ( 48 3273 ) N ;
+   - and_481_ and
+      + PLACED ( 47 3005 ) N ;
+   - and_482_ and
+      + PLACED ( 47 2831 ) N ;
+   - and_483_ and
+      + PLACED ( 52 2782 ) N ;
+   - and_484_ and
+      + PLACED ( 49 2649 ) N ;
+   - and_485_ and
+      + PLACED ( 44 2662 ) N ;
+   - and_486_ and
+      + PLACED ( 46 3652 ) N ;
+   - and_487_ and
+      + PLACED ( 47 3425 ) N ;
+   - and_488_ and
+      + PLACED ( 48 3280 ) N ;
+   - and_489_ and
+      + PLACED ( 45 3168 ) N ;
+   - and_490_ and
+      + PLACED ( 37 3717 ) N ;
+   - and_491_ and
+      + PLACED ( 40 3174 ) N ;
+   - and_492_ and
+      + PLACED ( 45 3456 ) N ;
+   - and_493_ and
+      + PLACED ( 44 3292 ) N ;
+   - and_494_ and
+      + PLACED ( 42 3379 ) N ;
+   - and_495_ and
+      + PLACED ( 49 3349 ) N ;
+   - and_496_ and
+      + PLACED ( 46 3643 ) N ;
+   - and_497_ and
+      + PLACED ( 39 4029 ) N ;
+   - and_498_ and
+      + PLACED ( 34 4353 ) N ;
+   - and_499_ and
+      + PLACED ( 36 4523 ) N ;
+   - and_500_ and
+      + PLACED ( 42 4364 ) N ;
+   - and_501_ and
+      + PLACED ( 46 3922 ) N ;
+   - and_502_ and
+      + PLACED ( 51 3620 ) N ;
+   - and_503_ and
+      + PLACED ( 50 3401 ) N ;
+   - and_504_ and
+      + PLACED ( 48 3109 ) N ;
+   - and_505_ and
+      + PLACED ( 51 2978 ) N ;
+   - and_506_ and
+      + PLACED ( 50 2988 ) N ;
+   - and_507_ and
+      + PLACED ( 50 2801 ) N ;
+   - and_508_ and
+      + PLACED ( 53 2758 ) N ;
+   - and_509_ and
+      + PLACED ( 52 3794 ) N ;
+   - and_510_ and
+      + PLACED ( 55 4129 ) N ;
+   - and_511_ and
+      + PLACED ( 49 3867 ) N ;
+   - and_512_ and
+      + PLACED ( 49 3533 ) N ;
+   - and_513_ and
+      + PLACED ( 53 3306 ) N ;
+   - and_514_ and
+      + PLACED ( 50 3266 ) N ;
+   - and_515_ and
+      + PLACED ( 44 3133 ) N ;
+   - and_516_ and
+      + PLACED ( 46 3409 ) N ;
+   - and_517_ and
+      + PLACED ( 47 3617 ) N ;
+   - and_518_ and
+      + PLACED ( 46 3205 ) N ;
+   - and_519_ and
+      + PLACED ( 45 3350 ) N ;
+   - and_520_ and
+      + PLACED ( 46 3538 ) N ;
+   - and_521_ and
+      + PLACED ( 45 3836 ) N ;
+   - and_522_ and
+      + PLACED ( 44 3959 ) N ;
+   - and_523_ and
+      + PLACED ( 45 3806 ) N ;
+   - and_524_ and
+      + PLACED ( 41 3511 ) N ;
+   - and_525_ and
+      + PLACED ( 37 3233 ) N ;
+   - and_526_ and
+      + PLACED ( 40 3453 ) N ;
+   - and_527_ and
+      + PLACED ( 45 3386 ) N ;
+   - and_528_ and
+      + PLACED ( 42 3485 ) N ;
+   - and_529_ and
+      + PLACED ( 43 3564 ) N ;
+   - and_530_ and
+      + PLACED ( 46 3506 ) N ;
+   - and_531_ and
+      + PLACED ( 49 3307 ) N ;
+   - and_532_ and
+      + PLACED ( 44 2910 ) N ;
+   - and_533_ and
+      + PLACED ( 49 3116 ) N ;
+   - and_534_ and
+      + PLACED ( 48 3213 ) N ;
+   - and_535_ and
+      + PLACED ( 53 3092 ) N ;
+   - and_536_ and
+      + PLACED ( 53 2911 ) N ;
+   - and_537_ and
+      + PLACED ( 52 3026 ) N ;
+   - and_538_ and
+      + PLACED ( 38 3710 ) N ;
+   - and_539_ and
+      + PLACED ( 42 3617 ) N ;
+   - and_540_ and
+      + PLACED ( 50 3461 ) N ;
+   - and_541_ and
+      + PLACED ( 49 3664 ) N ;
+   - and_542_ and
+      + PLACED ( 44 3852 ) N ;
+   - and_543_ and
+      + PLACED ( 48 3676 ) N ;
+   - and_544_ and
+      + PLACED ( 48 3094 ) N ;
+   - and_545_ and
+      + PLACED ( 50 3665 ) N ;
+   - and_546_ and
+      + PLACED ( 47 3925 ) N ;
+   - and_547_ and
+      + PLACED ( 44 3594 ) N ;
+   - and_548_ and
+      + PLACED ( 45 3281 ) N ;
+   - and_549_ and
+      + PLACED ( 38 3269 ) N ;
+   - and_550_ and
+      + PLACED ( 50 3571 ) N ;
+   - and_551_ and
+      + PLACED ( 44 2973 ) N ;
+   - and_552_ and
+      + PLACED ( 40 3185 ) N ;
+   - and_553_ and
+      + PLACED ( 41 3101 ) N ;
+   - and_554_ and
+      + PLACED ( 48 3273 ) N ;
+   - and_555_ and
+      + PLACED ( 50 3157 ) N ;
+   - and_556_ and
+      + PLACED ( 52 3053 ) N ;
+   - and_557_ and
+      + PLACED ( 49 3262 ) N ;
+   - and_558_ and
+      + PLACED ( 46 2477 ) N ;
+   - and_559_ and
+      + PLACED ( 45 2489 ) N ;
+   - and_560_ and
+      + PLACED ( 47 2998 ) N ;
+   - and_561_ and
+      + PLACED ( 46 2796 ) N ;
+   - and_562_ and
+      + PLACED ( 41 2925 ) N ;
+   - and_563_ and
+      + PLACED ( 46 3479 ) N ;
+   - and_564_ and
+      + PLACED ( 45 3270 ) N ;
+   - and_565_ and
+      + PLACED ( 47 3223 ) N ;
+   - and_566_ and
+      + PLACED ( 39 3376 ) N ;
+   - and_567_ and
+      + PLACED ( 42 3313 ) N ;
+   - and_568_ and
+      + PLACED ( 44 3572 ) N ;
+   - and_569_ and
+      + PLACED ( 43 3577 ) N ;
+   - and_570_ and
+      + PLACED ( 41 3390 ) N ;
+   - and_571_ and
+      + PLACED ( 44 3443 ) N ;
+   - and_572_ and
+      + PLACED ( 49 3826 ) N ;
+   - and_573_ and
+      + PLACED ( 49 3777 ) N ;
+   - and_574_ and
+      + PLACED ( 44 3672 ) N ;
+   - and_575_ and
+      + PLACED ( 48 3140 ) N ;
+   - and_576_ and
+      + PLACED ( 41 3322 ) N ;
+   - and_577_ and
+      + PLACED ( 41 3851 ) N ;
+   - and_578_ and
+      + PLACED ( 39 3942 ) N ;
+   - and_579_ and
+      + PLACED ( 42 3825 ) N ;
+   - and_580_ and
+      + PLACED ( 48 3656 ) N ;
+   - and_581_ and
+      + PLACED ( 47 3515 ) N ;
+   - and_582_ and
+      + PLACED ( 45 3023 ) N ;
+   - and_583_ and
+      + PLACED ( 46 2889 ) N ;
+   - and_584_ and
+      + PLACED ( 46 3090 ) N ;
+   - and_585_ and
+      + PLACED ( 48 3062 ) N ;
+   - and_586_ and
+      + PLACED ( 48 2798 ) N ;
+   - and_587_ and
+      + PLACED ( 44 2881 ) N ;
+   - and_588_ and
+      + PLACED ( 45 2977 ) N ;
+   - and_589_ and
+      + PLACED ( 45 3337 ) N ;
+   - and_590_ and
+      + PLACED ( 44 3185 ) N ;
+   - and_591_ and
+      + PLACED ( 44 3646 ) N ;
+   - and_592_ and
+      + PLACED ( 42 3371 ) N ;
+   - and_593_ and
+      + PLACED ( 35 3230 ) N ;
+   - and_594_ and
+      + PLACED ( 38 3145 ) N ;
+   - and_595_ and
+      + PLACED ( 44 2593 ) N ;
+   - and_596_ and
+      + PLACED ( 46 3311 ) N ;
+   - and_597_ and
+      + PLACED ( 54 3635 ) N ;
+   - and_598_ and
+      + PLACED ( 52 3813 ) N ;
+   - and_599_ and
+      + PLACED ( 47 3582 ) N ;
+   - and_600_ and
+      + PLACED ( 54 3997 ) N ;
+   - and_601_ and
+      + PLACED ( 51 3789 ) N ;
+   - and_602_ and
+      + PLACED ( 53 3744 ) N ;
+   - and_603_ and
+      + PLACED ( 54 3708 ) N ;
+   - and_604_ and
+      + PLACED ( 46 3755 ) N ;
+   - and_605_ and
+      + PLACED ( 50 4026 ) N ;
+   - and_606_ and
+      + PLACED ( 56 4174 ) N ;
+   - and_607_ and
+      + PLACED ( 54 4136 ) N ;
+   - and_608_ and
+      + PLACED ( 50 3516 ) N ;
+   - and_609_ and
+      + PLACED ( 47 3748 ) N ;
+   - and_610_ and
+      + PLACED ( 48 3209 ) N ;
+   - and_611_ and
+      + PLACED ( 52 3252 ) N ;
+   - and_612_ and
+      + PLACED ( 52 3043 ) N ;
+   - and_613_ and
+      + PLACED ( 46 2954 ) N ;
+   - and_614_ and
+      + PLACED ( 45 3273 ) N ;
+   - and_615_ and
+      + PLACED ( 45 3034 ) N ;
+   - and_616_ and
+      + PLACED ( 44 2944 ) N ;
+   - and_617_ and
+      + PLACED ( 42 3300 ) N ;
+   - and_618_ and
+      + PLACED ( 40 3707 ) N ;
+   - and_619_ and
+      + PLACED ( 44 3390 ) N ;
+   - and_620_ and
+      + PLACED ( 40 3720 ) N ;
+   - and_621_ and
+      + PLACED ( 38 3708 ) N ;
+   - and_622_ and
+      + PLACED ( 51 3962 ) N ;
+   - and_623_ and
+      + PLACED ( 45 3890 ) N ;
+   - and_624_ and
+      + PLACED ( 42 4024 ) N ;
+   - and_625_ and
+      + PLACED ( 41 3818 ) N ;
+   - and_626_ and
+      + PLACED ( 43 3795 ) N ;
+   - and_627_ and
+      + PLACED ( 49 3319 ) N ;
+   - and_628_ and
+      + PLACED ( 46 3084 ) N ;
+   - and_629_ and
+      + PLACED ( 41 3533 ) N ;
+   - and_630_ and
+      + PLACED ( 35 3107 ) N ;
+   - and_631_ and
+      + PLACED ( 36 3445 ) N ;
+   - and_632_ and
+      + PLACED ( 41 3594 ) N ;
+   - and_633_ and
+      + PLACED ( 50 3728 ) N ;
+   - and_634_ and
+      + PLACED ( 55 3746 ) N ;
+   - and_635_ and
+      + PLACED ( 40 3571 ) N ;
+   - and_636_ and
+      + PLACED ( 45 3859 ) N ;
+   - and_637_ and
+      + PLACED ( 54 3966 ) N ;
+   - and_638_ and
+      + PLACED ( 48 3922 ) N ;
+   - and_639_ and
+      + PLACED ( 44 3839 ) N ;
+   - and_640_ and
+      + PLACED ( 44 3548 ) N ;
+   - and_641_ and
+      + PLACED ( 43 3365 ) N ;
+   - and_642_ and
+      + PLACED ( 48 2978 ) N ;
+   - and_643_ and
+      + PLACED ( 45 2890 ) N ;
+   - and_644_ and
+      + PLACED ( 47 3012 ) N ;
+   - and_645_ and
+      + PLACED ( 52 3400 ) N ;
+   - and_646_ and
+      + PLACED ( 53 3592 ) N ;
+   - and_647_ and
+      + PLACED ( 58 3639 ) N ;
+   - and_648_ and
+      + PLACED ( 53 3442 ) N ;
+   - and_649_ and
+      + PLACED ( 52 3218 ) N ;
+   - and_650_ and
+      + PLACED ( 55 3441 ) N ;
+   - and_651_ and
+      + PLACED ( 54 3351 ) N ;
+   - and_652_ and
+      + PLACED ( 50 3022 ) N ;
+   - and_653_ and
+      + PLACED ( 49 2999 ) N ;
+   - and_654_ and
+      + PLACED ( 51 2718 ) N ;
+   - and_655_ and
+      + PLACED ( 50 3217 ) N ;
+   - and_656_ and
+      + PLACED ( 53 2925 ) N ;
+   - and_657_ and
+      + PLACED ( 57 2402 ) N ;
+   - and_658_ and
+      + PLACED ( 41 3509 ) N ;
+   - and_659_ and
+      + PLACED ( 50 3502 ) N ;
+   - and_660_ and
+      + PLACED ( 46 3514 ) N ;
+   - and_661_ and
+      + PLACED ( 41 3734 ) N ;
+   - and_662_ and
+      + PLACED ( 40 3127 ) N ;
+   - and_663_ and
+      + PLACED ( 40 3343 ) N ;
+   - and_664_ and
+      + PLACED ( 39 3648 ) N ;
+   - and_665_ and
+      + PLACED ( 41 3422 ) N ;
+   - and_666_ and
+      + PLACED ( 43 3570 ) N ;
+   - and_667_ and
+      + PLACED ( 41 3443 ) N ;
+   - and_668_ and
+      + PLACED ( 38 3314 ) N ;
+   - and_669_ and
+      + PLACED ( 38 3538 ) N ;
+   - and_670_ and
+      + PLACED ( 48 3124 ) N ;
+   - and_671_ and
+      + PLACED ( 45 2845 ) N ;
+   - and_672_ and
+      + PLACED ( 44 2794 ) N ;
+   - and_673_ and
+      + PLACED ( 40 2834 ) N ;
+   - and_674_ and
+      + PLACED ( 41 3040 ) N ;
+   - and_675_ and
+      + PLACED ( 38 3735 ) N ;
+   - and_676_ and
+      + PLACED ( 40 3775 ) N ;
+   - and_677_ and
+      + PLACED ( 46 3170 ) N ;
+   - and_678_ and
+      + PLACED ( 50 3359 ) N ;
+   - and_679_ and
+      + PLACED ( 50 3381 ) N ;
+   - and_680_ and
+      + PLACED ( 45 3783 ) N ;
+   - and_681_ and
+      + PLACED ( 43 3874 ) N ;
+   - and_682_ and
+      + PLACED ( 48 3844 ) N ;
+   - and_683_ and
+      + PLACED ( 48 3569 ) N ;
+   - and_684_ and
+      + PLACED ( 48 3283 ) N ;
+   - and_685_ and
+      + PLACED ( 46 3245 ) N ;
+   - and_686_ and
+      + PLACED ( 48 3046 ) N ;
+   - and_687_ and
+      + PLACED ( 54 3164 ) N ;
+   - and_688_ and
+      + PLACED ( 52 2765 ) N ;
+   - and_689_ and
+      + PLACED ( 36 3270 ) N ;
+   - and_690_ and
+      + PLACED ( 38 2935 ) N ;
+   - and_691_ and
+      + PLACED ( 47 2848 ) N ;
+   - and_692_ and
+      + PLACED ( 45 3450 ) N ;
+   - and_693_ and
+      + PLACED ( 42 3652 ) N ;
+   - and_694_ and
+      + PLACED ( 40 3741 ) N ;
+   - and_695_ and
+      + PLACED ( 39 3808 ) N ;
+   - and_696_ and
+      + PLACED ( 44 3258 ) N ;
+   - and_697_ and
+      + PLACED ( 46 3339 ) N ;
+   - and_698_ and
+      + PLACED ( 50 3875 ) N ;
+   - and_699_ and
+      + PLACED ( 49 3999 ) N ;
+   - and_700_ and
+      + PLACED ( 42 3786 ) N ;
+   - and_701_ and
+      + PLACED ( 45 3796 ) N ;
+   - and_702_ and
+      + PLACED ( 47 3340 ) N ;
+   - and_703_ and
+      + PLACED ( 60 3018 ) N ;
+END COMPONENTS
+
+PINS 22 ;
+   - output_0 + NET output_0
+      + DIRECTION OUTPUT
+      + PLACED ( 0 7140 ) N
+      + LAYER metal3 ( 0 0 ) ( 510 100 ) ;
+   - output_1 + NET output_1
+      + DIRECTION OUTPUT
+      + PLACED ( 10 7140 ) N
+      + LAYER metal3 ( 0 0 ) ( 510 100 ) ;
+   - output_2 + NET output_2
+      + DIRECTION OUTPUT
+      + PLACED ( 20 7140 ) N
+      + LAYER metal3 ( 0 0 ) ( 510 100 ) ;
+   - output_3 + NET output_3
+      + DIRECTION OUTPUT
+      + PLACED ( 30 7140 ) N
+      + LAYER metal3 ( 0 0 ) ( 510 100 ) ;
+   - output_4 + NET output_4
+      + DIRECTION OUTPUT
+      + PLACED ( 40 7140 ) N
+      + LAYER metal3 ( 0 0 ) ( 510 100 ) ;
+   - output_5 + NET output_5
+      + DIRECTION OUTPUT
+      + PLACED ( 50 7140 ) N
+      + LAYER metal3 ( 0 0 ) ( 510 100 ) ;
+   - output_6 + NET output_6
+      + DIRECTION OUTPUT
+      + PLACED ( 60 7140 ) N
+      + LAYER metal3 ( 0 0 ) ( 510 100 ) ;
+   - output_7 + NET output_7
+      + DIRECTION OUTPUT
+      + PLACED ( 70 7140 ) N
+      + LAYER metal3 ( 0 0 ) ( 510 100 ) ;
+   - output_8 + NET output_8
+      + DIRECTION OUTPUT
+      + PLACED ( 80 7140 ) N
+      + LAYER metal3 ( 0 0 ) ( 510 100 ) ;
+   - output_9 + NET output_9
+      + DIRECTION OUTPUT
+      + PLACED ( 90 7140 ) N
+      + LAYER metal3 ( 0 0 ) ( 510 100 ) ;
+   - output_10 + NET output_10
+      + DIRECTION OUTPUT
+      + PLACED ( 100 7140 ) N
+      + LAYER metal3 ( 0 0 ) ( 510 100 ) ;
+   - input_0 + NET input_0
+      + DIRECTION INPUT
+      + PLACED ( 0 0 ) N
+      + LAYER metal3 ( 0 0 ) ( 510 100 ) ;
+   - input_1 + NET input_1
+      + DIRECTION INPUT
+      + PLACED ( 10 0 ) N
+      + LAYER metal3 ( 0 0 ) ( 510 100 ) ;
+   - input_2 + NET input_2
+      + DIRECTION INPUT
+      + PLACED ( 20 0 ) N
+      + LAYER metal3 ( 0 0 ) ( 510 100 ) ;
+   - input_3 + NET input_3
+      + DIRECTION INPUT
+      + PLACED ( 30 0 ) N
+      + LAYER metal3 ( 0 0 ) ( 510 100 ) ;
+   - input_4 + NET input_4
+      + DIRECTION INPUT
+      + PLACED ( 40 0 ) N
+      + LAYER metal3 ( 0 0 ) ( 510 100 ) ;
+   - input_5 + NET input_5
+      + DIRECTION INPUT
+      + PLACED ( 50 0 ) N
+      + LAYER metal3 ( 0 0 ) ( 510 100 ) ;
+   - input_6 + NET input_6
+      + DIRECTION INPUT
+      + PLACED ( 60 0 ) N
+      + LAYER metal3 ( 0 0 ) ( 510 100 ) ;
+   - input_7 + NET input_7
+      + DIRECTION INPUT
+      + PLACED ( 70 0 ) N
+      + LAYER metal3 ( 0 0 ) ( 510 100 ) ;
+   - input_8 + NET input_8
+      + DIRECTION INPUT
+      + PLACED ( 80 0 ) N
+      + LAYER metal3 ( 0 0 ) ( 510 100 ) ;
+   - input_9 + NET input_9
+      + DIRECTION INPUT
+      + PLACED ( 90 0 ) N
+      + LAYER metal3 ( 0 0 ) ( 510 100 ) ;
+    - input_clk + NET input_clk
+      + DIRECTION INPUT
+      + PLACED ( 100 0 ) N
+      + LAYER metal3 ( 0 0 ) ( 510 100 ) ;
+END PINS
