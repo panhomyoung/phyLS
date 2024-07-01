@@ -159,7 +159,7 @@ class techmap_command : public command {
                 st.total_wirelength);
           } else {
             auto res = mockturtle::map(aig, lib, ps, &st);
-            if (is_set("output")) write_verilog_with_binding_new(res, filename);
+            if (is_set("output")) write_verilog_with_binding(res, filename);
             std::cout << fmt::format(
                 "Mapped AIG into #gates = {}, area = {:.2f}, delay = {:.2f}, "
                 "power = {:.2f}\n",
