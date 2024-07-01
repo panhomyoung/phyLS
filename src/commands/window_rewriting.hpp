@@ -41,7 +41,6 @@ class wr_command : public command {
                "set the window level, default = 5");
     add_flag("--gain, -g", "optimize until there is no gain");
     add_flag("--resub, -r", "window resub");
-    add_flag("--mffw, -w", "MFFW rewriting");
     add_flag("--verbose, -v", "print the information");
   }
 
@@ -76,10 +75,6 @@ class wr_command : public command {
           if (is_set("verbose")) win_st.report();
           aig = cleanup_dangling(aig);
         } while (aig.num_gates() < size_current);
-      } else if (is_set("mffw")) {
-        window_rewriting_stats win_st;
-        mffw_rewriting(aig, ps, &win_st);
-        aig = cleanup_dangling(aig);
       } else {
         window_rewriting_stats win_st;
         window_rewriting(aig, ps, &win_st);

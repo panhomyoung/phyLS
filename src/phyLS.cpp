@@ -79,6 +79,5 @@
 #include "commands/exact/exact_multi.hpp"
 // #include "commands/exact/exact_klut.hpp"
 // #include "commands/exact/exactlut.hpp"
-#include "commands/to_npz.hpp"
-
+// #include "commands/to_npz.hpp"
 ALICE_MAIN(phyLS)
