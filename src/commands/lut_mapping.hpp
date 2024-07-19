@@ -47,9 +47,7 @@ class lut_mapping_command : public command {
     clock_t begin, end;
     double totalTime;
     lut_mapping_params ps;
-    if (is_set("area")){
-      ps.rounds_ela = 4u;
-    }
+    if (is_set("area")) ps.rounds = 0u;
 
     if (is_set("mig")) {
       /* derive some MIG */

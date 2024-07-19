@@ -31,6 +31,7 @@
 #include <mockturtle/networks/xmg.hpp>
 
 #include "../core/misc.hpp"
+#include "../networks/aoig/xag_lut_npn.hpp"
 
 using namespace std;
 using namespace mockturtle;
@@ -75,7 +76,7 @@ class resyn_command : public command {
         totalTime = (double)(end - begin) / CLOCKS_PER_SEC;
       } else if (is_set("xag")) {
         begin = clock();
-        xag_npn_resynthesis<xag_network> resyn;
+        xag_npn_lut_resynthesis resyn;
         const auto xag = node_resynthesis<xag_network>(klut, resyn);
         store<xag_network>().extend();
         store<xag_network>().current() = cleanup_dangling(xag);

@@ -34,6 +34,7 @@ class balance_command : public command {
       : command(env,
                 "transforms the current network into a well-balanced AIG") {
     add_flag("--xmg, -x", "Balance for XMG");
+    add_flag("--xag, -g", "ESOP balance for XAG");
     add_flag("--strash, -s", "Balance AND finding structural hashing");
     add_flag("--verbose, -v", "print the information");
   }
@@ -42,6 +43,8 @@ class balance_command : public command {
   void execute() {
     clock_t begin, end;
     double totalTime = 0.0;
+    begin = clock();
+
     if (is_set("xmg")) {
       xmg_network xmg = store<xmg_network>().current();
       xmg = balancing(
@@ -53,30 +56,32 @@ class balance_command : public command {
 
       store<xmg_network>().extend();
       store<xmg_network>().current() = xmg_copy;
+    } else if (is_set("xag")) {
+      xag_network xag = store<xag_network>().current();
+      xag_network res = esop_balancing(xag);
+      phyLS::print_stats(res);
+      store<xag_network>().extend();
+      store<xag_network>().current() = res;
     } else {
       if (store<aig_network>().size() == 0u)
         std::cerr << "Error: Empty AIG network\n";
       else {
         auto aig = store<aig_network>().current();
         if (is_set("strash")) {
-          begin = clock();
           aig_balancing_params ps;
           ps.minimize_levels = false;
           aig_balance(aig, ps);
-          end = clock();
-          totalTime = (double)(end - begin) / CLOCKS_PER_SEC;
         } else {
-          begin = clock();
           aig_balance(aig);
-          end = clock();
-          totalTime = (double)(end - begin) / CLOCKS_PER_SEC;
         }
         phyLS::print_stats(aig);
-
         store<aig_network>().extend();
         store<aig_network>().current() = aig;
       }
     }
+
+    end = clock();
+    totalTime = (double)(end - begin) / CLOCKS_PER_SEC;
 
     cout.setf(ios::fixed);
     cout << "[CPU time]   " << setprecision(2) << totalTime << " s" << endl;

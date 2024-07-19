@@ -32,8 +32,9 @@ class lutmap_command : public command {
     add_flag("--mig, -m", "FPGA technology mapping for MIG");
     add_flag("--xag, -g", "FPGA technology mapping for XAG");
     add_flag("--xmg, -x", "FPGA technology mapping for XMG");
+    add_flag("--klut, -k", "FPGA technology mapping for k-LUT");
     add_option("--cut_size, -s", cut_size,
-               "Maximum number of leaves for a cut [default = 4]");
+               "Maximum number of leaves for a cut [default = 6]");
     add_option(
         "--cut_limit, -l", cut_limit,
         "the input Maximum number of cuts for a node name [default = 25]");
@@ -47,6 +48,7 @@ class lutmap_command : public command {
              "LUT map with cost function [default = false]");
     add_flag("--dominated_cuts, -d",
              "Remove the cuts that are contained in others [default = true]");
+    add_option("--output, -o", filename, "the bench filename");
     add_flag("--verbose, -v", "print the information");
   }
 
@@ -119,6 +121,24 @@ class lutmap_command : public command {
         phyLS::lut_map(mapped_xmg, ps);
         mapped_xmg.clear_mapping();
       }
+    } else if (is_set("klut")) {
+      if (store<klut_network>().size() == 0u)
+        std::cerr << "Error: Empty k-LUT network\n";
+      else {
+        auto klut = store<klut_network>().current();
+        mapping_view mapped_klut{klut};
+        phyLS::lut_map_params ps;
+        if (is_set("area")) ps.area_oriented_mapping = true;
+        if (is_set("relax_required")) ps.relax_required = relax_required;
+        if (is_set("cut_size")) ps.cut_enumeration_ps.cut_size = cut_size;
+        if (is_set("cut_limit")) ps.cut_enumeration_ps.cut_limit = cut_limit;
+        if (is_set("recompute_cuts")) ps.recompute_cuts = false;
+        if (is_set("edge")) ps.edge_optimization = false;
+        if (is_set("dominated_cuts")) ps.remove_dominated_cuts = false;
+        cout << "Mapped kLUT into " << cut_size << "-LUT : ";
+        phyLS::lut_map(mapped_klut, ps);
+        mapped_klut.clear_mapping();
+      }
     } else {
       if (store<aig_network>().size() == 0u)
         std::cerr << "Error: Empty AIG network\n";
@@ -139,7 +159,11 @@ class lutmap_command : public command {
               mapped_aig, ps);
         else
           phyLS::lut_map(mapped_aig, ps);
-        mapped_aig.clear_mapping();
+        if (is_set("output")) {
+          write_bench(mapped_aig, filename);
+        } else {
+          mapped_aig.clear_mapping();
+        }
       }
     }
   }
@@ -148,6 +172,7 @@ class lutmap_command : public command {
   uint32_t cut_size{6u};
   uint32_t cut_limit{8u};
   uint32_t relax_required{0u};
+  std::string filename = "lut.bench";
 };
 
 ALICE_ADD_COMMAND(lutmap, "Mapping")

@@ -39,6 +39,7 @@ class wr_command : public command {
                "set the cut size from 2 to 6, default = 4");
     add_option("num_levels, -l", num_levels,
                "set the window level, default = 5");
+    add_flag("--xag, -a", "indow rewriting for XAG");
     add_flag("--gain, -g", "optimize until there is no gain");
     add_flag("--resub, -r", "window resub");
     add_flag("--verbose, -v", "print the information");
@@ -48,43 +49,68 @@ class wr_command : public command {
   void execute() {
     clock_t begin, end;
     double totalTime;
-
     begin = clock();
-    auto aig = store<aig_network>().current();
 
-    window_rewriting_params ps;
-    ps.cut_size = cut_size;
-    ps.num_levels = num_levels;
-
-    if (is_set("resub")) {
-      window_resub_params ps_r;
+    if (is_set("xag")) {
+      xag_network xag = store<xag_network>().current();
+      window_rewriting_params ps;
+      ps.cut_size = cut_size;
+      ps.num_levels = num_levels;
       if (is_set("gain")) {
-        window_aig_enumerative_resub(aig, ps_r);
-      } else {
-        window_aig_heuristic_resub(aig, ps_r);
-      }
-      aig = cleanup_dangling(aig);
-    } else {
-      if (is_set("gain")) {
-        uint64_t const size_before{aig.num_gates()};
         uint64_t size_current{};
         do {
-          size_current = aig.num_gates();
+          size_current = xag.num_gates();
           window_rewriting_stats win_st;
-          window_rewriting(aig, ps, &win_st);
+          window_rewriting(xag, ps, &win_st);
           if (is_set("verbose")) win_st.report();
-          aig = cleanup_dangling(aig);
-        } while (aig.num_gates() < size_current);
+          xag = cleanup_dangling(xag);
+        } while (xag.num_gates() < size_current);
       } else {
         window_rewriting_stats win_st;
-        window_rewriting(aig, ps, &win_st);
-        aig = cleanup_dangling(aig);
+        window_rewriting(xag, ps, &win_st);
+        xag = cleanup_dangling(xag);
+      }
+      phyLS::print_stats(xag);
+      store<xag_network>().extend();
+      store<xag_network>().current() = xag;
+    } else {
+      if (store<aig_network>().size() == 0u)
+        std::cerr << "Error: Empty AIG network\n";
+      else {
+        auto aig = store<aig_network>().current();
+        window_rewriting_params ps;
+        ps.cut_size = cut_size;
+        ps.num_levels = num_levels;
+
+        if (is_set("resub")) {
+          window_resub_params ps_r;
+          if (is_set("gain")) {
+            window_aig_enumerative_resub(aig, ps_r);
+          } else {
+            window_aig_heuristic_resub(aig, ps_r);
+          }
+          aig = cleanup_dangling(aig);
+        } else {
+          if (is_set("gain")) {
+            uint64_t size_current{};
+            do {
+              size_current = aig.num_gates();
+              window_rewriting_stats win_st;
+              window_rewriting(aig, ps, &win_st);
+              if (is_set("verbose")) win_st.report();
+              aig = cleanup_dangling(aig);
+            } while (aig.num_gates() < size_current);
+          } else {
+            window_rewriting_stats win_st;
+            window_rewriting(aig, ps, &win_st);
+            aig = cleanup_dangling(aig);
+          }
+        }
+        phyLS::print_stats(aig);
+        store<aig_network>().extend();
+        store<aig_network>().current() = aig;
       }
     }
-
-    phyLS::print_stats(aig);
-    store<aig_network>().extend();
-    store<aig_network>().current() = aig;
 
     end = clock();
     totalTime = (double)(end - begin) / CLOCKS_PER_SEC;

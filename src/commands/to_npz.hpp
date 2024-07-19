@@ -34,8 +34,9 @@ class write_npz_command : public command {
     add_option("--csv, -c", filename_csv,
                "The path to store csv file, default: ./placement/test.csv");
     add_option("--def, -d", filename_def,
-               "The path to store def file, default: "
-               "./placement/mfloorplan.def & ./placement/floorplan.def");
+               "The path to store def file, default: ./placement/floorplan.def");
+    add_option("--mdef, -f", filename_mdef,
+               "The path to store def file, default: ./placement/mfloorplan.def");
   }
 
  protected:
@@ -50,10 +51,9 @@ class write_npz_command : public command {
       aig_network aig = store<aig_network>().current();
       if (is_set("csv")) {
         phyLS::write_npz(aig, filename_csv);
-      } else if (is_set("def")) {
+      }
+      if (is_set("def")) {
         phyLS::write_def(aig, filename_def, filename_mdef);
-      } else {
-        assert(false && "At least one filename should be specified. ");
       }
     }
   }
