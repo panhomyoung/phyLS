@@ -25,6 +25,8 @@ class arewrite_command : public command {
  public:
   explicit arewrite_command(const environment::ptr &env)
       : command(env, "performs technology-independent rewriting of the AIG") {
+    add_flag("--zero, -z", "using zero-cost replacements");
+    add_flag("--level, -l", "preserving the number of levels");
     add_flag("--verbose, -v", "print the information");
   }
 
@@ -54,6 +56,8 @@ class arewrite_command : public command {
       fVerbose = 0;
       fVeryVerbose = 0;
       fPlaceEnable = 0;
+      if (is_set("level")) fUpdateLevel ^= 1;
+      if (is_set("zero")) fUseZeros ^= 1;
       Extra_UtilGetoptReset();
 
       if (pNtk == NULL) {

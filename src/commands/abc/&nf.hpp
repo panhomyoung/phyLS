@@ -27,6 +27,11 @@ class Anf_command : public command {
  public:
   explicit Anf_command(const environment::ptr &env)
       : command(env, "performs technology mapping of the GIA network") {
+    add_option("--flow, -f", nRounds, "the number of area flow rounds");
+    add_option("--area, -a", nRoundsEla, "the number of exact area rounds");
+    add_option("--cut, -c", nCutNumMax, "the max number of priority cuts");
+    add_option("--relaxation, -r", nRelaxRatio, "the delay relaxation ratio");
+    add_flag("--pin, -p", "toggles pin permutation");
     add_flag("--verbose, -v", "print the information");
   }
 
@@ -40,6 +45,12 @@ class Anf_command : public command {
     pabc::Jf_Par_t Pars, *pPars = &Pars;
     pabc::Gia_Man_t *pGia, *pNew;
     pabc::Nf_ManSetDefaultPars(pPars);
+
+    if (is_set("flow")) pPars->nRounds = nRounds;
+    if (is_set("area")) pPars->nRoundsEla = nRoundsEla;
+    if (is_set("cut")) pPars->nCutNum = nCutNumMax;
+    if (is_set("relaxation")) pPars->nRelaxRatio = nRelaxRatio;
+    if (is_set("pin")) pPars->fPinPerm ^= 1;
 
     if (store<pabc::Gia_Man_t *>().size() == 0u)
       std::cerr << "Error: Empty GIA network.\n";
@@ -63,6 +74,10 @@ class Anf_command : public command {
   }
 
  private:
+  int nRounds = 4;
+  int nRoundsEla = 2;
+  int nCutNumMax = 16;
+  int nRelaxRatio = 0;
 };
 
 ALICE_ADD_COMMAND(Anf, "Gia")

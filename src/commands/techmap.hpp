@@ -35,6 +35,7 @@ class techmap_command : public command {
       : command(env, "Standard cell mapping [default = AIG]") {
     add_flag("--xmg, -x", "Standard cell mapping for XMG");
     add_flag("--mig, -m", "Standard cell mapping for MIG");
+    add_flag("--xag, -g", "Standard cell mapping for XAG");
     add_flag("--lut, -l", "Standard cell mapping for k-LUT");
     add_option("--output, -o", filename, "the verilog filename");
     add_option("--cut_limit, -c", cut_limit,
@@ -138,6 +139,22 @@ class techmap_command : public command {
 
           std::cout << fmt::format(
               "Mapped k-LUT into #gates = {} area = {:.2f} delay = {:.2f}\n",
+              res.num_gates(), st.area, st.delay);
+        }
+      } else if (is_set("xag")) {
+        if (store<xag_network>().size() == 0u) {
+          std::cerr << "[e] no XAG in the store\n";
+        } else {
+          auto xag = store<xag_network>().current();
+
+          auto res = mockturtle::map(xag, lib, ps, &st);
+
+          if (is_set("output")) {
+            write_verilog_with_binding(res, filename);
+          }
+
+          std::cout << fmt::format(
+              "Mapped XAG into #gates = {} area = {:.2f} delay = {:.2f}\n",
               res.num_gates(), st.area, st.delay);
         }
       } else {

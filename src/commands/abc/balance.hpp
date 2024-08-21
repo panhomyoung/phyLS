@@ -26,6 +26,7 @@ class abalance_command : public command {
   explicit abalance_command(const environment::ptr &env)
       : command(env,
                 "transforms the current network into a well-balanced AIG") {
+    add_flag("--level, -l", "minimizing the number of levels");
     add_flag("--verbose, -v", "print the information");
   }
 
@@ -53,6 +54,7 @@ class abalance_command : public command {
       fUpdateLevel = 1;
       fExor = 0;
       fVerbose = 0;
+      if (is_set("level")) fUpdateLevel ^= 1;
       Extra_UtilGetoptReset();
       if (pNtk == NULL) {
         Abc_Print(-1, "Empty network.\n");

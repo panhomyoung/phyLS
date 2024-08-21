@@ -13,7 +13,7 @@
 #ifndef ABC_RESUB_HPP
 #define ABC_RESUB_HPP
 
-#include "base/abci/abcRestruct.c"
+#include "base/abci/abcResub.c"
 
 using namespace std;
 using namespace mockturtle;
@@ -25,6 +25,9 @@ class aresub_command : public command {
   explicit aresub_command(const environment::ptr &env)
       : command(env,
                 "performs technology-independent restructuring of the AIG") {
+    add_option("--cut_size, -k", CutsMax, "the max cut size, default = 8");
+    add_option("--node, -n", NodesMax, "the max number of nodes to add");
+    add_flag("--level, -l", "preserving the number of levels");
     add_flag("--verbose, -v", "print the information");
   }
 
@@ -41,11 +44,19 @@ class aresub_command : public command {
       pabc::Abc_Ntk_t *pNtk = store<pabc::Abc_Ntk_t *>().current();
 
       // set defaults
-      int nCutsMax = 5, fUpdateLevel = 0, fUseZeros = 0, fVerbose = 0;
-
+      int nCutsMax = CutsMax;
+      int nNodesMax = NodesMax;
+      int nLevelsOdc = 0;
+      int nMinSaved = 1;
+      int fUpdateLevel = 1;
+      int fUseZeros = 0;
+      int fVerbose = 0;
+      int fVeryVerbose = 0;
+      if (is_set("level")) fUpdateLevel ^= 1;
       if (is_set("verbose")) fVerbose ^= 1;
 
-      Abc_NtkRestructure(pNtk, nCutsMax, fUpdateLevel, fUseZeros, fVerbose);
+      Abc_NtkResubstitute(pNtk, nCutsMax, nNodesMax, nMinSaved, nLevelsOdc,
+                          fUpdateLevel, fVerbose, fVeryVerbose);
       store<pabc::Abc_Ntk_t *>().extend();
       store<pabc::Abc_Ntk_t *>().current() = pNtk;
     }
@@ -58,6 +69,8 @@ class aresub_command : public command {
   }
 
  private:
+  int CutsMax = 8;
+  int NodesMax = 1;
 };
 
 ALICE_ADD_COMMAND(aresub, "ABC")
