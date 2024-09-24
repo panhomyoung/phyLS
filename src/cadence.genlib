@@ -1,0 +1,32 @@
+# 180 nm Generic Library
+# Download from http://crete.cadence.com
+# Copyright 2003, Cadence Design Systems - All Rights Reserved
+# (Single-output logic gates converted to GENLIB by Alan Mishchenko.)
+GATE ZERO      1  Y=CONST0;
+GATE ONE       1  Y=CONST1;
+GATE INVX1     1  Y=!A;                        PIN * INV 1 999 1 0 1 0
+GATE INVX2     1  Y=!A;                        PIN * INV 1 999 1 0 1 0
+GATE INVX4     1  Y=!A;                        PIN * INV 1 999 1 0 1 0
+GATE INVX8     1  Y=!A;                        PIN * INV 1 999 1 0 1 0
+GATE BUFX1     1  Y=A;                         PIN * NONINV 1 999 1 0 1 0
+GATE BUFX3     1  Y=A;                         PIN * NONINV 1 999 1 0 1 0
+GATE CLKBUFX1  1  Y=A;                         PIN * NONINV 1 999 1 0 1 0
+GATE CLKBUFX2  1  Y=A;                         PIN * NONINV 1 999 1 0 1 0
+GATE CLKBUFX3  1  Y=A;                         PIN * NONINV 1 999 1 0 1 0
+GATE NOR2X1    1  Y=!(A+B);                    PIN * INV 1 999 1 0 1 0
+GATE NOR3X1    1  Y=!(A+B+C);                  PIN * INV 1 999 1 0 1 0
+GATE NOR4X1    1  Y=!(A+B+C+D);                PIN * INV 1 999 1 0 1 0
+GATE NAND2X1   1  Y=!(A*B);                    PIN * INV 1 999 1 0 1 0
+GATE NAND2X2   1  Y=!(A*B);                    PIN * INV 1 999 1 0 1 0
+GATE NAND3X1   1  Y=!(A*B*C);                  PIN * INV 1 999 1 0 1 0
+GATE NAND4X1   1  Y=!(A*B*C*D);                PIN * INV 1 999 1 0 1 0
+GATE OR2X1     1  Y=A+B;                       PIN * NONINV 1 999 1 0 1 0
+GATE OR4X1     1  Y=A+B+C+D;                   PIN * NONINV 1 999 1 0 1 0
+GATE AND2X1    1  Y=A*B;                       PIN * NONINV 1 999 1 0 1 0
+GATE OAI21X1   1  Y=!((A0+A1)*B0);             PIN * INV 1 999 1 0 1 0
+GATE OAI22X1   1  Y=!((A0+A1)*(B0+B1));        PIN * INV 1 999 1 0 1 0
+GATE OAI33X1   1  Y=!((A0+A1+A2)*(B0+B1+B2));  PIN * INV 1 999 1 0 1 0
+GATE AOI21X1   1  Y=!(A0*A1+B0);               PIN * INV 1 999 1 0 1 0
+GATE AOI22X1   1  Y=!(A0*A1+B0*B1);            PIN * INV 1 999 1 0 1 0
+GATE MX2X1     1  Y=(A*B)+(S0*B)+(!S0*A);      PIN * UNKNOWN 1 999 1 0 1 0
+GATE XOR2X1    1  Y=(A*!B)+(!A*B);             PIN * UNKNOWN 1 999 1 0 1 0
