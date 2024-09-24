@@ -43,8 +43,12 @@
 #include <mockturtle/io/write_verilog.hpp>
 #include <mockturtle/mockturtle.hpp>
 #include <mockturtle/views/names_view.hpp>
+#include <mockturtle/algorithms/node_resynthesis.hpp>
 
 #include "./core/abc2mockturtle.hpp"
+#include "./core/abc_api.hpp"
+#include "./core/abc_gia.hpp"
+#include "./core/abc.hpp"
 
 using namespace mockturtle;
 
@@ -255,6 +259,10 @@ ALICE_WRITE_FILE(xmg_network, verilog, xmg, filename, cmd) {
   mockturtle::write_verilog(xmg, filename);
 }
 
+ALICE_WRITE_FILE(aig_network, verilog, aig, filename, cmd) {
+  mockturtle::write_verilog(aig, filename);
+}
+
 ALICE_PRINT_STORE_STATISTICS(xmg_network, os, xmg) {
   auto xmg_copy = mockturtle::cleanup_dangling(xmg);
   mockturtle::depth_view depth_xmg{xmg_copy};
@@ -385,6 +393,56 @@ ALICE_CONVERT(aig_network, element, mig_network) {
   auto mig = node_resynthesis<mig_network>(klut, resyn);
 
   return mig;
+}
+
+/********************************************************************
+ * Convert from aig to xag                                          *
+ ********************************************************************/
+ALICE_CONVERT(aig_network, element, xag_network){
+  aig_network aig = element;
+
+  /* LUT mapping */
+  mapping_view<aig_network, true> mapped_aig{aig};
+  lut_mapping_params ps;
+  ps.cut_enumeration_ps.cut_size = 4;
+  lut_mapping<mapping_view<aig_network, true>, true>(mapped_aig, ps);
+
+  /* collapse into k-LUT network */
+  const auto klut = *collapse_mapped_network<klut_network>(mapped_aig);
+
+  /* node resynthesis */
+  xag_npn_resynthesis<xag_network> resyn;
+  auto xag = node_resynthesis<xag_network>(klut, resyn);
+
+  return xag;
+}
+
+/********************************************************************
+ * Convert from xmg to aig                                          *
+ ********************************************************************/
+ALICE_CONVERT(xmg_network, element, aig_network){
+  xmg_network xmg = element;
+
+  /* LUT mapping */
+  mapping_view<xmg_network, true> mapped_xmg{xmg};
+  lut_mapping_params ps;
+  ps.cut_enumeration_ps.cut_size = 4;
+  lut_mapping<mapping_view<xmg_network, true>, true>(mapped_xmg, ps);
+
+  /* collapse into k-LUT network */
+  const auto klut = *collapse_mapped_network<klut_network>(mapped_xmg);
+
+  /* node resynthesis */
+  exact_resynthesis_params ps2;
+  ps2.cache = std::make_shared<exact_resynthesis_params::cache_map_t>();
+  exact_aig_resynthesis<aig_network> exact_resyn(false, ps2);
+  node_resynthesis_stats nrst;
+  dsd_resynthesis<aig_network, decltype(exact_resyn)> resyn(exact_resyn);
+  //DSD decomposition may not be able to decompose the whole truth table, \
+  a different fall-back resynthesis function must be passed to this function
+  const auto aig = node_resynthesis<aig_network>(klut, resyn, {}, &nrst);
+
+  return aig;
 }
 
 /* show */
@@ -588,10 +646,14 @@ ALICE_CONVERT(klut_network, element, pabc::Abc_Ntk_t *) {
 ALICE_ADD_STORE(pabc::Gia_Man_t *, "gia", "i", "GIA", "GIAs")
 
 ALICE_DESCRIBE_STORE(pabc::Gia_Man_t *, gia) {
-  const auto name = pabc::Gia_ManName(gia);
+  // const auto name = pabc::Gia_ManName(gia);
+  //When using `aig_to_gia`, the generated GIA network does not contain `Gia_ManName` information, hence it is disabled.
   const auto pi_num = pabc::Gia_ManPiNum(gia);
   const auto po_num = pabc::Gia_ManPoNum(gia);
-  return fmt::format("{}   i/o = {}/{}", name, pi_num, po_num);
+  const auto gates_num = pabc::Gia_ManAndNum(gia);
+  const auto level = pabc::Gia_ManLevelNum(gia);
+  // return fmt::format("{}   i/o = {}/{}", name, pi_num, po_num);
+  return fmt::format("[GIA]   i/o = {}/{}  nodes = {}  level = {}", pi_num, po_num, gates_num, level);
 }
 
 ALICE_PRINT_STORE(pabc::Gia_Man_t *, os, gia) {
@@ -620,6 +682,26 @@ ALICE_READ_FILE(pabc::Gia_Man_t *, gia, filename, cmd) {
 
 ALICE_WRITE_FILE(pabc::Gia_Man_t *, gia, gia, filename, cmd) {
   pabc::Gia_AigerWrite(gia, (char *)filename.c_str(), 1, 0, 0);
+}
+
+/* gia */
+//ALICE_ADD_STORE(gia_network, "gia", "q", "gia", "GIA")
+
+ALICE_CONVERT(aig_network, element, pabc::Gia_Man_t *) {
+  aig_network aig = element;
+  gia_network gia(aig.size() << 1);
+  aig_to_gia(gia, aig);
+  pabc::Gia_Man_t * GIA = const_cast<pabc::Gia_Man_t*>(gia.get_gia());
+
+  return GIA;
+}
+ALICE_CONVERT(pabc::Gia_Man_t *, element, aig_network) {
+  pabc::Gia_Man_t * gia_ = element;
+  aig_network aig;
+  gia_network gia(gia_);
+  gia_to_aig(aig, gia);
+
+  return aig;
 }
 
 }  // namespace alice
