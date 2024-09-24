@@ -80,5 +80,6 @@
 #include "commands/to_npz.hpp"
 #include "commands/exact/exact_klut.hpp"
 #include "commands/exact/exactlut.hpp"
+#include "commands/abc/gia_opt.hpp"
 // #include "commands/abc/orch.hpp"
 ALICE_MAIN(phyLS)
