@@ -74,10 +74,14 @@ class techmap_command : public command {
       ps.strategy = map_params::area;
     else if (is_set("delay"))
       ps.strategy = map_params::delay;
-    else if (is_set("wirelength"))
+    else if (is_set("wirelength")) {
+      ps.wirelength_rounds = true;
       ps.strategy = map_params::wirelength;
-    else if (is_set("balance"))
+    }
+    else if (is_set("balance")) {
+      ps.wirelength_rounds = true;
       ps.strategy = map_params::balance;
+    }
     else
       ps.strategy = map_params::def;
     if (is_set("verbose")) ps.verbose = true;
@@ -163,9 +167,9 @@ class techmap_command : public command {
         } else {
           auto aig = store<aig_network>().current();
           if (is_set("node_position_def")) {
-            std::vector<mockturtle::node_position> np(aig.size());
+            std::vector<mockturtle::node_position> np(aig.size() +
+                                                      aig.num_pos());
             phyLS::read_def_file(def_filename, np);
-            ps.wirelength_rounds = true;
             auto res = mockturtle::map(aig, lib, np, ps, &st);
             if (is_set("output")) write_verilog_with_binding(res, filename);
             std::cout << fmt::format(
