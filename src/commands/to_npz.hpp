@@ -59,7 +59,7 @@ class write_npz_command : public command {
         phyLS::write_def(aig, filename_def, filename_mdef);
       }
       if (is_set("netlist")) {
-        write_netlist(aig, filename_netlist);
+        phyLS::write_netlist_def(aig, filename_netlist);
       }
     }
   }

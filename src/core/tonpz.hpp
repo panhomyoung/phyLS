@@ -174,78 +174,8 @@ void write_def(Ntk const& ntk, std::ostream& os_def, std::ostream& os_mdef) {
   os_def << components.str() << pins_def.str();
 }
 
-void write_def(mockturtle::binding_view<mockturtle::klut_network> const& ntk,
-               std::ostream& os_def, std::ostream& os_mdef) {
-  std::stringstream components, pins, pins_def;
-  //   cout << "num_pis: " << ntk.num_pis() << endl;
-  //   cout << "num_pos: " << ntk.num_pos() << endl;
-  //   cout << "num_gates: " << ntk.num_gates() << endl;
-  int num_pis = ntk.num_pis(), num_pos = ntk.num_pos(),
-      num_gates = ntk.num_gates();
-  int size = num_pis + num_pos + num_gates;
-  int output_position = 0, input_position = 0, max_position = 30 * size;
-
-  components << fmt::format("COMPONENTS {} ;\n", num_gates);
-
-  auto const& gates = ntk.get_library();
-
-  ntk.foreach_gate([&](auto const& n) {
-    if (ntk.is_constant(n) || ntk.is_ci(n)) {
-      std::cout << "there is constant and ci\n";
-      return true;
-    }
-
-    components << fmt::format("   - gate_{}_ {}\n", ntk.node_to_index(n),
-                              gates[ntk.get_binding_index(n)].name)
-               << "      + UNPLACED ;\n";
-    return true;
-  });
-  components << "END COMPONENTS\n"
-             << "\n";
-
-  pins << fmt::format("PINS {} ;\n", num_pis + num_pos + 1);
-  pins_def << fmt::format("PINS {} ;\n", num_pis + num_pos + 1);
-
-  ntk.foreach_po([&](auto const& f, auto i) {
-    pins << fmt::format("   - output_{} + NET output_{}\n", i, i)
-         << "      + DIRECTION OUTPUT\n"
-         << fmt::format("      + PLACED ( {} {} ) N\n", output_position * 10,
-                        max_position)
-         << "      + LAYER metal3 ( 0 0 ) ( 510 100 ) ;\n";
-    pins_def << fmt::format("   - output_{} + NET output_{}\n", i, i)
-             << "      + DIRECTION OUTPUT\n"
-             << fmt::format("      + PLACED ( {} {} ) N\n",
-                            output_position * 10, max_position)
-             << "      + LAYER metal3 ( 0 0 ) ( 510 100 ) ;\n";
-    output_position++;
-  });
-
-  ntk.foreach_pi([&](auto const& f, auto i) {
-    pins << fmt::format("   - input_{} + NET input_{}\n", i, i)
-         << "      + DIRECTION INPUT\n"
-         << fmt::format("      + PLACED ( {} {} ) N\n", input_position * 10, 0)
-         << "      + LAYER metal3 ( 0 0 ) ( 510 100 ) ;\n";
-    pins_def << fmt::format("   - input_{} + NET input_{}\n", i, i)
-             << "      + DIRECTION INPUT\n"
-             << fmt::format("      + PLACED ( {} {} ) N\n", input_position * 10,
-                            0)
-             << "      + LAYER metal3 ( 0 0 ) ( 510 100 ) ;\n";
-    input_position++;
-  });
-  pins << "END PINS\n";
-  pins_def << "    - input_clk + NET input_clk\n"
-           << "      + DIRECTION INPUT\n"
-           << fmt::format("      + PLACED ( {} {} ) N\n", input_position * 10,
-                          0)
-           << "      + LAYER metal3 ( 0 0 ) ( 510 100 ) ;\n";
-  pins_def << "END PINS\n";
-
-  os_mdef << components.str() << pins.str();
-  os_def << components.str() << pins_def.str();
-}
-
 template <class Ntk>
-void write_netlist(Ntk const& ntk, std::ostream& os) {
+void write_netlist_def(Ntk const& ntk, std::ostream& os) {
   std::stringstream connect;
   //   cout << "num_pis: " << ntk.num_pis() << endl;
   //   cout << "num_pos: " << ntk.num_pos() << endl;
@@ -344,9 +274,9 @@ void write_def(Ntk const& ntk, std::string const& filename_def,
 }
 
 template <class Ntk>
-void write_netlist(Ntk const& ntk, std::string const& filename_netlist) {
+void write_netlist_def(Ntk const& ntk, std::string const& filename_netlist) {
   std::ofstream os(filename_netlist.c_str(), std::ofstream::out);
-  write_netlist(ntk, os);
+  write_netlist_def(ntk, os);
   os.close();
 }
 
