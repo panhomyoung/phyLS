@@ -82,4 +82,7 @@
 #include "commands/exact/exactlut.hpp"
 #include "commands/abc/gia_opt.hpp"
 // #include "commands/abc/orch.hpp"
+#include "commands/ic_map.hpp"
+#include "commands/abc/stime.hpp"
+// #include "commands/test.hpp"
 ALICE_MAIN(phyLS)

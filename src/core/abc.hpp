@@ -50,7 +50,6 @@ void aig_to_gia(gia_network &gia, aig_network aig) {
 }
 
 void gia_to_aig(aig_network aig, const gia_network &gia) {
-  using gia_node = gia_network::node;
   using gia_signal = gia_network::signal;
 
   std::vector<aig_network::signal> g_to_a(gia.size());

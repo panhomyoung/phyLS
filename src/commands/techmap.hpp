@@ -44,8 +44,13 @@ class techmap_command : public command {
     add_option("--node_position_def, -d", def_filename, "the def filename");
     add_flag("--area, -a", "Area-only standard cell mapping");
     add_flag("--delay, -e", "Delay-only standard cell mapping");
-    add_flag("--wirelength, -w", "Wirelength-only standard cell mapping");
-    add_flag("--balance, -b", "Balanced wirelength standard cell mapping");
+    add_flag("--performance, -w",
+             "Performance mode: wirelength-only standard cell mapping");
+    add_flag("--power, -b",
+             "Power mode: total wirelength-driven standard cell mapping");
+    add_option("--trade_off, -t", trade_off,
+               "The trade-off between power mode (1) and performance mode (0), "
+               "range: [0,1], default = performance mode (0)");
     add_flag("--verbose, -v", "print the information");
   }
 
@@ -58,6 +63,7 @@ class techmap_command : public command {
   std::string pl_filename = "";
   std::string def_filename = "";
   uint32_t cut_limit{49u};
+  double trade_off = 0.0;
 
  protected:
   void execute() {
@@ -74,12 +80,12 @@ class techmap_command : public command {
       ps.strategy = map_params::area;
     else if (is_set("delay"))
       ps.strategy = map_params::delay;
-    else if (is_set("wirelength")) {
-      ps.wirelength_rounds = true;
-      ps.strategy = map_params::wirelength;
-    }
-    else if (is_set("balance")) {
-      ps.wirelength_rounds = true;
+    else if (is_set("performance"))
+      ps.strategy = map_params::performance;
+    else if (is_set("power"))
+      ps.strategy = map_params::power;
+    else if (is_set("trade_off")) {
+      ps.trade_off = trade_off;
       ps.strategy = map_params::balance;
     }
     else
@@ -169,7 +175,7 @@ class techmap_command : public command {
           if (is_set("node_position_def")) {
             std::vector<mockturtle::node_position> np(aig.size() +
                                                       aig.num_pos());
-            phyLS::read_def_file(def_filename, np);
+            phyLS::read_deffile(def_filename, np, aig.num_pis());
             auto res = mockturtle::map(aig, lib, np, ps, &st);
             if (is_set("output")) write_verilog_with_binding(res, filename);
             std::cout << fmt::format(
