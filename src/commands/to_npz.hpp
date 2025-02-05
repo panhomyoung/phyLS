@@ -14,6 +14,7 @@
 #define TO_NPZ_HPP
 
 #include <algorithm>
+#include <mockturtle/io/write_verilog.hpp>
 #include <mockturtle/networks/aig.hpp>
 #include <vector>
 
@@ -37,6 +38,8 @@ class write_npz_command : public command {
                "The path to store def file, default: ./placement/floorplan.def");
     add_option("--mdef, -f", filename_mdef,
                "The path to store def file, default: ./placement/mfloorplan.def");
+    add_option("--netlist, -n", filename_netlist,
+               "The path to store netlist file");
   }
 
  protected:
@@ -55,6 +58,9 @@ class write_npz_command : public command {
       if (is_set("def")) {
         phyLS::write_def(aig, filename_def, filename_mdef);
       }
+      if (is_set("netlist")) {
+        phyLS::write_netlist_def(aig, filename_netlist);
+      }
     }
   }
 
@@ -62,6 +68,7 @@ class write_npz_command : public command {
   std::string filename_csv = "./placement/test.csv";
   std::string filename_def = "./placement/ploorplan.def";
   std::string filename_mdef = "./placement/mfloorplan.def";
+  std::string filename_netlist;
 };
 
 ALICE_ADD_COMMAND(write_npz, "I/O")

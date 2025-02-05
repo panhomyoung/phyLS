@@ -31,9 +31,9 @@ namespace phyLS {
 template <class Ntk>
 void write_npz(Ntk const& ntk, std::ostream& os) {
   std::stringstream connect;
-//   cout << "num_pis: " << ntk.num_pis() << endl;
-//   cout << "num_pos: " << ntk.num_pos() << endl;
-//   cout << "num_gates: " << ntk.num_gates() << endl;
+  //   cout << "num_pis: " << ntk.num_pis() << endl;
+  //   cout << "num_pos: " << ntk.num_pos() << endl;
+  //   cout << "num_gates: " << ntk.num_gates() << endl;
   int num_pis = ntk.num_pis(), num_pos = ntk.num_pos(),
       num_gates = ntk.num_gates();
   int size = num_pis + num_pos + num_gates;
@@ -113,9 +113,9 @@ void write_npz(Ntk const& ntk, std::ostream& os) {
 template <class Ntk>
 void write_def(Ntk const& ntk, std::ostream& os_def, std::ostream& os_mdef) {
   std::stringstream components, pins, pins_def;
-//   cout << "num_pis: " << ntk.num_pis() << endl;
-//   cout << "num_pos: " << ntk.num_pos() << endl;
-//   cout << "num_gates: " << ntk.num_gates() << endl;
+  //   cout << "num_pis: " << ntk.num_pis() << endl;
+  //   cout << "num_pos: " << ntk.num_pos() << endl;
+  //   cout << "num_gates: " << ntk.num_gates() << endl;
   int num_pis = ntk.num_pis(), num_pos = ntk.num_pos(),
       num_gates = ntk.num_gates();
   int size = num_pis + num_pos + num_gates;
@@ -175,6 +175,88 @@ void write_def(Ntk const& ntk, std::ostream& os_def, std::ostream& os_mdef) {
 }
 
 template <class Ntk>
+void write_netlist_def(Ntk const& ntk, std::ostream& os) {
+  std::stringstream connect;
+  //   cout << "num_pis: " << ntk.num_pis() << endl;
+  //   cout << "num_pos: " << ntk.num_pos() << endl;
+  //   cout << "num_gates: " << ntk.num_gates() << endl;
+  int num_pis = ntk.num_pis(), num_pos = ntk.num_pos(),
+      num_gates = ntk.num_gates();
+  int size = num_pis + num_pos + num_gates;
+  cout << "size: " << size << endl;
+  vector<double> value;
+  vector<vector<int>> coordinate(2);
+
+  ntk.foreach_node([&](auto const& n) {
+    if (ntk.is_constant(n) || ntk.is_ci(n)) return true;
+
+    ntk.foreach_fanin(n, [&](auto const& f) {
+      if (ntk.node_to_index(ntk.get_node(f)) <= num_pis) {
+        value.push_back(0.6);
+        coordinate[0].push_back(ntk.node_to_index(n) - num_pis - 1);
+        coordinate[1].push_back(ntk.node_to_index(ntk.get_node(f)) + num_gates -
+                                1);
+        value.push_back(0.6);
+        coordinate[0].push_back(ntk.node_to_index(ntk.get_node(f)) + num_gates -
+                                1);
+        coordinate[1].push_back(ntk.node_to_index(n) - num_pis - 1);
+      } else {
+        value.push_back(1);
+        coordinate[0].push_back(ntk.node_to_index(n) - num_pis - 1);
+        coordinate[1].push_back(ntk.node_to_index(ntk.get_node(f)) - num_pis -
+                                1);
+        value.push_back(1);
+        coordinate[0].push_back(ntk.node_to_index(ntk.get_node(f)) - num_pis -
+                                1);
+        coordinate[1].push_back(ntk.node_to_index(n) - num_pis - 1);
+      }
+      return true;
+    });
+    return true;
+  });
+
+  ntk.foreach_po([&](auto const& f, auto i) {
+    if (ntk.node_to_index(ntk.get_node(f)) <= num_pis) {
+      value.push_back(0.1);
+      coordinate[0].push_back(i + num_pis + num_gates);
+      coordinate[1].push_back(ntk.node_to_index(ntk.get_node(f)) + num_gates -
+                              1);
+      value.push_back(0.1);
+      coordinate[0].push_back(ntk.node_to_index(ntk.get_node(f)) + num_gates -
+                              1);
+      coordinate[1].push_back(i + num_pis + num_gates);
+    } else {
+      value.push_back(0.6);
+      coordinate[0].push_back(i + num_pis + num_gates);
+      coordinate[1].push_back(ntk.node_to_index(ntk.get_node(f)) - num_pis - 1);
+      value.push_back(0.6);
+      coordinate[0].push_back(ntk.node_to_index(ntk.get_node(f)) - num_pis - 1);
+      coordinate[1].push_back(i + num_pis + num_gates);
+    }
+  });
+
+  for (int i = 0; i < value.size(); i++) {
+    if (i == value.size() - 1) {
+      connect << fmt::format("{}", value[i]);
+    } else {
+      connect << fmt::format("{}", value[i]) << ",";
+    }
+  }
+  connect << "\n";
+  for (auto x : coordinate) {
+    for (int i = 0; i < x.size(); i++) {
+      if (i == x.size() - 1) {
+        connect << fmt::format("{}", x[i]);
+      } else {
+        connect << fmt::format("{}", x[i]) << ",";
+      }
+    }
+    connect << "\n";
+  }
+  os << connect.str();
+}
+
+template <class Ntk>
 void write_npz(Ntk const& ntk, std::string const& filename) {
   std::ofstream os(filename.c_str(), std::ofstream::out);
   write_npz(ntk, os);
@@ -189,6 +271,13 @@ void write_def(Ntk const& ntk, std::string const& filename_def,
   write_def(ntk, os_def, os_mdef);
   os_def.close();
   os_mdef.close();
+}
+
+template <class Ntk>
+void write_netlist_def(Ntk const& ntk, std::string const& filename_netlist) {
+  std::ofstream os(filename_netlist.c_str(), std::ofstream::out);
+  write_netlist_def(ntk, os);
+  os.close();
 }
 
 }  // namespace phyLS
