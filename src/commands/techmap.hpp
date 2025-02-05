@@ -38,8 +38,7 @@ class techmap_command : public command {
     add_flag("--xag, -g", "Standard cell mapping for XAG");
     add_flag("--lut, -l", "Standard cell mapping for k-LUT");
     add_option("--output, -o", filename, "the verilog filename");
-    add_option("--cut_limit, -c", cut_limit,
-               "Maximum number of cuts for a node");
+    add_option("--cut_limit, -c", cut_limit, "Maximum number of cuts for a node");
     add_option("--node_position_pl, -p", pl_filename, "the pl filename");
     add_option("--node_position_def, -d", def_filename, "the def filename");
     add_flag("--area, -a", "Area-only standard cell mapping");
@@ -176,6 +175,7 @@ class techmap_command : public command {
             std::vector<mockturtle::node_position> np(aig.size() +
                                                       aig.num_pos());
             phyLS::read_deffile(def_filename, np, aig.num_pis());
+
             auto res = mockturtle::map(aig, lib, np, ps, &st);
             if (is_set("output")) write_verilog_with_binding(res, filename);
             std::cout << fmt::format(

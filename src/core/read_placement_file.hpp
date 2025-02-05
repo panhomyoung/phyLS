@@ -29,148 +29,27 @@ void read_mcts_ps(std::string file_path, MCTS::MCTS_params &ps) {
 }
 
 void read_def_file(std::string file_path,
-                   std::vector<mockturtle::node_position> &Vec_position) {
+                   std::vector<node_position> &Vec_position, int input_size = 0) {
   std::ifstream ifs(file_path, std::ifstream::in);
   assert(ifs.is_open());
   std::string line;
   int cell_size = 0;
+  bool gift = false;
   while (std::getline(ifs, line)) {
     if (line.substr(0, 4) == "COMP") {
       while (std::getline(ifs, line)) {
         if (line.substr(0, 3) == "END") {
           break;
         } else {
-          // get index of AIG node
-          int index;
-          std::string res;
-          std::string::size_type found_b = line.find_first_of("_");
-          std::string::size_type found_e = line.find_last_of("_");
-          while (found_b != found_e - 1) {
-            res += line[found_b + 1];
-            found_b++;
+          std::string substr;
+          // std::cout<<line<<"\n";
+          std::string::size_type found_s = line.find_first_of("-");
+          if (found_s != std::string::npos) {
+            substr = line.substr(found_s);
+          } else {
+            continue;
           }
-          index = std::stoi(res);
-          cell_size = index;
-          // read next line
-          std::getline(ifs, line);
-          // get position of AIG node
-          bool is_x = true;
-          std::string position = "";
-          for (char c : line) {
-            if (std::isdigit(c)) {
-              position += c;
-            } else if (!position.empty()) {
-              if (is_x) {
-                Vec_position[index].x_coordinate = std::stoi(position);
-                position.clear();
-                is_x = false;
-              } else {
-                Vec_position[index].y_coordinate = std::stoi(position);
-                position.clear();
-              }
-            } else {
-              continue;
-            }
-          }
-        }
-      }
-    } else if (line.substr(0, 4) == "PINS") {
-      while (std::getline(ifs, line)) {
-        if (line.substr(0, 3) == "END") {
-          break;
-        } else if (line.find("input") != std::string::npos &&
-                   line.find("clk") == std::string::npos) {
-          // get input position
-          std::string::size_type found_1 = line.find("_");
-          std::string::size_type found_2 = line.find("+");
-          int index;
-          std::string res;
-          while (found_1 != found_2 - 2) {
-            res += line[found_1 + 1];
-            found_1++;
-          }
-          index = std::stoi(res);
-          std::getline(ifs, line);
-          std::getline(ifs, line);
-          bool is_x = true;
-          std::string position_input = "";
-          for (char c : line) {
-            if (std::isdigit(c)) {
-              position_input += c;
-            } else if (!position_input.empty()) {
-              if (is_x) {
-                Vec_position[index + 1].x_coordinate =
-                    std::stoi(position_input);
-                position_input.clear();
-                is_x = false;
-              } else {
-                Vec_position[index + 1].y_coordinate =
-                    std::stoi(position_input);
-                position_input.clear();
-              }
-            } else {
-              continue;
-            }
-          }
-        } else if (line.find("output") != std::string::npos) {
-          // get input position
-          std::string::size_type found_1 = line.find("_");
-          std::string::size_type found_2 = line.find("+");
-          int index;
-          std::string res;
-          while (found_1 != found_2 - 2) {
-            res += line[found_1 + 1];
-            found_1++;
-          }
-          index = std::stoi(res);
-          std::getline(ifs, line);
-          std::getline(ifs, line);
-          bool is_x = true;
-          std::string position_output = "";
-          for (char c : line) {
-            if (std::isdigit(c)) {
-              position_output += c;
-            } else if (!position_output.empty()) {
-              if (is_x) {
-                Vec_position[index + cell_size + 1].x_coordinate =
-                    std::stoi(position_output);
-                position_output.clear();
-                is_x = false;
-              } else {
-                Vec_position[index + cell_size + 1].y_coordinate =
-                    std::stoi(position_output);
-                position_output.clear();
-              }
-            } else {
-              continue;
-            }
-          }
-        } else {
-          continue;
-        }
-      }
-    } else {
-      continue;
-    }
-  }
-}
-
-void read_def_file_openroad(
-    std::string file_path, std::vector<mockturtle::node_position> &Vec_position,
-    int input_size) {
-  std::cout << "reading def file from " << file_path << "\n";
-  std::ifstream ifs(file_path, std::ifstream::in);
-  assert(ifs.is_open());
-  std::string line;
-  int cell_size = 0;
-  while (std::getline(ifs, line)) {
-    if (line.substr(0, 10) == "COMPONENTS") {
-      while (std::getline(ifs, line)) {
-        if (line.substr(0, 3) == "END") {
-          break;
-        } else {
-          if (line.find("PLACED") != std::string::npos) {
-            // get index of AIG node
+          if (substr[2] == 'g') {
             int index;
             std::string res;
             std::string::size_type found_b = line.find_first_of("g");
@@ -180,7 +59,13 @@ void read_def_file_openroad(
               found_b++;
             }
             index = std::stoi(res);
-            cell_size = index;
+            cell_size++;
+
+            // read next line
+            while (line.find("PLACED") == std::string::npos)
+              std::getline(ifs, line);
+            // get position of AIG node
+            assert(line.find("PLACED") != std::string::npos);
             std::string position;
             std::string::size_type found_1 = line.find_first_of("(");
             std::string::size_type found_2 = line.find_first_of(")");
@@ -191,11 +76,51 @@ void read_def_file_openroad(
             std::regex pattern(R"((\d+)\s+(\d+))");
             std::smatch match;
             std::regex_search(position, match, pattern);
-            Vec_position[index + input_size + 1].x_coordinate =
-                std::stoi(match[1]);
-            Vec_position[index + input_size + 1].y_coordinate =
-                std::stoi(match[2]);
-          } else {
+            if (!match.empty()) {
+              // std::cout << match[1] << " " << match[2] << "\n";
+              Vec_position[index + input_size + 1].x_coordinate = std::stoi(match[1]);
+              Vec_position[index + input_size + 1].y_coordinate = std::stoi(match[2]);
+            }
+            else {
+              std::cerr << "Error at : " << line <<"\n";
+            }
+          }
+          else if (substr.substr(2, 3) == "and") {
+            // get index of AIG node
+            int index;
+            gift = true;
+            std::string res;
+            std::string::size_type found_b = line.find_first_of("_");
+            std::string::size_type found_e = line.find_last_of("_");
+            while (found_b != found_e - 1) {
+              res += line[found_b + 1];
+              found_b++;
+            }
+            index = std::stoi(res);
+            cell_size = index;
+            // read next line
+            std::getline(ifs, line);
+            // get position of AIG node
+            bool is_x = true;
+            std::string position = "";
+            for (char c : line) {
+              if (std::isdigit(c)) {
+                position += c;
+              } else if (!position.empty()) {
+                if (is_x) {
+                  Vec_position[index].x_coordinate = std::stoi(position);
+                  position.clear();
+                  is_x = false;
+                } else {
+                  Vec_position[index].y_coordinate = std::stoi(position);
+                  position.clear();
+                }
+              } else {
+                continue;
+              }
+            }
+          }
+          else {
             continue;
           }
         }
@@ -205,59 +130,84 @@ void read_def_file_openroad(
         if (line.substr(0, 3) == "END") {
           break;
         } else {
-          if (line.find("INPUT") != std::string::npos) {
-            int index;
-            std::string res;
-            std::string::size_type found_b = line.find_first_of("x");
-            std::string::size_type found_e = line.find_first_of("+");
-            while (found_b != found_e - 1) {
-              res += line[found_b + 1];
-              found_b++;
+          std::string::size_type fidx = line.find_first_not_of(" ");
+          if (line[fidx] != '-')
+          {
+            // std::cerr << "Error at : " << line <<"\n";
+            continue;
+          }
+          std::string et_line = line;
+          std::getline(ifs, line);
+          et_line += line;
+          // get input position
+          if (et_line.find("INPUT") != std::string::npos) 
+          {
+            std::regex pattern(R"((\d+))");
+            std::smatch match;
+            std::regex_search(et_line, match, pattern);
+            int index = 0;
+            if (!match.empty()) {
+              index = std::stoi(match[1]);
             }
-            index = std::stoi(res);
-            std::getline(ifs, line);
-            std::getline(ifs, line);
-            std::getline(ifs, line);
-            std::string position;
+            else {
+              std::cout<<"error\n";
+              continue;
+            }
+            
+            while (line.find("PLACED") == std::string::npos) 
+              std::getline(ifs, line);
+
+            std::string position = "";
             std::string::size_type found_1 = line.find_first_of("(");
             std::string::size_type found_2 = line.find_first_of(")");
             while (found_1 != found_2 - 1) {
               position += line[found_1 + 1];
               found_1++;
             }
-            std::regex pattern(R"((\d+)\s+(\d+))");
+            std::regex pattern2(R"((\d+)\s+(\d+))");
+            std::smatch match2;
+            std::regex_search(position, match2, pattern2);
+            // std::cout<<"input\n";
+            Vec_position[index + 1].x_coordinate = std::stoi(match2[1]);
+            Vec_position[index + 1].y_coordinate = std::stoi(match2[2]);
+            continue;
+          }
+          else if (et_line.find("OUTPUT") != std::string::npos)
+          {
+            std::regex pattern(R"((\d+))");
             std::smatch match;
-            std::regex_search(position, match, pattern);
-            Vec_position[index + 1].x_coordinate = std::stoi(match[1]);
-            Vec_position[index + 1].y_coordinate = std::stoi(match[2]);
-          } else if (line.find("OUTPUT") != std::string::npos) {
-            int index;
-            std::string res;
-            std::string::size_type found_b = line.find_first_of("y");
-            std::string::size_type found_e = line.find_first_of("+");
-            while (found_b != found_e - 1) {
-              res += line[found_b + 1];
-              found_b++;
+            std::regex_search(et_line, match, pattern);
+            int index = 0;
+            if (!match.empty()) {
+              index = std::stoi(match[1]);
             }
-            index = std::stoi(res);
-            std::getline(ifs, line);
-            std::getline(ifs, line);
-            std::getline(ifs, line);
-            std::string position;
+            else {
+              std::cout<<"error\n";
+              continue;
+            }
+            
+            while (line.find("PLACED") == std::string::npos) 
+              std::getline(ifs, line);
+            
+            std::string position = "";
             std::string::size_type found_1 = line.find_first_of("(");
             std::string::size_type found_2 = line.find_first_of(")");
             while (found_1 != found_2 - 1) {
               position += line[found_1 + 1];
               found_1++;
             }
-            std::regex pattern(R"((\d+)\s+(\d+))");
-            std::smatch match;
-            std::regex_search(position, match, pattern);
-            Vec_position[index + cell_size + input_size + 2].x_coordinate =
-                std::stoi(match[1]);
-            Vec_position[index + cell_size + input_size + 2].y_coordinate =
-                std::stoi(match[2]);
-          } else {
+            std::regex pattern2(R"((\d+)\s+(\d+))");
+            std::smatch match2;
+            std::regex_search(position, match2, pattern2);
+            int sa;
+            if (gift) 
+            {
+              sa = index + cell_size + 1;
+            } else {
+              sa = index + cell_size + input_size + 1;
+            }
+            Vec_position[sa].x_coordinate = std::stoi(match2[1]);
+            Vec_position[sa].y_coordinate = std::stoi(match2[2]);
             continue;
           }
         }
@@ -267,6 +217,100 @@ void read_def_file_openroad(
     }
   }
 }
+
+// void read_def_file(std::string file_path,
+//                    std::vector<mockturtle::node_position> &Vec_position,
+//                    int input_size = 0) {
+//   std::ifstream ifs(file_path, std::ifstream::in);
+//   assert(ifs.is_open());
+//   std::string line;
+//   while (std::getline(ifs, line)) {
+//     if (line.substr(0, 4) == "COMP") {
+//       while (std::getline(ifs, line)) {
+//         if (line.substr(0, 3) == "END") {
+//           break;
+//         } else {
+//           // get index of AIG node
+//           int index;
+//           std::string res;
+//           std::string::size_type found_b = line.find_first_of("_");
+//           std::string::size_type found_e = line.find_last_of("_");
+//           while (found_b != found_e - 1) {
+//             res += line[found_b + 1];
+//             found_b++;
+//           }
+//           index = std::stoi(res);
+
+//           // read next line
+//           std::getline(ifs, line);
+//           // get position of AIG node
+//           bool is_x = true;
+//           std::string position = "";
+//           for (char c : line) {
+//             if (std::isdigit(c)) {
+//               position += c;
+//             } else if (!position.empty()) {
+//               if (is_x) {
+//                 Vec_position[index].x_coordinate = std::stoi(position);
+//                 position.clear();
+//                 is_x = false;
+//               } else {
+//                 Vec_position[index].y_coordinate = std::stoi(position);
+//                 position.clear();
+//               }
+//             } else {
+//               continue;
+//             }
+//           }
+//         }
+//       }
+//     } else if (line.substr(0, 4) == "PINS") {
+//       while (std::getline(ifs, line)) {
+//         if (line.substr(0, 3) == "END") {
+//           break;
+//         } else if (line.find("input") != std::string::npos &&
+//                    line.find("clk") == std::string::npos) {
+//           // get input position
+//           std::string::size_type found_1 = line.find("_");
+//           std::string::size_type found_2 = line.find("+");
+//           int index;
+//           std::string res;
+//           while (found_1 != found_2 - 2) {
+//             res += line[found_1 + 1];
+//             found_1++;
+//           }
+//           index = std::stoi(res);
+//           std::getline(ifs, line);
+//           std::getline(ifs, line);
+//           bool is_x = true;
+//           std::string position_input = "";
+//           for (char c : line) {
+//             if (std::isdigit(c)) {
+//               position_input += c;
+//             } else if (!position_input.empty()) {
+//               if (is_x) {
+//                 Vec_position[index + 1].x_coordinate =
+//                     std::stoi(position_input);
+//                 position_input.clear();
+//                 is_x = false;
+//               } else {
+//                 Vec_position[index + 1].y_coordinate =
+//                     std::stoi(position_input);
+//                 position_input.clear();
+//               }
+//             } else {
+//               continue;
+//             }
+//           }
+//         } else {
+//           continue;
+//         }
+//       }
+//     } else {
+//       continue;
+//     }
+//   }
+// }
 
 void read_pl_file(std::string file_path,
                   std::vector<mockturtle::node_position> &Vec_position,
