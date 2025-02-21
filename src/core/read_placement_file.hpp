@@ -218,6 +218,119 @@ void read_def_file(std::string file_path,
   }
 }
 
+void read_def_file_openroad(
+    std::string file_path, std::vector<mockturtle::node_position> &Vec_position,
+    int input_size) {
+  std::cout << "reading def file from " << file_path << "\n";
+  std::ifstream ifs(file_path, std::ifstream::in);
+  assert(ifs.is_open());
+  std::string line;
+  int cell_size = 0;
+  while (std::getline(ifs, line)) {
+    if (line.substr(0, 10) == "COMPONENTS") {
+      while (std::getline(ifs, line)) {
+        if (line.substr(0, 3) == "END") {
+          break;
+        } else {
+          if (line.find("PLACED") != std::string::npos) {
+            // get index of AIG node
+            int index;
+            std::string res;
+            std::string::size_type found_b = line.find_first_of("g");
+            std::string::size_type found_e = line.find_first_of("A");
+            while (found_b != found_e - 1) {
+              res += line[found_b + 1];
+              found_b++;
+            }
+            index = std::stoi(res);
+            cell_size = index;
+            std::string position;
+            std::string::size_type found_1 = line.find_first_of("(");
+            std::string::size_type found_2 = line.find_first_of(")");
+            while (found_1 != found_2 - 1) {
+              position += line[found_1 + 1];
+              found_1++;
+            }
+            std::regex pattern(R"((\d+)\s+(\d+))");
+            std::smatch match;
+            std::regex_search(position, match, pattern);
+            Vec_position[index + input_size + 1].x_coordinate =
+                std::stoi(match[1]);
+            Vec_position[index + input_size + 1].y_coordinate =
+                std::stoi(match[2]);
+          } else {
+            continue;
+          }
+        }
+      }
+    } else if (line.substr(0, 4) == "PINS") {
+      while (std::getline(ifs, line)) {
+        if (line.substr(0, 3) == "END") {
+          break;
+        } else {
+          if (line.find("INPUT") != std::string::npos) {
+            int index;
+            std::string res;
+            std::string::size_type found_b = line.find_first_of("x");
+            std::string::size_type found_e = line.find_first_of("+");
+            while (found_b != found_e - 1) {
+              res += line[found_b + 1];
+              found_b++;
+            }
+            index = std::stoi(res);
+            std::getline(ifs, line);
+            std::getline(ifs, line);
+            std::getline(ifs, line);
+            std::string position;
+            std::string::size_type found_1 = line.find_first_of("(");
+            std::string::size_type found_2 = line.find_first_of(")");
+            while (found_1 != found_2 - 1) {
+              position += line[found_1 + 1];
+              found_1++;
+            }
+            std::regex pattern(R"((\d+)\s+(\d+))");
+            std::smatch match;
+            std::regex_search(position, match, pattern);
+            Vec_position[index + 1].x_coordinate = std::stoi(match[1]);
+            Vec_position[index + 1].y_coordinate = std::stoi(match[2]);
+          } else if (line.find("OUTPUT") != std::string::npos) {
+            int index;
+            std::string res;
+            std::string::size_type found_b = line.find_first_of("y");
+            std::string::size_type found_e = line.find_first_of("+");
+            while (found_b != found_e - 1) {
+              res += line[found_b + 1];
+              found_b++;
+            }
+            index = std::stoi(res);
+            std::getline(ifs, line);
+            std::getline(ifs, line);
+            std::getline(ifs, line);
+            std::string position;
+            std::string::size_type found_1 = line.find_first_of("(");
+            std::string::size_type found_2 = line.find_first_of(")");
+            while (found_1 != found_2 - 1) {
+              position += line[found_1 + 1];
+              found_1++;
+            }
+            std::regex pattern(R"((\d+)\s+(\d+))");
+            std::smatch match;
+            std::regex_search(position, match, pattern);
+            Vec_position[index + cell_size + input_size + 2].x_coordinate =
+                std::stoi(match[1]);
+            Vec_position[index + cell_size + input_size + 2].y_coordinate =
+                std::stoi(match[2]);
+          } else {
+            continue;
+          }
+        }
+      }
+    } else {
+      continue;
+    }
+  }
+}
+
 // void read_def_file(std::string file_path,
 //                    std::vector<mockturtle::node_position> &Vec_position,
 //                    int input_size = 0) {
@@ -240,7 +353,6 @@ void read_def_file(std::string file_path,
 //             found_b++;
 //           }
 //           index = std::stoi(res);
-
 //           // read next line
 //           std::getline(ifs, line);
 //           // get position of AIG node
@@ -861,6 +973,5 @@ void read_deffile(std::string file_path,
     }
   }
 }
-
 
 }  // NAMESPACE phyLS
