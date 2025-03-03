@@ -655,7 +655,7 @@ std::pair<double, double> _stime(std::string lib_file, std::string netlist_file,
   int np_size = Abc_NtkNodeNum(pNtk) + Abc_NtkPiNum(pNtk) + Abc_NtkPoNum(pNtk);
 
   std::vector<mockturtle::node_position> np(np_size + 1);
-  read_def_file_openroad(def_file, np, Abc_NtkPiNum(pNtk));
+  read_def_file(def_file, np, Abc_NtkPiNum(pNtk));
   np.erase(np.begin());
 
   // set defaults
