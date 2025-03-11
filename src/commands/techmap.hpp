@@ -45,6 +45,7 @@
      add_option("--cut_limit, -c", cut_limit, "Maximum number of cuts for a node");
      add_option("--node_position_pl, -p", pl_filename, "the pl filename");
      add_option("--node_position_def, -d", def_filename, "the def filename");
+     add_flag("--rudy, -r", "RUDY-based standard cell mapping");
      add_flag("--area, -a", "Area-only standard cell mapping");
      add_flag("--delay, -e", "Delay-only standard cell mapping");
      add_flag("--performance, -w",
@@ -55,7 +56,6 @@
                 "The trade-off between power mode (1) and performance mode (0), "
                 "range: [0,1], default = performance mode (0)");
      add_flag("--verbose, -v", "print the information");
-     add_flag("--test, -s", "test bench for techmap");
    }
  
    rules validity_rules() const {
@@ -171,20 +171,22 @@
                "Mapped XAG into #gates = {} area = {:.2f} delay = {:.2f}\n",
                res.num_gates(), st.area, st.delay);
          }
-       } else if (is_set("test")) {
+       } else if (is_set("rudy")) {
          if (store<aig_network>().size() == 0u) {
            std::cerr << "[e] no AIG in the store\n";
          } else {
-           std::cout << "[i] test bench for techmap" << std::endl;
            auto aig = store<aig_network>().current();
            std::vector<mockturtle::node_position> nps(aig.size() + aig.num_pos());;
-           std::cout << "[i] test bench for read def file" << std::endl;
            phyLS::read_def_file(def_filename, nps, aig.num_pis());
-           // auto res = phyLS::phymap(aig, lib, nps, ps, &st);
            auto res = mockturtle::phymap(aig, lib, nps, ps, &st);
-           std::cout << "[i] test bench for create rudy instance" << std::endl;
+           if (is_set("output")) write_verilog_with_binding(res, filename);
+           std::cout << fmt::format(
+               "Mapped AIG into #gates = {}, area = {:.2f}, delay = {:.2f}, "
+               "power = {:.2f}, wirelength = {:.2f}, total_wirelength = "
+               "{:.2f}\n",
+               res.num_gates(), st.area, st.delay, st.power, st.wirelength,
+               st.total_wirelength);
            phyLS::RUDY rudy_map(&nps, &aig, aig.num_pis(), aig.num_pos());
-           std::cout << "[i] test bench for calculate rudy" << std::endl;
            rudy_map.calculateRudy();
            rudy_map.show();
          }

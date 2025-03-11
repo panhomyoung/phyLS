@@ -173,23 +173,16 @@ public:
                                             _placement(placement), _ntk(ntk), _num_pi(num_pi), _num_po(num_po),
                                             _nets(ntk->size()) 
   {
-    std::cout << "Size of placement = " << placement->size() << std::endl;
-    std::cout << "Size of ntk = " << ntk->size() << std::endl;
     // Set the wire width to 1 as default
     _wire_width = 12;
-
     // Build up the core grid
-    std::cout << "Building core grid" << std::endl;
     buildCore();
-    std::cout << "Building core grid done" << std::endl;
     makeGrid();
-    std::cout << "Building grid done" << std::endl;
     extractNets();
   }
 
   void calculateRudy()
   {
-    std::cout << "Calculating Rudy" << std::endl;
     for (auto& grid_colun : _grids)
     {
       for (auto& tile : grid_colun)
@@ -248,7 +241,6 @@ public:
     for (auto pin : net_pins)
     {
       node_position fanout_np = (*_placement)[pin];
-      std::cout << "Fanout: "  << pin << " " << fanout_np.x_coordinate << " " << fanout_np.y_coordinate << std::endl;
       if (fanout_np.x_coordinate < xmin)
         xmin = fanout_np.x_coordinate;
       if (fanout_np.x_coordinate > xmax)
@@ -266,7 +258,6 @@ public:
       ++xhi; // Consider the upper bound is 1 more than the actual value
     if (ymax != yhi)
       ++yhi; // Consider the upper bound is 1 more than the actual value
-    std::cout << "Net rect: " << xlo << " " << ylo << " " << xhi << " " << yhi << std::endl;
     net_rect.init(xlo - _wire_width / 2, ylo - _wire_width / 2, 
                   xhi + _wire_width / 2, yhi + _wire_width / 2);
     
@@ -284,10 +275,8 @@ public:
       std::cerr << "Error: Net area is zero" << std::endl;
     
     const auto hpwl = static_cast<float>(net_rect.dx() + net_rect.dy());
-    std::cout << "HPWL = " << hpwl << std::endl;
     const auto wire_area = hpwl * _wire_width;
     const auto net_congestion = wire_area / net_area;
-    // std::cout << "Net congestion = " << net_congestion << std::endl;
 
     const int min_x_index
       = std::max(0, (net_rect.xMin() - _block_grid.xMin() ) / _tile_size);
@@ -310,9 +299,6 @@ public:
           const auto tile_area = tile_box.area();
           const auto tile_net_box_ratio = static_cast<float>(intersect_area)
                                           / static_cast<float>(tile_area);
-          // std::cout << "Tile area = " << tile_area << std::endl;
-          // std::cout << "Intersect area = " << intersect_area << std::endl;
-          // std::cout << "Tile net box ratio = " << tile_net_box_ratio << std::endl;
           const auto rudy = net_congestion * tile_net_box_ratio * 100;
           if constexpr (TEMP) {
             tile.addOffset(rudy);
@@ -320,7 +306,6 @@ public:
           }
           else {
             tile.addRudy(rudy);
-            std::cout << "rudy = " << rudy << std::endl;
           }
         }
       }
@@ -552,20 +537,19 @@ public:
   }
 
   void nodeRUDYRemove(int node_index) {
-    auto node = _ntk.index_to_node(node_index);
+    auto node = _ntk->index_to_node(node_index);
 
     int old_size = _offset_grids.size();
     // if the node is  invertor, then remove the net of the child node
-    _ntk.foreach_fanin(node, [&](auto f) { 
-      auto child_index = _ntk.node_to_index(_ntk.get_node(f));
-      if (_ntk._storage->nodes[index].data[1].h1 == 3) {
-        foreach_fanin(_ntk.index_to_node(child_index), [&](auto f) {
-          std::cout << "Child index: " << child_index << "is invertor" << std::endl;
-          auto grand_child_index = _ntk.node_to_index(_ntk.get_node(f));
+    _ntk->foreach_fanin(node, [&](auto f) {
+      auto child_index = _ntk->node_to_index(_ntk->get_node(f));
+      if (_ntk->_storage->nodes[index].data[1].h1 == 3) {
+        foreach_fanin(_ntk->index_to_node(child_index), [&](auto f) {
+          auto grand_child_index = _ntk->node_to_index(_ntk->get_node(f));
           removeRectRudy<true>(_placement->at(child_index).x_coordinate, _placement->at(child_index).y_coordinate,
                                _placement->at(grand_child_index).x_coordinate, _placement->at(grand_child_index).y_coordinate);
         });
-      } 
+      }
       removeRectRudy<true>(_placement->at(node_index).x_coordinate, _placement->at(node_index).y_coordinate,
                            _placement->at(child_index).x_coordinate, _placement->at(child_index).y_coordinate);
     });
@@ -665,7 +649,6 @@ public:
         min_y = node.y_coordinate;
     }
 
-    std::cout << "Core: " << min_x << " " << min_y << " " << max_x << " " << max_y << std::endl;
     _block_grid.init(min_x, min_y, max_x, max_y);
   }
 
@@ -691,17 +674,12 @@ public:
         min_y = node.y_coordinate;
     }
 
-    std::cout << "Core: " << min_x << " " << min_y << " " << max_x << " " << max_y << std::endl;
     _block_grid.init(min_x, min_y, max_x, max_y);
   }
 
   // Extract the nets from the AIG network and its companion placement
   void extractNets()
   {
-    // for (auto& position : _placement) {
-    //   std::cout << "index = " << position->index << std::endl;
-    //   std::cout << "Placement: " << position->x_coordinate << " " << position->y_coordinate << std::endl;
-    // }
     _ntk->foreach_pi([&](auto const& n) {
       auto nindex = _ntk->node_to_index(n);
       if (!_nets[nindex].empty()) {
@@ -759,7 +737,6 @@ public:
   void makeGrid()
   {
     compute_tile_cnt();
-    std::cout << "Tile size: " << _tile_cnt_x << " " << _tile_cnt_y << std::endl;
     const int grid_lx = _block_grid.xMin();
     const int grid_ly = _block_grid.yMin();
 

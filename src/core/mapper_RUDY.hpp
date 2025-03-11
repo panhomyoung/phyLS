@@ -177,13 +177,13 @@ public:
     ntk.foreach_node([&](auto const& n) {
       auto index = ntk.node_to_index(n);
       auto& node_data = node_match[index];
-      std::cout << "Node " << index << " has position " << node_data.position[0].x_coordinate << " " << node_data.position[0].y_coordinate << std::endl;
     });
 
     /* init the data structure */
     init_nodes();
 
     /* execute mapping */
+    std::cout << "delay flow" << std::endl;
     bool success = compute_mapping<false>();
     if (!success) {
       std::cout << "Failed to map the network" << std::endl;
@@ -191,6 +191,7 @@ public:
     } 
     compute_required_time();
 
+    std::cout << "area flow" << std::endl;
     success = compute_mapping<true>();
     if (!success) {
       std::cout << "Failed to map the network" << std::endl;
@@ -198,7 +199,16 @@ public:
     }
     compute_required_time();
 
-    success = compute_mapping_wirelength<true, false, false>();
+    std::cout << "WL flow" << std::endl;
+    success = compute_mapping_wirelength<false, true>();
+    if (!success) {
+      std::cout << "Failed to map the network" << std::endl;
+      return res;
+    }
+    compute_required_time();
+
+    std::cout << "exact area flow" << std::endl;
+    success = compute_mapping_exact<false>();
     if (!success) {
       std::cout << "Failed to map the network" << std::endl;
       return res;
@@ -208,11 +218,9 @@ public:
     /* generate the output network */
     auto [res_temp, old2new_temp] = initialize_map_network<true>();
 
-    std::cout << "second time printing position of the nodes" << std::endl;
     ntk.foreach_node([&](auto const& n) {
       auto index = ntk.node_to_index(n);
       auto& node_data = node_match[index];
-      std::cout << "Node " << index << " has position " << node_data.position[0].x_coordinate << " " << node_data.position[0].y_coordinate << std::endl;
     });
 
     finalize_cover_congest<map_ntk_t, true>(res_temp, old2new_temp);
@@ -400,10 +408,6 @@ protected:
     if (cut->size() <= 1) return;
     if (level > 7)
     {
-      std::cout << "cut size = " << cut->size() << " leaves = ";
-      for (auto& i : cut->pins)
-        std::cout << i << " ";
-      std::cout << std::endl;
       return;
     }
     else if (ntk.is_ci(ntk.index_to_node(n)) || ntk.is_constant(ntk.index_to_node(n)))
@@ -417,9 +421,6 @@ protected:
 
     ntk.foreach_fanin(ntk.index_to_node(n), [&](signal<Ntk> const& fi) {
       uint32_t child = ntk.node_to_index(ntk.get_node(fi));
-
-      std::cout << "fanin[" << n << "] = " << child << std::endl;
-
       if (node_match[child].set_flag[0] == true) return;
       bool in_leaves = false;
       for (uint32_t& i : *cut) {
@@ -446,43 +447,28 @@ protected:
         return;
       }
     });
-    // std::cout << "Leaves of node " << n << " : ";
 
     cut->nodes.push_back(n);
     if (is_pins) 
     {
       cut->pins.push_back(n);
     }
-    // std::cout << "Leaves of node " << n << " : ";
 
     if (level == 0)
     {
-      // std::cout << "Leaves of node " << n << " : ";
-      for (auto& i : *cut)
-      {
-        std::cout << i << " ";
-      }
-      std::cout << std::endl;
-
       if (std::find(cut->pins.begin(), cut->pins.end(), n) == cut->pins.end())
       {
-        std::cout <<"Root node isn't in the pins of the cut" << std::endl;
         cut->pins.push_back(n);
       }
 
       if (std::find(cut->nodes.begin(), cut->nodes.end(), n) == cut->nodes.end())
       {
-        std::cout << "Root node isn't in the nodes of the cut" << std::endl;
         cut->pins.push_back(n);
       }
-
-      // std::cout << "nodes of node " << n << " : ";
       for (auto& i : cut->nodes)
       {
-        // std::cout << i << " ";
         node_match[i].set_flag[0] = false;
       }
-      std::cout << std::endl;
     }
   }
 
@@ -492,10 +478,6 @@ protected:
     if (cut->size() <= 1) return;
     if (level > 5)
     {
-      std::cout << "cut size = " << cut->size() << " level = " ;
-      for (auto& i : cut->pins)
-        std::cout << i << " ";
-      std::cout << std::endl;
       return;
     }
     else if (ntk.is_ci(ntk.index_to_node(n))) 
@@ -529,34 +511,25 @@ protected:
     });
   }
 
-  void compute_matches() {
-    std::cout << "Ninputs = " << NInputs << std::endl;
+  void compute_matches() 
+  {
     /* match gates */
     ntk.foreach_gate( [&]( auto const& n ) {
       const auto index = ntk.node_to_index( n );
-      if (index == 131) std::cout << "Cut size of " << n << " = " << cuts.cuts( index ).size() << std::endl;
+      
       std::vector<cut_match_tech<NInputs>> node_matches;
 
       auto i = 0u;
       for ( auto& cut : cuts.cuts( index ) )
       {
-        if (index == 131) 
-        {
-          if (ntk.is_constant(index)) std::cout << "131 is constant" << std::endl;
-          std::cout << "Cut size of " << n << " = " << cuts.cuts( index ).size() << std::endl;
-          for (auto& i : *cut)
-            std::cout << i << " ";
-        }
         /* ignore unit cut */
         if ( cut->size() == 1 && *cut->begin() == index )
         {
-          if (index == 131) std::cout << "ignoring for too small " << n << std::endl;
           ( *cut )->data.ignore = true;
           continue;
         }
         if ( cut->size() > NInputs )
         {
-          if (index == 131) std::cout << "ignoring for too large " << n << std::endl;
           /* Ignore cuts too big to be mapped using the library */
           ( *cut )->data.ignore = true;
           continue;
@@ -603,10 +576,6 @@ protected:
           ( *cut )->data.ignore = true;
         }
         search_nodes_pins(index, cut);
-        // if (ps.strategy == map_params::performance ||
-        //     ps.strategy == map_params::power ||
-        //     ps.strategy == map_params::balance)
-        //   search_pins(index, cut);
       }
 
       matches[index] = node_matches;
@@ -931,17 +900,17 @@ protected:
     return success;
   }
 
-  template <bool DO_TOTALWIRE, bool DO_POWER, bool DO_TRADE>
+  template <bool DO_TOTALWIRE, bool DO_TRADE>
   bool compute_mapping_wirelength() {
     for (auto const& n : top_order) {
       uint32_t idx = ntk.node_to_index(n);
       if (ntk.is_constant(n) || ntk.is_ci(n)) continue;
 
       /* match positive wire&delay phase */
-      match_wirelength<DO_TOTALWIRE, DO_POWER, DO_TRADE>(n, 0u);
+      match_wirelength<DO_TOTALWIRE, DO_TRADE>(n, 0u);
 
       /* match negative wire&delay phase */
-      match_wirelength<DO_TOTALWIRE, DO_POWER, DO_TRADE>(n, 1u);
+      match_wirelength<DO_TOTALWIRE, DO_TRADE>(n, 1u);
 
       /* try to drop one delay phase */
       match_wirelength_drop_phase<DO_TOTALWIRE, DO_TRADE>(n);
@@ -1603,7 +1572,7 @@ protected:
     return gate_position;
   }
 
-  template <bool DO_TOTALWIRE, bool DO_POWER, bool DO_TRADE>
+  template <bool DO_TOTALWIRE, bool DO_TRADE>
   void match_wirelength(node<Ntk> const& n, uint8_t phase) {
     double best_arrival = std::numeric_limits<double>::max();
     double best_area_flow = std::numeric_limits<double>::max();
@@ -1621,16 +1590,10 @@ protected:
     auto& cut_matches = matches[index];
     supergate<NInputs> const* best_supergate = node_data.best_supergate[phase];
     auto const& cur_best_cut = cuts.cuts(index)[node_data.best_cut[phase]];
-
     node_position best_gate_position = compute_gate_position(cur_best_cut);
-
-    std::cout << "1position of node / phase: " << n << " / " << int(phase) << " = " 
-              << best_gate_position.x_coordinate << " " 
-              << best_gate_position.y_coordinate << std::endl; 
 
     /* recompute best match info */
     if (best_supergate != nullptr) {
-      std::cout << "best_supergate is not nullptr" << std::endl;
       auto const& cut = cuts.cuts(index)[node_data.best_cut[phase]];
       best_phase = node_data.phase[phase];
       best_arrival = 0.0f;
@@ -1661,7 +1624,6 @@ protected:
 
     /* foreach cut */
     for (auto& cut : cuts.cuts(index)) {
-      std::cout << "cut_index: " << static_cast<int>(cut_index) << std::endl;
       /* trivial cuts or not matched cuts */
       if ((*cut)->data.ignore) {
         ++cut_index;
@@ -1705,19 +1667,11 @@ protected:
           ++ctr;
         }
 
-        if (worst_arrival > node_data.required[phase] + epsilon) {
-          std::cout << "arrival > required" << std::endl;
-          continue;
+        if (worst_arrival > node_data.required[phase] + epsilon) continue;
+        if (DO_TOTALWIRE) {
+          if (worst_wirelength * 0.95 > node_data.wirelength[phase] + epsilon)
+            continue;
         }
-
-        // if (!DO_TRADE) {
-        //   if constexpr (!DO_POWER) {
-        //     if constexpr (DO_TOTALWIRE) {
-        //       if (worst_wirelength > node_data.wirelength[phase] + epsilon)
-        //         continue;
-        //     }
-        //   }
-        // }
 
         if (compare_map_wirelength<DO_TOTALWIRE, DO_TRADE>(
                 worst_wirelength, best_wirelength, worst_arrival, best_arrival,
@@ -1736,6 +1690,7 @@ protected:
           best_position = true;
         }
       }
+
       ++cut_index;
     }
 
@@ -1748,12 +1703,6 @@ protected:
     node_data.phase[phase] = best_phase;
     node_data.best_supergate[phase] = best_supergate;
     node_data.position[phase] = best_gate_position;
-    std::cout << "2position of node / phase: " << n << " / " << int(phase) << " = " 
-              << node_data.position[phase].x_coordinate << " " 
-              << node_data.position[phase].y_coordinate << std::endl; 
-    if (best_position) {
-      std::cout << "replace success, position of node / phase: " << std::endl;
-    }
   }
 
   void match_wirelength_exact(node<Ntk> const& n, uint8_t phase) {
@@ -2073,10 +2022,10 @@ protected:
 
     /* only one phase is matched */
     if (node_data.best_supergate[0] == nullptr) {
-      set_match_wirelength_complemented_phase<DO_TOTALWIRE>(index, 1, worst_arrival_npos);
+      set_match_wirelength_complemented_phase(index, 1, worst_arrival_npos);
       return;
     } else if (node_data.best_supergate[1] == nullptr) {
-      set_match_wirelength_complemented_phase<DO_TOTALWIRE>(index, 0, worst_arrival_nneg);
+      set_match_wirelength_complemented_phase(index, 0, worst_arrival_nneg);
       return;
     }
 
@@ -2126,9 +2075,9 @@ protected:
     }
 
     if (use_zero) {
-      set_match_wirelength_complemented_phase<DO_TOTALWIRE>(index, 0, worst_arrival_nneg);
+      set_match_wirelength_complemented_phase(index, 0, worst_arrival_nneg);
     } else {
-      set_match_wirelength_complemented_phase<DO_TOTALWIRE>(index, 1, worst_arrival_npos);
+      set_match_wirelength_complemented_phase(index, 1, worst_arrival_npos);
     }
   }
 
@@ -2147,8 +2096,8 @@ protected:
     node_data.flows[2] = node_data.flows[phase];
   }
 
-  template <bool DO_TOTALWIRE>
-  inline void set_match_wirelength_complemented_phase(uint32_t index, uint8_t phase,
+  inline void set_match_wirelength_complemented_phase(uint32_t index,
+                                                      uint8_t phase,
                                                       double worst_arrival_n) {
     auto& node_data = node_match[index];
     auto phase_n = phase ^ 1;
@@ -2161,10 +2110,8 @@ protected:
     node_data.position[phase_n] = node_data.position[phase];
 
     // Treat the total wirelength as the area flow
-    if constexpr (DO_TOTALWIRE) {
-      node_data.total_wirelength[phase] = node_data.total_wirelength[phase] / node_data.est_refs[2];
-      node_data.total_wirelength[phase_n] = node_data.total_wirelength[phase];
-    }
+    node_data.total_wirelength[phase] = node_data.total_wirelength[phase] / node_data.est_refs[2];
+    node_data.total_wirelength[phase_n] = node_data.total_wirelength[phase];
 
     node_data.area[phase_n] = node_data.area[phase];
     node_data.congestion[phase_n] = node_data.congestion[phase];
@@ -2420,9 +2367,6 @@ protected:
       match_position.clear();
       match_position.resize(2);
     }
-      
-
-    std::cout << "initially dest size = " << dest.size() << std::endl;
 
     old2new[ntk.node_to_index( ntk.get_node( ntk.get_constant( false ) ) )][0] = dest.get_constant( false );
     old2new[ntk.node_to_index( ntk.get_node( ntk.get_constant( false ) ) )][1] = dest.get_constant( true );
@@ -2431,9 +2375,6 @@ protected:
       old2new[ntk.node_to_index( n )][0] = dest.create_pi();
       if constexpr ( PHYAWARE ) {
         match_position.push_back( node_match[ntk.node_to_index( n )].position[0] );
-        std::cout << "match_position [" << (match_position.size() - 1) << "] = " 
-                      << match_position[match_position.size() - 1].x_coordinate << ", " 
-                      << match_position[match_position.size() - 1].y_coordinate << std::endl;
         if ( match_position.size() != dest.size() )
           std::cerr << "Error: match_position size is not equal to dest size: index = " << ntk.node_to_index( n )
                     << " match size = " << match_position.size() << " dest size = " << dest.size() << std::endl;
@@ -2487,9 +2428,6 @@ protected:
           old2new[index][1] = res.create_not( old2new[n][0] );
           if constexpr ( PHYAWARE ) {
             match_position.push_back(node_data.position[0]);
-            std::cout << "match_position [" << (match_position.size() - 1) << "] = " 
-                      << match_position[match_position.size() - 1].x_coordinate << ", " 
-                      << match_position[match_position.size() - 1].y_coordinate << std::endl;
             if (match_position.size() != res.size())
               std::cerr << "Error: match_position size is not equal to res size: index = " << index
                  << " match size = " << match_position.size() << " res size = " << res.size() << std::endl;
@@ -2518,9 +2456,6 @@ protected:
             binding_roots.push_back(old2new[index][phase]);
           }
           match_position.push_back(node_data.position[phase]);
-          std::cout << "match_position [" << (match_position.size() - 1) << "] = " 
-                      << match_position[match_position.size() - 1].x_coordinate << ", " 
-                      << match_position[match_position.size() - 1].y_coordinate << std::endl;
           if (match_position.size() != res.size())
               std::cerr << "Error: match_position size is not equal to res size: index = " << index
                  << " match size = " << match_position.size() << " res size = " << res.size() << std::endl;
@@ -2532,9 +2467,6 @@ protected:
           old2new[index][phase ^ 1] = res.create_not( old2new[index][phase] );
           if constexpr (PHYAWARE) {
             match_position.push_back(node_data.position[phase ^ 1]);
-            std::cout << "match_position [" << (match_position.size() - 1) << "] = " 
-                      << match_position[match_position.size() - 1].x_coordinate << ", " 
-                      << match_position[match_position.size() - 1].y_coordinate << std::endl;
             if (match_position.size() != res.size())
               std::cerr << "Error: match_position size is not equal to res size: index = " << index
                  << " match size = " << match_position.size() << " res size = " << res.size() << std::endl;
@@ -2556,9 +2488,6 @@ protected:
             binding_roots.push_back(old2new[index][phase]);
           }
           match_position.push_back(node_data.position[phase]);
-          std::cout << "match_position [" << (match_position.size() - 1) << "] = " 
-                      << match_position[match_position.size() - 1].x_coordinate << ", " 
-                      << match_position[match_position.size() - 1].y_coordinate << std::endl;
           if (match_position.size() != res.size())
               std::cerr << "Error: match_position size is not equal to res size: index = " << index
                  << " match size = " << match_position.size() << " res size = " << res.size() << std::endl;
@@ -2873,13 +2802,13 @@ protected:
           return true;
         else if (wirelength > best_wirelength + epsilon)
           return false;
-        else if (arrival < best_arrival - epsilon)
-          return true;
-        else if (arrival > best_arrival + epsilon)
-          return false;
         else if (total_wirelength < best_total_wirelength - epsilon)
           return true;
         else if (total_wirelength > best_total_wirelength + epsilon)
+          return false;
+        else if (arrival < best_arrival - epsilon)
+          return true;
+        else if (arrival > best_arrival + epsilon)
           return false;
       }
     }
@@ -2970,8 +2899,7 @@ protected:
     return worst_wl;
   }
 
-  double compute_wirelength(cut_t const& cut) 
-  {
+  double compute_wirelength(cut_t const& cut) {
     node_position roots, leafs;
     int count_l = 0, count_r = 0;
     for (auto r : cut.pins) {
@@ -2995,10 +2923,11 @@ protected:
     return distance;
   }
 
-  double weight_w_d(double wirelength_t, double total_wirelength_t, double delay_t) {
+  double weight_w_d(double wirelength_t, double total_wirelength_t,
+                    double delay_t) {
     double wires = ((1 - ps.trade_off) * wirelength_t) +
                    (ps.trade_off * total_wirelength_t);
-    return (0.8 * wires + 0.2 * delay_t) / 2;
+    return (0.9 * wires + 0.1 * delay_t) / 2;
   }
 
   void print_node_match() 
