@@ -1,16 +1,12 @@
 #pragma once
 
 #include <memory>
-
 #include <mockturtle/algorithms/mapper.hpp>
+
 #include "../core/RUDY.hpp"
 #include "../core/utils/data_structure.hpp"
 
-
 namespace mockturtle {
-
-
-
 namespace detail {
 template<class Ntk, unsigned CutSize, typename CutData, unsigned NInputs, classification_type Configuration>
 class phy_map_impl
@@ -24,7 +20,7 @@ public:
   using seq_map_ntk_t = binding_view<sequential<klut_network>>;
 
   struct node_match_phy : public detail::node_match_tech<NInputs> {
-    double congest_flow[2];
+    double congest_flow[3];
     double congestion[2];
     node_position position[2] {node_position{0, 0}, node_position{0, 0}};
   };
@@ -76,85 +72,6 @@ public:
     std::tie(lib_buf_area, lib_buf_delay, lib_buf_id) = library.get_buffer_info();
   }
 
-  map_ntk_t run()
-  {
-    stopwatch t( st.time_mapping );
-
-    auto [res, old2new] = initialize_map_network();
-
-    /* compute and save topological order */
-    top_order.reserve( ntk.size() );
-    topo_view<Ntk>( ntk ).foreach_node( [this]( auto n ) {
-      top_order.push_back( n );
-    } );
-
-    /* match cuts with gates */
-    compute_matches();
-
-    /* init the data structure */
-    init_nodes();
-
-    /* execute mapping */
-    switch (ps.strategy) {
-      case map_params::def:
-        if (!execute_mapping()) return res;
-        break;
-      case map_params::area:
-        if (!execute_area_mapping()) return res;
-        break;
-      case map_params::delay:
-        if (!execute_delay_mapping()) return res;
-        break;
-      case map_params::performance:
-        if (!execute_wirelength_mapping<false, false>()) return res;
-        break;
-      case map_params::power:
-        if (!execute_wirelength_mapping<true, false>()) return res;
-        break;
-      case map_params::balance:
-        if (!execute_wirelength_mapping<true, true>()) return res;
-        break;
-    }
-    /* insert buffers for POs driven by PIs */
-    insert_buffers();
-
-    /* generate the output network */
-    finalize_cover<map_ntk_t>( res, old2new );
-
-    return res;
-  }
-
-  seq_map_ntk_t run_seq()
-  {
-    stopwatch t( st.time_mapping );
-
-    auto [res, old2new] = initialize_map_seq_network();
-
-    /* compute and save topological order */
-    top_order.reserve( ntk.size() );
-    topo_view<Ntk>( ntk ).foreach_node( [this]( auto n ) {
-      top_order.push_back( n );
-    } );
-
-    /* match cuts with gates */
-    compute_matches();
-
-    /* init the data structure */
-    init_nodes();
-
-    /* execute mapping */
-    if ( !execute_mapping() )
-      return res;
-
-    /* insert buffers for POs driven by PIs */
-    insert_buffers();
-
-    /* generate the output network */
-    finalize_cover<seq_map_ntk_t>( res, old2new );
-
-    return res;
-  }
-
   map_ntk_t rudy_map_test() {
     auto [res, old2new] = initialize_map_network();
 
@@ -183,62 +100,42 @@ public:
     init_nodes();
 
     /* execute mapping */
+    /* compute mapping for delay */
     std::cout << "delay flow" << std::endl;
     bool success = compute_mapping<false>();
-    if (!success) {
-      std::cout << "Failed to map the network" << std::endl;
-      return res;
-    } 
-    compute_required_time();
+    if (!success) return res;
 
     std::cout << "area flow" << std::endl;
-    success = compute_mapping<true>();
-    if (!success) {
-      std::cout << "Failed to map the network" << std::endl;
-      return res;
-    }
     compute_required_time();
+    success = compute_mapping<true>();
+    if (!success) return res;
 
     std::cout << "WL flow" << std::endl;
+    compute_required_time();
     success = compute_mapping_wirelength<false, true>();
-    if (!success) {
-      std::cout << "Failed to map the network" << std::endl;
-      return res;
-    }
-    compute_required_time();
+    if (!success) return res;
 
-    std::cout << "exact area flow" << std::endl;
-    success = compute_mapping_exact<false>();
-    if (!success) {
-      std::cout << "Failed to map the network" << std::endl;
-      return res;
-    }
-    compute_required_time();
-
-    /* generate the output network */
+    /* generate RUDY tile*/
     auto [res_temp, old2new_temp] = initialize_map_network<true>();
 
-    ntk.foreach_node([&](auto const& n) {
-      auto index = ntk.node_to_index(n);
-      auto& node_data = node_match[index];
-    });
-
     finalize_cover_congest<map_ntk_t, true>(res_temp, old2new_temp);
-
-    // get_binding_position(match_position);
-    // TODO: Implement the position of the nodes
     set_RUDY_map(&match_position, &res_temp, res.num_pis(), res.num_pos());
     calculateRUDY();
 
-    // rudy_map->show();
-    
-    insert_buffers();
+    std::cout << "RUDY flow" << std::endl;
+    compute_required_time();
+    success = compute_wireCongest();
+    if (!success) return res;
 
-    // ntk.foreach_node([&](auto const& n) {
-    //   auto index = ntk.node_to_index(n);
-    //   auto& node_data = node_match[index];
-    //   std::cout << "Node " << index << " has position " << node_data.position[0].x_coordinate << " " << node_data.position[0].y_coordinate << std::endl;
-    // });
+    std::cout << "exact area flow" << std::endl;
+    compute_required_time();
+    success = compute_mapping_exact<false>();
+    if (!success) return res;
+    compute_required_time();
+    success = compute_mapping_exact<false>();
+    if (!success) return res;
+
+    insert_buffers();
 
     /* generate the output network */
     finalize_cover<map_ntk_t>(res, old2new);
@@ -255,128 +152,7 @@ protected:
     rudy_map->calculateRudy();
   }
 
-  bool execute_mapping()
-  {
-    /* compute mapping for delay */
-    if ( !ps.skip_delay_round )
-    {
-      std::cout << "Compute mapping for delay" << std::endl;
-      if ( !compute_mapping<false>() )
-      {
-        return false;
-      }
-    }
-    /* compute mapping using global area flow */
-    while ( iteration < ps.area_flow_rounds + 1 )
-    {
-      compute_required_time();
-      if ( !compute_mapping<true>() )
-      {
-        return false;
-      }
-    }
-
-    /* compute mapping using exact area */
-    while ( iteration < ps.ela_rounds + ps.area_flow_rounds + 1 )
-    {
-      std::cout << "Compute mapping using exact area" << std::endl;
-      compute_required_time();
-      if ( !compute_mapping_exact<false>() )
-      {
-        return false;
-      }
-    }
-
-    /* compute mapping using exact switching activity estimation */
-    while ( iteration < ps.eswp_rounds + ps.ela_rounds + ps.area_flow_rounds + 1 )
-    {
-      std::cout << "Compute mapping using exact switching activity estimation" << std::endl;
-      compute_required_time();
-      if ( !compute_mapping_exact<true>() )
-      {
-        return false;
-      }
-    }
-
-    return true;
-  }
-
-  template <bool DO_POWER, bool DO_TRADE>
-  bool execute_wirelength_mapping() {
-    /* compute mapping for delay */
-    if (!ps.skip_delay_round) {
-      if (!compute_mapping<false>()) return false;
-    }
-
-    /* compute mapping using global area flow */
-    while (iteration < ps.area_flow_rounds + 1) {
-      compute_required_time();
-      if (!compute_mapping<true>()) return false;
-    }
-
-    /* compute mapping for total wirelength */
-    if (ps.wirelength_rounds) {
-      compute_required_time();
-      if (!compute_mapping_wirelength<false, DO_POWER, DO_TRADE>())
-        return false;
-    }
-
-    /* compute mapping for total wirelength */
-    if (iteration < ps.area_flow_rounds + ps.total_wirelength_rounds + 2) {
-      compute_required_time();
-      if (!compute_mapping_wirelength<true, DO_POWER, DO_TRADE>()) return false;
-    }
-
-    /* compute mapping using exact area */
-    while (iteration < ps.ela_rounds + ps.area_flow_rounds + 2) {
-      compute_required_time();
-      if (!compute_mapping_exact<false>()) return false;
-    }
-
-    return true;
-  }
-
-  bool execute_delay_mapping() 
-  {
-    /* compute mapping for delay */
-    if (!ps.skip_delay_round) {
-      if (!compute_mapping<false>()) {
-        return false;
-      }
-    }
-
-    /* compute mapping using global area flow */
-    while (iteration < ps.area_flow_rounds + 1) {
-      compute_required_time();
-      if (!compute_mapping<true>()) {
-        return false;
-      }
-    }
-
-    return true;
-  }
-
-  bool execute_area_mapping() 
-  {
-    /* compute mapping using global area flow */
-    while (iteration < ps.area_flow_rounds + 1) {
-      compute_required_time();
-      if (!compute_mapping<true>()) {
-        return false;
-      }
-    }
-
-    /* compute mapping using exact area */
-    while (iteration < ps.ela_rounds + ps.area_flow_rounds + 1) {
-      compute_required_time();
-      if (!compute_mapping_exact<false>()) {
-        return false;
-      }
-    }
-
-    return true;
-  }
-
+protected:
   void init_nodes()
   {
     ntk.foreach_node( [this]( auto const& n, auto ) {
@@ -677,8 +453,9 @@ protected:
     return success;
   }
 
-  std::pair<double, double> wireCongestCompute(node<Ntk> const& n, cut_t const& cut, node_position const& gate_position, 
-                            uint8_t best_phase) {
+  std::pair<double, double> wireCongestCompute(
+      node<Ntk> const& n, cut_t const& cut, node_position const& gate_position,
+      uint8_t best_phase) {
     double wire_congest = 0.0f;
     double congest_flow = 0.0f;
     auto index = ntk.node_to_index(n);
@@ -686,33 +463,36 @@ protected:
     const bool is_temporary = true;
     int ctr = 0;
     for (auto& c : cut) {
-      rudy_map->addRectRudy<is_temporary>(gate_position.x_coordinate, gate_position.y_coordinate, 
-                                          node_match[c].position[(best_phase >> ctr) & 1].x_coordinate,
-                                          node_match[c].position[(best_phase >> ctr) & 1].y_coordinate);
+      rudy_map->addRectRudy<is_temporary>(
+          gate_position.x_coordinate, gate_position.y_coordinate,
+          node_match[c].position[(best_phase >> ctr) & 1].x_coordinate,
+          node_match[c].position[(best_phase >> ctr) & 1].y_coordinate);
       ++ctr;
     }
 
     ctr = 0;
     for (auto& c : cut) {
-      double congestion = rudy_map->hpwlCongestCompute(gate_position.x_coordinate, gate_position.y_coordinate,
-                                                       node_match[c].position[(best_phase >> ctr) & 1].x_coordinate, 
-                                                       node_match[c].position[(best_phase >> ctr) & 1].y_coordinate);
+      double congestion = rudy_map->hpwlCongestCompute(
+          gate_position.x_coordinate, gate_position.y_coordinate,
+          node_match[c].position[(best_phase >> ctr) & 1].x_coordinate,
+          node_match[c].position[(best_phase >> ctr) & 1].y_coordinate);
       wire_congest += congestion;
-      congest_flow += congestion + node_match[c].wireCongest[best_phase >> ctr];
+      congest_flow +=
+          congestion + node_match[c].congest_flow[best_phase >> ctr];
       ++ctr;
     }
     ctr = 0;
     for (auto& c : cut) {
-      rudy_map->removeRectRudy<is_temporary>(gate_position.x_coordinate, gate_position.y_coordinate, 
-                                          node_match[c].position[(best_phase >> ctr) & 1].x_coordinate,
-                                          node_match[c].position[(best_phase >> ctr) & 1].y_coordinate);
+      rudy_map->removeRectRudy<is_temporary>(
+          gate_position.x_coordinate, gate_position.y_coordinate,
+          node_match[c].position[(best_phase >> ctr) & 1].x_coordinate,
+          node_match[c].position[(best_phase >> ctr) & 1].y_coordinate);
       ++ctr;
     }
 
     return {wire_congest, congest_flow};
   }
 
-  template <bool DO_TOTALWIRE, bool DO_POWER, bool DO_TRADE>
   void match_wireCongest(node<Ntk> const& n, uint8_t phase) {
     double best_arrival = std::numeric_limits<double>::max();
     double best_area_flow = std::numeric_limits<double>::max();
@@ -735,7 +515,7 @@ protected:
     supergate<NInputs> const* best_supergate = node_data.best_supergate[phase];
 
     // Remove RUDY induced by the binding root of this node
-    auto binding_roots = get_binding_roots(n, phase);
+    auto binding_roots = get_binding_roots(n);
     for (auto& root : binding_roots) {
       rudy_map->nodeRUDYRemove(index);
     }
@@ -757,10 +537,10 @@ protected:
         best_arrival = std::max(best_arrival, arrival_pin);
         ++ctr;
       }
-      
-      if (cut.size() != 1) {
+
+      if (cut.size() != 1)
         best_gate_position = compute_gate_position(cut);
-      } else {
+      else {
         std::cerr << "Error: This cut has only one leaf" << std::endl;
         best_gate_position = node_data.position[phase];
       }
@@ -768,13 +548,12 @@ protected:
           compute_match_wirelength(cut, best_gate_position, best_phase);
       best_total_wirelength =
           compute_match_total_wirelength(cut, best_gate_position, best_phase);
-      best_congest_flow = 
+      best_congest_flow =
           (wireCongestCompute(n, cut, best_gate_position, best_phase)).second;
-      // Restore RUDY induced by the binding root of this node
     }
 
     for (auto const& cut : cuts.cuts(index)) {
-      if (cut->data.ignore) {
+      if ((*cut)->data.ignore) {
         ++cut_index;
         continue;
       } else if (cut->size() <= 1) {
@@ -792,13 +571,12 @@ protected:
       }
 
       node_position gate_position;
-      if ((*cut).size() != 1) {
+      if ((*cut).size() != 1)
         gate_position = compute_gate_position(*cut);
-      } else {
-        std::cerr << "Error: This cut has only one leaf (in interation)" << std::endl;
+      else
         continue;
-      }
 
+      /* match each gate and take the best one */
       for (auto const& gate : *supergates[phase]) {
         uint8_t gate_polarity = gate.polarity ^ negation;
         node_data.phase[phase] = gate_polarity;
@@ -808,8 +586,8 @@ protected:
             compute_match_wirelength(*cut, gate_position, gate_polarity);
         double worst_total_wirelength =
             compute_match_total_wirelength(*cut, gate_position, gate_polarity);
-        auto [worst_wire_congest, worst_congest_flow] = 
-            wireCongestCompute(*cut, gate_position, gate_polarity);
+        auto [worst_wire_congest, worst_congest_flow] =
+            wireCongestCompute(n, *cut, gate_position, gate_polarity);
 
         auto ctr = 0u;
         for (auto l : *cut) {
@@ -821,20 +599,16 @@ protected:
         }
 
         if (worst_arrival > node_data.required[phase] + epsilon) continue;
+        if (weight_w_d(
+                worst_wirelength / node_data.wirelength[phase],
+                worst_total_wirelength / node_data.total_wirelength[phase],
+                worst_arrival / node_data.required[phase]) > 1 + epsilon)
+          continue;
 
-        if (!DO_TRADE) {
-          if constexpr (!DO_POWER) {
-            if constexpr (DO_TOTALWIRE) {
-              if (worst_wirelength > node_data.wirelength[phase] + epsilon)
-                continue;
-            }
-          }
-        }
-
-        if (compare_map_wirelength<DO_TOTALWIRE, DO_TRADE>(
-                worst_wirelength, best_wirelength, worst_arrival, best_arrival,
-                worst_total_wirelength, best_total_wirelength, cut->size(),
-                best_size)) {
+        if (compare_map_rudy(worst_congest_flow, best_congest_flow,
+                             worst_wirelength, best_wirelength, worst_arrival,
+                             best_arrival, worst_total_wirelength,
+                             best_total_wirelength, cut->size(), best_size)) {
           best_wirelength = worst_wirelength;
           best_total_wirelength = worst_total_wirelength;
           best_arrival = worst_arrival;
@@ -868,21 +642,19 @@ protected:
     node_data.congest_flow[phase] = best_congest_flow;
   }
 
-  template <bool DO_TOTALWIRE, bool DO_POWER>
   bool compute_wireCongest() {
     for (auto const& n : top_order) {
       if (ntk.is_constant(n) || ntk.is_ci(n)) continue;
-
       auto index = ntk.node_to_index(n);
       auto& node_data = node_match[index];
 
-      match_wireCongest<DO_TOTALWIRE, DO_POWER>(n, 0u);
+      match_wireCongest(n, 0u);
 
       /* match negative wire&delay phase */
-      match_wireCongest<DO_TOTALWIRE, DO_POWER>(n, 1u);
+      match_wireCongest(n, 1u);
 
       /* try to drop one delay phase */
-      match_wirelength_drop_phase<DO_TOTALWIRE>(n);
+      match_wirelength_drop_phase<false, true>(n);
     }
 
     bool success = set_mapping_refs_wirelength<false>();
@@ -1112,8 +884,7 @@ protected:
   }
 
   template <bool ELA>
-  bool set_mapping_refs_wirelength() 
-  {
+  bool set_mapping_refs_wirelength() {
     const auto coef = 1.0f / (2.0f + (iteration + 1) * (iteration + 1));
 
     if constexpr (!ELA) {
@@ -2050,13 +1821,6 @@ protected:
       node_data.congest_flow[1] = node_data.congest_flow[1] / node_data.est_refs[1];
       node_data.congest_flow[2] = node_data.congest_flow[0] + node_data.congest_flow[1];
 
-      // Treat the total wirelength as the area flow
-      if constexpr (DO_TOTALWIRE) {
-        node_data.total_wirelength[0] = node_data.total_wirelength[0] / node_data.est_refs[0];
-        node_data.total_wirelength[1] = node_data.total_wirelength[1] / node_data.est_refs[1];
-        node_data.total_wirelength[2] = node_data.total_wirelength[0] + node_data.total_wirelength[1];
-      }
-
       node_data.same_match = false;
       return;
     }
@@ -2107,16 +1871,10 @@ protected:
     node_data.phase[phase_n] = node_data.phase[phase];
     node_data.arrival[phase_n] = worst_arrival_n;
     node_data.wirelength[phase_n] = node_data.wirelength[phase];
-    node_data.position[phase_n] = node_data.position[phase];
-
-    // Treat the total wirelength as the area flow
-    node_data.total_wirelength[phase] = node_data.total_wirelength[phase] / node_data.est_refs[2];
     node_data.total_wirelength[phase_n] = node_data.total_wirelength[phase];
-
     node_data.area[phase_n] = node_data.area[phase];
     node_data.congestion[phase_n] = node_data.congestion[phase];
     node_data.position[phase_n] = node_data.position[phase];
-
     node_data.flows[phase] = node_data.flows[phase] / node_data.est_refs[2];
     node_data.flows[phase_n] = node_data.flows[phase];
 
@@ -2126,7 +1884,6 @@ protected:
 
     node_data.flows[2] = node_data.flows[phase];
     node_data.congest_flow[2] = node_data.congest_flow[phase];
-    node_data.total_wirelength[2] = node_data.total_wirelength[phase];
   }
 
   void match_constants( uint32_t index )
@@ -2812,6 +2569,29 @@ protected:
           return false;
       }
     }
+    if (size < best_size) return true;
+    return false;
+  }
+
+  inline bool compare_map_rudy(double rudy, double best_rudy, double wirelength,
+                               double best_wirelength, double arrival,
+                               double best_arrival, double total_wirelength,
+                               double best_total_wirelength, uint32_t size,
+                               uint32_t best_size) {
+    if (rudy < best_rudy - epsilon) {
+      return true;
+    } else if (rudy > best_rudy + epsilon) {
+      return false;
+    } else if (weight_w_d(wirelength / best_wirelength,
+                          total_wirelength / best_total_wirelength,
+                          arrival / best_arrival) < (1 - epsilon)) {
+      return true;
+    } else if (weight_w_d(wirelength / best_wirelength,
+                          total_wirelength / best_total_wirelength,
+                          arrival / best_arrival) > (1 + epsilon)) {
+      return false;
+    }
+
     if (size < best_size) return true;
     return false;
   }

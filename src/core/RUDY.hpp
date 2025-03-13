@@ -541,15 +541,15 @@ public:
 
     int old_size = _offset_grids.size();
     // if the node is  invertor, then remove the net of the child node
-    _ntk->foreach_fanin(node, [&](auto f) {
+    _ntk->foreach_fanin(node, [&](auto f) { 
       auto child_index = _ntk->node_to_index(_ntk->get_node(f));
-      if (_ntk->_storage->nodes[index].data[1].h1 == 3) {
-        foreach_fanin(_ntk->index_to_node(child_index), [&](auto f) {
+      if (_ntk->_storage->nodes[child_index].data[1].h1 == 3) {
+        _ntk->foreach_fanin(_ntk->index_to_node(child_index), [&](auto f) {
           auto grand_child_index = _ntk->node_to_index(_ntk->get_node(f));
           removeRectRudy<true>(_placement->at(child_index).x_coordinate, _placement->at(child_index).y_coordinate,
                                _placement->at(grand_child_index).x_coordinate, _placement->at(grand_child_index).y_coordinate);
         });
-      }
+      } 
       removeRectRudy<true>(_placement->at(node_index).x_coordinate, _placement->at(node_index).y_coordinate,
                            _placement->at(child_index).x_coordinate, _placement->at(child_index).y_coordinate);
     });
@@ -569,8 +569,8 @@ public:
     if (ymax != yhi)
       ++yhi; // Consider the upper bound is 1 more than the actual value
 
-    net_rect.init(static_cast<int>(xlo) - _wire_width / 2, static_cast<int>(ylo) - _wire_width / 2, 
-                     static_cast<int>(xhi) + _wire_width / 2, static_cast<int>(yhi) + _wire_width / 2);
+    net_rect.init(static_cast<int>(xlo - _wire_width / 2), static_cast<int>(ylo - _wire_width / 2), 
+                  static_cast<int>(xhi + _wire_width / 2), static_cast<int>(yhi + _wire_width / 2));
 
     auto [max_rudy, aver_rudy] = maxAverRUDY<true>(net_rect);
     return ((xhi - xlo) + (yhi - ylo)) * (static_cast<float>(max_rudy) / 2 + static_cast<float>(aver_rudy));
@@ -674,6 +674,7 @@ public:
         min_y = node.y_coordinate;
     }
 
+    std::cout << "Core: " << min_x << " " << min_y << " " << max_x << " " << max_y << std::endl;
     _block_grid.init(min_x, min_y, max_x, max_y);
   }
 
@@ -777,7 +778,7 @@ public:
   Rect _block_grid;
   std::vector<std::vector<Tile>> _grids;
   std::vector<std::vector<int>> _nets;
-  int _wire_width = 0;
+  int _wire_width = 12;
   int _tile_cnt_x = 10;
   int _tile_cnt_y = 10;
   int _tile_size = 600; // should we respectively set horizontal and vertical tile size? 600 by default
