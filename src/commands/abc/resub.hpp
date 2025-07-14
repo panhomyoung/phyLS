@@ -6,7 +6,7 @@
  *
  * @brief performs technology-independent restructuring of the AIG
  *
- * @author Homyoung
+ * @author XXX
  * @since  2023/02/28
  */
 

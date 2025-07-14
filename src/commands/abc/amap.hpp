@@ -5,7 +5,7 @@
  *
  * @brief performs technology-independent mapping of the AIG
  *
- * @author Homyoung
+ * @author XXX
  * @since  2023/11/16
  */
 

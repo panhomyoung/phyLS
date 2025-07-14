@@ -5,7 +5,7 @@
  *
  * @brief converts node functions to SOP
  *
- * @author Homyoung
+ * @author XXX
  * @since  2023/11/16
  */
 

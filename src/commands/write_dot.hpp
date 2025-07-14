@@ -6,7 +6,7 @@
  *
  * @brief write dot files
  *
- * @author Homyoung
+ * @author XXX
  * @since  2022/12/14
  */
 

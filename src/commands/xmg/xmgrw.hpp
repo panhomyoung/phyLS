@@ -6,7 +6,7 @@
  *
  * @brief algebraic XMG rewriting
  *
- * @author Homyoung
+ * @author XXX
  * @since  2023/11/16
  */
 

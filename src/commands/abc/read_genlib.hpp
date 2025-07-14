@@ -6,7 +6,7 @@
  *
  * @brief read the library from a genlib file
  *
- * @author Homyoung
+ * @author XXX
  * @since  2023/11/16
  */
 

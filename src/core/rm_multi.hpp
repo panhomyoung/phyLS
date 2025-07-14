@@ -6,7 +6,7 @@
  *
  * @brief Multilevel RM logic optimization
  *
- * @author Homyoung
+ * @author XXX
  * @since  2023/11/16
  */
 

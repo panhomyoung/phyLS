@@ -6,7 +6,7 @@
  *
  * @brief dag generate
  *
- * @author Homyoung
+ * @author XXX
  * @since  0.1
  */
 

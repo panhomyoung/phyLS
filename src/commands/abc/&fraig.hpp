@@ -6,7 +6,7 @@
  *
  * @brief performs combinational SAT sweeping
  *
- * @author Homyoung
+ * @author XXX
  * @since  2023/03/14
  */
 

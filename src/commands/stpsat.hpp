@@ -6,7 +6,7 @@
  *
  * @brief Semi-Tensor Product based SAT
  *
- * @author Homyoung
+ * @author XXX
  * @since  2022/12/14
  */
 

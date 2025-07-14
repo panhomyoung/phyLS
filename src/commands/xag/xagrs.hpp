@@ -6,7 +6,7 @@
  *
  * @brief XAG resubsitution
  *
- * @author Homyoung
+ * @author XXX
  * @since  2023/11/16
  */
 

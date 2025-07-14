@@ -6,7 +6,7 @@
  *
  * @brief performs FPGA technology mapping of the network
  *
- * @author Homyoung
+ * @author XXX
  * @since  2023/08/03
  */
 

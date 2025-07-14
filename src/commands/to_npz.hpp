@@ -6,7 +6,7 @@
  *
  * @brief transforms the current network into adjacency matrix(.npz)
  *
- * @author Homyoung
+ * @author XXX
  * @since  2024/03/01
  */
 

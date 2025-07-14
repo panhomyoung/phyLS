@@ -6,7 +6,7 @@
  *
  * @brief Semi-tensor product based logic network simulation
  *
- * @author Homyoung
+ * @author XXX
  * @since  2023/03/21
  */
 

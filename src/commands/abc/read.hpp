@@ -6,7 +6,7 @@
  *
  * @brief  replaces the current network by the network read from file
  *
- * @author Homyoung
+ * @author XXX
  * @since  2023/03/14
  */
 

@@ -6,7 +6,7 @@
  *
  * @brief Standard cell mapping
  *
- * @author Homyoung
+ * @author XXX
  * @since  2022/12/14
  */
 
@@ -35,6 +35,7 @@ class techmap_command : public command {
       : command(env, "Standard cell mapping [default = AIG]") {
     add_flag("--xmg, -x", "Standard cell mapping for XMG");
     add_flag("--mig, -m", "Standard cell mapping for MIG");
+    add_flag("--xag, -g", "Standard cell mapping for XAG");
     add_flag("--lut, -l", "Standard cell mapping for k-LUT");
     add_option("--output, -o", filename, "the verilog filename");
     add_option("--cut_limit, -c", cut_limit,
@@ -43,8 +44,13 @@ class techmap_command : public command {
     add_option("--node_position_def, -d", def_filename, "the def filename");
     add_flag("--area, -a", "Area-only standard cell mapping");
     add_flag("--delay, -e", "Delay-only standard cell mapping");
-    add_flag("--wirelength, -w", "Wirelength-only standard cell mapping");
-    add_flag("--balance, -b", "Balanced wirelength standard cell mapping");
+    add_flag("--performance, -w",
+             "Performance mode: wirelength-only standard cell mapping");
+    add_flag("--power, -b",
+             "Power mode: total wirelength-driven standard cell mapping");
+    add_option("--trade_off, -t", trade_off,
+               "The trade-off between power mode (1) and performance mode (0), "
+               "range: [0,1], default = performance mode (0)");
     add_flag("--verbose, -v", "print the information");
   }
 
@@ -57,6 +63,7 @@ class techmap_command : public command {
   std::string pl_filename = "";
   std::string def_filename = "";
   uint32_t cut_limit{49u};
+  double trade_off = 0.0;
 
  protected:
   void execute() {
@@ -73,10 +80,14 @@ class techmap_command : public command {
       ps.strategy = map_params::area;
     else if (is_set("delay"))
       ps.strategy = map_params::delay;
-    else if (is_set("wirelength"))
-      ps.strategy = map_params::wirelength;
-    else if (is_set("balance"))
+    else if (is_set("performance"))
+      ps.strategy = map_params::performance;
+    else if (is_set("power"))
+      ps.strategy = map_params::power;
+    else if (is_set("trade_off")) {
+      ps.trade_off = trade_off;
       ps.strategy = map_params::balance;
+    }
     else
       ps.strategy = map_params::def;
     if (is_set("verbose")) ps.verbose = true;
@@ -140,15 +151,31 @@ class techmap_command : public command {
               "Mapped k-LUT into #gates = {} area = {:.2f} delay = {:.2f}\n",
               res.num_gates(), st.area, st.delay);
         }
+      } else if (is_set("xag")) {
+        if (store<xag_network>().size() == 0u) {
+          std::cerr << "[e] no XAG in the store\n";
+        } else {
+          auto xag = store<xag_network>().current();
+
+          auto res = mockturtle::map(xag, lib, ps, &st);
+
+          if (is_set("output")) {
+            write_verilog_with_binding(res, filename);
+          }
+
+          std::cout << fmt::format(
+              "Mapped XAG into #gates = {} area = {:.2f} delay = {:.2f}\n",
+              res.num_gates(), st.area, st.delay);
+        }
       } else {
         if (store<aig_network>().size() == 0u) {
           std::cerr << "[e] no AIG in the store\n";
         } else {
           auto aig = store<aig_network>().current();
           if (is_set("node_position_def")) {
-            std::vector<mockturtle::node_position> np(aig.size());
-            phyLS::read_def_file(def_filename, np);
-            ps.wirelength_rounds = true;
+            std::vector<mockturtle::node_position> np(aig.size() +
+                                                      aig.num_pos());
+            phyLS::read_deffile(def_filename, np, aig.num_pis());
             auto res = mockturtle::map(aig, lib, np, ps, &st);
             if (is_set("output")) write_verilog_with_binding(res, filename);
             std::cout << fmt::format(

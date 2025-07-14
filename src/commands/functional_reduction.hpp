@@ -6,7 +6,7 @@
  *
  * @brief performs functional reduction
  *
- * @author Homyoung
+ * @author XXX
  * @since  2022/12/20
  */
 

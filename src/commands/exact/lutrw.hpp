@@ -6,7 +6,7 @@
  *
  * @brief 2-lut rewriting with STP based exact synthesis
  *
- * @author Homyoung
+ * @author XXX
  * @since  2022/11/30
  */
 

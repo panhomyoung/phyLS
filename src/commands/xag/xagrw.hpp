@@ -6,7 +6,7 @@
  *
  * @brief XAG rewriting
  *
- * @author Homyoung
+ * @author XXX
  * @since  2023/11/16
  */
 

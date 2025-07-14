@@ -5,7 +5,7 @@
   \file mg.hpp
   \brief Matrix logic network implementation
   \brief Inspired from aig.hpp in mockturtle
-  \author Homyoung
+  \author XXX
 */
 
 #pragma once

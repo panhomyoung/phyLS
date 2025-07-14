@@ -5,7 +5,7 @@
  *
  * @brief transforms the current network into a well-balanced AIG
  *
- * @author Homyoung
+ * @author XXX
  * @since  2023/11/16
  */
 

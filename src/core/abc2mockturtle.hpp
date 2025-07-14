@@ -6,7 +6,7 @@
  *
  * @brief convert format between abc and mockturtle
  *
- * @author Homyoung
+ * @author XXX
  * @since  2023/02/27
  */
 

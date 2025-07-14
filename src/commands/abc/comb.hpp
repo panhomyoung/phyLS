@@ -6,7 +6,7 @@
  *
  * @brief converts comb network into seq, and vice versa
  *
- * @author Homyoung
+ * @author XXX
  * @since  2023/03/21
  */
 

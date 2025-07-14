@@ -28,7 +28,7 @@
  *
  * @brief load a hexdecimal string represented truth table
  *
- * @author Homyoung
+ * @author XXX
  * @since  2022/12/14
  */
 

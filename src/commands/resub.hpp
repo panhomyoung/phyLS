@@ -6,7 +6,7 @@
  *
  * @brief performs technology-independent restructuring
  *
- * @author Homyoung
+ * @author XXX
  * @since  2022/12/14
  */
 

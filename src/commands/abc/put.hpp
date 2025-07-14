@@ -5,7 +5,7 @@
  *
  * @brief converts the current GIA network into Ntk
  *
- * @author Homyoung
+ * @author XXX
  * @since  2023/11/16
  */
 

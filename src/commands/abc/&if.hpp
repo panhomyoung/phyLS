@@ -6,7 +6,7 @@
  *
  * @brief performs FPGA mapping of the GIA
  *
- * @author Homyoung
+ * @author XXX
  * @since  2023/11/16
  */
 

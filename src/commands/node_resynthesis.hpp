@@ -6,7 +6,7 @@
  *
  * @brief Node resynthesis
  *
- * @author Homyoung
+ * @author XXX
  * @since  2022/12/14
  */
 

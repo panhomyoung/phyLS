@@ -6,7 +6,7 @@
  *
  * @brief on-the-fly DAG-aware logic rewriting
  *
- * @author Homyoung
+ * @author XXX
  * @since  2022/12/15
  */
 

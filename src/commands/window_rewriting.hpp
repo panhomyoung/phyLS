@@ -6,7 +6,7 @@
  *
  * @brief Window rewriting
  *
- * @author Homyoung
+ * @author XXX
  * @since  2023/09/27
  */
 

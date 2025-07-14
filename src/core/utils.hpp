@@ -6,7 +6,7 @@
  *
  * @brief TODO
  *
- * @author Homyoung
+ * @author XXX
  * @since  2023/11/16
  */
 

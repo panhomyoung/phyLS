@@ -5,7 +5,7 @@
   \file stp_npn.hpp
   \brief Replace with size-optimum STP-based exact synthesis from NPN
 
-  \author Homyoung
+  \author XXX
 */
 
 #pragma once

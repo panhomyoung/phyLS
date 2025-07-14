@@ -6,7 +6,7 @@
  *
  * @brief  writes the current network into file
  *
- * @author Homyoung
+ * @author XXX
  * @since  2023/03/14
  */
 

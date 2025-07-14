@@ -6,7 +6,7 @@
  *
  * @brief STP based exact synthesis
  *
- * @author Homyoung
+ * @author XXX
  * @since  2022/11/23
  */
 

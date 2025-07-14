@@ -6,7 +6,7 @@
  *
  * @brief simulate a expression and return a truth table
  *
- * @author Homyoung
+ * @author XXX
  * @since  2022/12/14
  */
 

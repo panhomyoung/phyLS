@@ -6,7 +6,7 @@
  *
  * @brief converts the current network into GIA
  *
- * @author Homyoung
+ * @author XXX
  * @since  2023/03/14
  */
 

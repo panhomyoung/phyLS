@@ -6,7 +6,7 @@
  *
  * @brief lut mapping for any input
  *
- * @author Homyoung
+ * @author XXX
  * @since  2022/12/14
  */
 

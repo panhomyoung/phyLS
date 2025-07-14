@@ -6,7 +6,7 @@
  *
  * @brief Inversion optimization of xmg
  *
- * @author Homyoung
+ * @author XXX
  * @since  2023/11/16
  */
 

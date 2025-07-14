@@ -6,7 +6,7 @@
  *
  * @brief STP-based functional reduction
  *
- * @author Homyoung
+ * @author XXX
  * @since  2023/03/14
  */
 #ifndef STPFR_HPP
