@@ -120,6 +120,7 @@ class if_command : public command {
           return;
         }
       }
+      if (is_set("delay")) Abc_NtkRecStop3();
       store<pabc::Abc_Ntk_t *>().extend();
       store<pabc::Abc_Ntk_t *>().current() = pNtkRes;
     }

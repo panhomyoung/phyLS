@@ -15,7 +15,7 @@
 // #include "base/abci/abc.c"
 #include "base/abc/abc.h"
 // #include "base/abci/abcDar.c"
-#include "base/abci/abcResub.c"
+// #include "base/abci/abcResub.c"
 
 using namespace std;
 using namespace mockturtle;

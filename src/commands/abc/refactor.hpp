@@ -26,6 +26,8 @@ class arefactor_command : public command {
  public:
   explicit arefactor_command(const environment::ptr &env)
       : command(env, "performs technology-independent refactoring of the AIG") {
+    add_flag("--zero, -z", "using zero-cost replacements");
+    add_flag("--level, -l", "preserving the number of levels");
     add_flag("--verbose, -v", "print the information");
   }
 
@@ -58,6 +60,8 @@ class arefactor_command : public command {
       fUseDcs = 0;
       fVerbose = 0;
       nMinSaved = 1;
+      if (is_set("level")) fUpdateLevel ^= 1;
+      if (is_set("zero")) fUseZeros ^= 1;
       Extra_UtilGetoptReset();
       if (pNtk == NULL) {
         Abc_Print(-1, "Empty network.\n");

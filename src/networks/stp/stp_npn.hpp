@@ -73,7 +73,7 @@ class stp_npn_resynthesis {
   std::unordered_map<std::string, std::vector<std::string>> opt_klut;
 
   void load_optimal_klut() {
-    std::ifstream infile("../src/networks/stp/opt_map.txt");
+    std::ifstream infile("../src/networks/stp/opt_stp.txt");
     if (!infile) {
       std::cout << " Cannot open file " << std::endl;
       assert(false);

@@ -33,10 +33,13 @@ class refactor_command : public command {
   explicit refactor_command(const environment::ptr& env)
       : command(env,
                 "performs technology-independent refactoring [default = AIG]") {
+    add_option("--cut_size, -k", cut_size,
+               "Maximum number of PIs of the MFFC or window");
     add_flag("--mig, -m", "refactoring for MIG");
     add_flag("--xag, -g", "refactoring for XAG");
     add_flag("--xmg, -x", "refactoring for XMG");
     add_flag("--akers, -a", "Refactoring with Akers synthesis for MIG");
+    add_flag("--gain, -n", "optimize until there is no gain");
     add_flag("--verbose, -v", "print the information");
   }
 
@@ -54,12 +57,12 @@ class refactor_command : public command {
         if (is_set("akers")) {
           akers_resynthesis<mig_network> resyn;
           refactoring_params ps;
-          ps.max_pis = 4u;
+          ps.max_pis = cut_size;
           refactoring(mig, resyn, ps);
         } else {
           mig_npn_resynthesis resyn;
           refactoring_params ps;
-          ps.max_pis = 4u;
+          ps.max_pis = cut_size;
           refactoring(mig, resyn, ps);
         }
         mig = cleanup_dangling(mig);
@@ -77,7 +80,7 @@ class refactor_command : public command {
         begin = clock();
         bidecomposition_resynthesis<xag_network> resyn;
         refactoring_params ps;
-        ps.max_pis = 4u;
+        ps.max_pis = cut_size;
         refactoring(xag, resyn, ps);
         xag = cleanup_dangling(xag);
         end = clock();
@@ -92,11 +95,23 @@ class refactor_command : public command {
       else {
         auto xmg = store<xmg_network>().current();
         begin = clock();
-        xmg_npn_resynthesis resyn;
-        refactoring_params ps;
-        ps.max_pis = 4u;
-        refactoring(xmg, resyn, ps);
-        xmg = cleanup_dangling(xmg);
+        if (is_set("gain")) {
+          uint64_t size_current{};
+          do {
+            size_current = xmg.num_gates();
+            xmg_npn_resynthesis resyn;
+            refactoring_params ps;
+            ps.max_pis = cut_size;
+            refactoring(xmg, resyn, ps);
+            xmg = cleanup_dangling(xmg);
+          } while (xmg.num_gates() < size_current);
+        } else {
+          xmg_npn_resynthesis resyn;
+          refactoring_params ps;
+          ps.max_pis = cut_size;
+          refactoring(xmg, resyn, ps);
+          xmg = cleanup_dangling(xmg);
+        }
         end = clock();
         totalTime = (double)(end - begin) / CLOCKS_PER_SEC;
         phyLS::print_stats(xmg);
@@ -111,7 +126,7 @@ class refactor_command : public command {
         begin = clock();
         direct_resynthesis<aig_network> aig_resyn;
         refactoring_params ps;
-        ps.max_pis = 4u;
+        ps.max_pis = cut_size;
         refactoring(aig, aig_resyn, ps);
         aig = cleanup_dangling(aig);
         end = clock();
@@ -127,6 +142,7 @@ class refactor_command : public command {
   }
 
  private:
+  uint32_t cut_size = 4u;
 };
 
 ALICE_ADD_COMMAND(refactor, "Synthesis")
