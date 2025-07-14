@@ -1,4 +1,4 @@
-# Towards Tight Logic-Physical Fusion: Timing-Driven Incremental Technology Mapping with Placement Oracle
+# PhyMap: A Physically-Aware Incremental Mapping Framework with On-the-fly Post-Layout Critical Path Tracking
 
 PhyMap is based on the [mockturtle](https://github.com/lsils/mockturtle) and the [abc](https://github.com/berkeley-abc/abc), it can optimize different logics attributes. 
 Currently, it supports mockturtle format(AIG, MIG, XAG, XMG) and abc format(AIG,GIA) based optimization.
